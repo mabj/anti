@@ -1,5 +1,5 @@
-# Anti Collection
-Knowledge base of anti debug and analysis techniques found during malware analyses.
+# Anti-Analysis Collection
+Knowledge base of anti-analysis techniques found during malware analyses.
 
 ## [001_SetErrorMode] Sandbox detection technique by inspect SetErrorMode behavior. 
 Uses calls to SetErrorMode to detect changes (hooks) in the default behavior or SetErrorMode windows API call. 
