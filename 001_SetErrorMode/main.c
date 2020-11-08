@@ -9,9 +9,9 @@ void _main() {
     UINT uMode = 0x400;
     SetErrorMode(uMode);
     if (SetErrorMode(0) == uMode) {
-        OutputDebugStringA("All OK");
+        OutputDebugStringA("[+] All OK");
     } else {
-        OutputDebugStringA("A sandbox has been detected.");
+        OutputDebugStringA("[+] A sandbox has been detected.");
     }
     ExitProcess(0);
 }

@@ -14,5 +14,4 @@ This method terminates the process if a mutex still exists by spawing the same p
  - https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-
  - https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
  - http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FThread%2FNtDelayExecution.
-
- 
+ - https://docs.microsoft.com/en-us/windows/win32/sync/using-named-objects
