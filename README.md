@@ -36,7 +36,13 @@ Usually this technique is used together with technique #007 so this avoids hooks
 
 - https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
 
-## [007_CopyOfNtdll] Load a copy of ntdll.dll, loads it and uses this copy instead the original library.
+## [007_CopyOfNtdll] Loads a copy of ntdll.dll and uses it instead the original library.
 This technique is used to hide behavioural data in case sandboxes do not propagate hooks. 
 
 - https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
+
+## [008_IsDebuggerPresent] Checks if process the current process has the debug flag activated by calling "IsDebuggerPresent"
+
+## [009_CheckRemoteDebuggerPresent] Checks if process the current process has the debug flag activated by calling "CheckRemoteDebuggerPresent"
+
+## [010_FindWindow] This technique checks open windows for known analysis tool names
