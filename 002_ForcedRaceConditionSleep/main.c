@@ -83,74 +83,55 @@ int _persist_file(char *file_name, char **persisted_file) {
 
 // https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes
 BOOL _check_if_process_exists(char *p_name) {
-  HANDLE hProcessSnap;
-  HANDLE hProcess;
-  PROCESSENTRY32 pe32;
-  DWORD dwPriorityClass;
+    HANDLE hProcessSnap;
+    HANDLE hProcess;
+    PROCESSENTRY32 pe32;
+    DWORD dwPriorityClass;
 
-  hProcessSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
-  if( hProcessSnap == INVALID_HANDLE_VALUE ) {
-    printf("[!] CreateToolhelp32Snapshot (of processes)\n");
-    return FALSE ;
-  }
+    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hProcessSnap == INVALID_HANDLE_VALUE) {
+        return FALSE;
+    }
 
-  pe32.dwSize = sizeof( PROCESSENTRY32 );
+    pe32.dwSize = sizeof(PROCESSENTRY32);
 
-  if( !Process32First( hProcessSnap, &pe32 ) ) {
-    printf("[!] Process32First\n");
-    CloseHandle( hProcessSnap );
-    return FALSE ;
-  }
+    if (!Process32First(hProcessSnap, &pe32)) {
+        CloseHandle(hProcessSnap);
+        return FALSE;
+    }
 
-  do {
-    if (pe32.szExeFile == p_name)
-        return TRUE;
+    do {
+        if (pe32.szExeFile == p_name)
+            return TRUE;
+        _list_process_modules(pe32.th32ProcessID);
+    } while(Process32Next(hProcessSnap, &pe32));
 
-    _list_process_modules( pe32.th32ProcessID );
-  } while( Process32Next( hProcessSnap, &pe32 ) );
-
-  CloseHandle( hProcessSnap );
-  return FALSE;
+    CloseHandle(hProcessSnap);
+    return FALSE;
 }
 
-BOOL _list_process_modules( DWORD dwPID ) {
-  HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
-  MODULEENTRY32 me32;
+BOOL _list_process_modules(DWORD dwPID) {
+    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
+    MODULEENTRY32 me32;
 
-  // Take a snapshot of all modules in the specified process.
-  hModuleSnap = CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, dwPID );
-  if( hModuleSnap == INVALID_HANDLE_VALUE ) {
-    // printf("CreateToolhelp32Snapshot (of modules)");
-    return FALSE ;
-  }
+    hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPID);
+    if(hModuleSnap == INVALID_HANDLE_VALUE) {
+        return FALSE;
+    }
 
-  // Set the size of the structure before using it.
-  me32.dwSize = sizeof( MODULEENTRY32 );
+    me32.dwSize = sizeof(MODULEENTRY32);
 
-  // Retrieve information about the first module,
-  // and exit if unsuccessful
-  if( !Module32First( hModuleSnap, &me32 ) ) {
-    // printf("Module32First");  // show cause of failure
-    CloseHandle( hModuleSnap );           // clean the snapshot object
-    return( FALSE );
-  }
+    if(!Module32First(hModuleSnap, &me32)) {
+        CloseHandle(hModuleSnap);
+        return FALSE;
+    }
 
-  // Now walk the module list of the process,
-  // and display information about each module
-  int i = 0;
-  do
-  {
-    i++;
-    // _tprintf( TEXT("\n\n     MODULE NAME:     %s"),   me32.szModule );
-    // _tprintf( TEXT("\n     Executable     = %s"),     me32.szExePath );
-    // _tprintf( TEXT("\n     Process ID     = 0x%08X"),         me32.th32ProcessID );
-    // _tprintf( TEXT("\n     Ref count (g)  = 0x%04X"),     me32.GlblcntUsage );
-    // _tprintf( TEXT("\n     Ref count (p)  = 0x%04X"),     me32.ProccntUsage );
-    // _tprintf( TEXT("\n     Base address   = 0x%08X"), (DWORD) me32.modBaseAddr );
-    // _tprintf( TEXT("\n     Base size      = %d"),             me32.modBaseSize );
+    int i=0;
+    do
+    {
+        i+=1;
+    } while(Module32Next(hModuleSnap, &me32));
 
-  } while( Module32Next( hModuleSnap, &me32 ) );
-
-  CloseHandle( hModuleSnap );
-  return TRUE ;
+    CloseHandle(hModuleSnap);
+    return TRUE;
 }
