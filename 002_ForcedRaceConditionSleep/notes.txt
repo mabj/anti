@@ -9,18 +9,19 @@ SHA256     cacec7cf35fc455c63afb772f3ef8084c2badfcd73d68d9d17878017eeaa21d8
 This method detects behavioural changes (caused by hooks) on sleep calls by forcing a race condition. Here are a pseudo-code on how it works: 
 
  - sleep(n)
- - persists itself in %APPDATA%
- - terminates if mutex "12345" exists
  - creates mutex "12345"
- - executes persisted binary
+ - terminates if mutex "12345" exists
+ 
  - if running version is inside persisted directory
-     - computes main payload;
-     - delete mutex "12345";
+     - deletes original binary
+     - computes main payload
+     - delete mutex "12345"
      - terminates
  - else
-     - delete itself
+     - persists itself in %APPDATA%
+     - executes persisted binary
+     - do some computation (just to cover the time taken for setup persisted version);
      - sleep(n/2)
-     - deletes mutex "12345";
      - terminates
 
 The outcome is that the main payload is not executed if sleep is shortcutted by hooks. This technique is implemented by default in many sandboxes in order to avoid malware delaying its own execution.
