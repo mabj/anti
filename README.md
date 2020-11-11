@@ -29,20 +29,29 @@ Sometimes analysis tools and sandboxes injects DLLs in targetted processes in or
 ## [005_CheckDeviceNames] Check devices names in the Windows Registry.
 This technique searches for specific keys in the Windows Registry regarding device names. Virtual machine technologies leaves a lot of traces if not fine tunned. Malware families use this technique to check if the main executable is running under a virtualized environment.
 
-- https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
+ - https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
 
 ## [006_CheckProcessDebugPort] Fetches "ProcessDebugPort" data by calling "NtQueryInformationProcess".
 Usually this technique is used together with technique #007 so this avoids hooks to this specfic API call ("NtQueryInformationProcess").
 
-- https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
+ - https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
 
 ## [007_CopyOfNtdll] Loads a copy of ntdll.dll and uses it instead the original library.
 This technique is used to hide behavioural data in case sandboxes do not propagate hooks. 
 
-- https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
+ - https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
 
-## [008_IsDebuggerPresent] Checks if process the current process has the debug flag activated by calling "IsDebuggerPresent"
+## [008_IsDebuggerPresent] Checks debug flag by using "IsDebuggerPresent" call
+Checks if any debugger is attached to the current process by inspecting debug fleg in PEB. There are many ways to achieve this and one of them is calling the "IsDebuggerPresent" call.
 
-## [009_CheckRemoteDebuggerPresent] Checks if process the current process has the debug flag activated by calling "CheckRemoteDebuggerPresent"
+ - https://docs.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent
 
-## [010_FindWindow] This technique checks open windows for known analysis tool names
+## [009_CheckRemoteDebuggerPresent] Checks debug flag by using "CheckRemoteDebuggerPresent" call
+Checks if any debugger is attached to an specific process.
+
+ - https://docs.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-checkremotedebuggerpresent
+
+## [010_FindWindow] Checks open windows for known analysis tool names
+Searches window names according to a list of pre-defined names used by analysis tools.
+
+ - https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa
