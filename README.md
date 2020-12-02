@@ -42,7 +42,7 @@ This technique is used to hide behavioural data in case sandboxes do not propaga
  - https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/
 
 ## [008_IsDebuggerPresent] Checks debug flag by using "IsDebuggerPresent" call
-Checks if any debugger is attached to the current process by inspecting debug fleg in PEB. There are many ways to achieve this and one of them is calling the "IsDebuggerPresent" call.
+Checks if any debugger is attached to the current process by inspecting debug flag in PEB. There are many ways to achieve this and one of them is calling the "IsDebuggerPresent" call.
 
  - https://docs.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent
 
