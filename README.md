@@ -62,3 +62,7 @@ Did not see this implemented in any malware family so far.
  - https://ieeexplore.ieee.org/abstract/document/9186656
  - https://github.com/gnxbr/Fully-Undetectable-Techniques/tree/main/user-imitating
 
+## [012_CheckPEB] Checks debug flags located inside PEB structure
+Checks being debugged flag inside PEB structure. 
+
+- https://docs.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb
