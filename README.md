@@ -55,3 +55,10 @@ Checks if any debugger is attached to an specific process.
 Searches window names according to a list of pre-defined names used by analysis tools.
 
  - https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa
+
+## [011_PhantomMW] Uses a hidden secondary desktop to imitate a user and bypass AVs' behaviour analysis. 
+Did not see this implemented in any malware family so far.
+
+ - https://ieeexplore.ieee.org/abstract/document/9186656
+ - https://github.com/gnxbr/Fully-Undetectable-Techniques/tree/main/user-imitating
+

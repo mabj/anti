@@ -1,9 +1,8 @@
 // @marcos_alvares
-// build with "vc.exe main.c"
+// build with "cl.exe main.c"
 // https://docs.microsoft.com/en-us/windows/win32/sync/using-named-objects
 
 #include <windows.h>
-#include <tlhelp32.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -14,7 +13,7 @@
 int _execute_cmd(char *);
 void _execute_main_payload(int, char **);
 int _persist_file(char *, char **);
-BOOL _check_if_process_exists(char *);
+void _delay(int);
 
 int main(int argc, char *argv[]) {
     Sleep(_TIMER);
@@ -26,7 +25,7 @@ int main(int argc, char *argv[]) {
 
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
         HANDLE tst = CreateMutex(NULL, FALSE, "SANDBOX_DETECTED");
-        printf("[+] A sandbox has been detected.\n");
+        printf("[+] Sandbox has been detected.\n");
         OutputDebugStringA("[+] A sandbox has been detected.");
         CloseHandle(mh); 
         return 0;
@@ -50,8 +49,8 @@ int main(int argc, char *argv[]) {
             return 0;
         }
         // Doing some random processing
-        for(int u = 0; u<180; u++)
-            _check_if_process_exists("unknown.exe");
+        for(int u = 0; u<20; u++)
+            _delay(u);
     }
 
     return 0;
@@ -70,7 +69,6 @@ int _execute_cmd(char *cmd) {
 
 void _execute_main_payload(int argc, char *argv[]) {
     printf("[+] Executing main payload...\n");
-    OutputDebugStringA("[+] Executing main payload ...");
     Sleep(_TIMER * 5);
     if (argc == 2) DeleteFile(argv[1]);
 }
@@ -81,57 +79,10 @@ int _persist_file(char *file_name, char **persisted_file) {
     return CopyFile(file_name, *persisted_file, FALSE);
 }
 
-// https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes
-BOOL _check_if_process_exists(char *p_name) {
-    HANDLE hProcessSnap;
-    HANDLE hProcess;
-    PROCESSENTRY32 pe32;
-    DWORD dwPriorityClass;
-
-    hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    if (hProcessSnap == INVALID_HANDLE_VALUE) {
-        return FALSE;
+void _delay(int counter) {
+    while(counter > 0) {
+        printf("[+] Executig delay function (iteration %03d)\n", counter);
+        Sleep(10);
+        counter -= 1;
     }
-
-    pe32.dwSize = sizeof(PROCESSENTRY32);
-
-    if (!Process32First(hProcessSnap, &pe32)) {
-        CloseHandle(hProcessSnap);
-        return FALSE;
-    }
-
-    do {
-        if (pe32.szExeFile == p_name)
-            return TRUE;
-        _list_process_modules(pe32.th32ProcessID);
-    } while(Process32Next(hProcessSnap, &pe32));
-
-    CloseHandle(hProcessSnap);
-    return FALSE;
-}
-
-BOOL _list_process_modules(DWORD dwPID) {
-    HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
-    MODULEENTRY32 me32;
-
-    hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPID);
-    if(hModuleSnap == INVALID_HANDLE_VALUE) {
-        return FALSE;
-    }
-
-    me32.dwSize = sizeof(MODULEENTRY32);
-
-    if(!Module32First(hModuleSnap, &me32)) {
-        CloseHandle(hModuleSnap);
-        return FALSE;
-    }
-
-    int i=0;
-    do
-    {
-        i+=1;
-    } while(Module32Next(hModuleSnap, &me32));
-
-    CloseHandle(hModuleSnap);
-    return TRUE;
 }

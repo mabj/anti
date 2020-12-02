@@ -11,7 +11,7 @@ void _main() {
     if (SetErrorMode(0) == uMode) {
         OutputDebugStringA("[+] All OK");
     } else {
-        OutputDebugStringA("[+] A sandbox has been detected.");
+        OutputDebugStringA("[+] Sandbox has been detected.");
     }
     ExitProcess(0);
 }
