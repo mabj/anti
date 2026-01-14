@@ -18,7 +18,7 @@ int main (int argc, char *argv[]) {
         NULL);
 
     if (status == 0x00000000 && debug_port != 0) {
-        printf("[+] Sandbox has been detected.\n");
+        printf("[+] Debugger has been detected.\n");
         return 0;
     }
     return 0;

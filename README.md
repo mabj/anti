@@ -66,3 +66,8 @@ Did not see this implemented in any malware family so far.
 Checks being debugged flag inside PEB structure. 
 
 - https://docs.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb
+
+## [013_SetUnhandledExceptionFilter] Detects Debugger by setting handler to Unhandled Exception Filter (UEF)
+Checks if debugger is taking over exception handling chain. 
+
+https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
