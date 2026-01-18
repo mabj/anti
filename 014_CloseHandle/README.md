@@ -12,6 +12,8 @@ If the application is running under a debugger, the function will throw an excep
 2. update the variable `$vcVarsPath` of the `build.ps1`with the path to VC
 3. Run `make` using powershell
 
+![Tool Output](doc/images/close_handle_debugger.png)
+
 ## References
 
 - https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
