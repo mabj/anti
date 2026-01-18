@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <stdbool.h>
 
-// https://wiki.osdev.org/Inline_Assembly
 bool __is_debugged() {
     __try {
         CloseHandle((HANDLE)(ULONG_PTR)0xDEADBEEF);
