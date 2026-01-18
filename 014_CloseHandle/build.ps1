@@ -16,16 +16,19 @@ function Invoke-BatchFile {
 # Parameters
 $architecture = $args[0]
 
+# Visual Studio VC compiler path
+$vcVarsPath = "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat"
+
 # Set environment variables
 if ($architecture -eq "amd64") {
-    Invoke-BatchFile -Path "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" -Arguments "amd64"
+    Invoke-BatchFile -Path $vcVarsPath -Arguments "amd64"
     $outputDir = "build/amd64"
     $exeName = "bin/sample_CloseHandle_amd64.exe"
     $cflags = "/W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_AMD64_ /fp:fast /Os /GL /Gy"
     $ldflags = "/link /LTCG:OFF /MACHINE:X64 kernel32.lib user32.lib legacy_stdio_definitions.lib"
 }
 elseif ($architecture -eq "x86") {
-    Invoke-BatchFile -Path "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" -Arguments "x86"
+    Invoke-BatchFile -Path $vcVarsPath -Arguments "x86"
     $outputDir = "build/x86"
     $exeName = "bin/sample_CloseHandle_x86.exe"
     $cflags = "/W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_X86_ /arch:SSE2 /Os /GL /Gy"

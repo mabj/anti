@@ -4,7 +4,7 @@
 // https://wiki.osdev.org/Inline_Assembly
 bool __is_debugged() {
     __try {
-        CloseHandle((HANDLE)0xDEADBEEF);
+        CloseHandle((HANDLE)(ULONG_PTR)0xDEADBEEF);
     }
     __except (EXCEPTION_INVALID_HANDLE == GetExceptionCode() ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
         return true;

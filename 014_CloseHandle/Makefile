@@ -6,7 +6,7 @@ CC = C:\Progra~1\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.00000\
 
 # Architecture-specific compiler flags
 CFLAGS_X86 = /W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_X86_ /arch:SSE2 /Os /GL /Gy
-CFLAGS_AMD64 = /W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_AMD64_ /fp:fast /Os /GL /Gy
+CFLAGS_AMD64 = /W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_AMD64_ /fp:fast /Os /GL /Gy /wd4312
 
 # Architecture-specific linker flags
 LDFLAGS_X86 = /link /LTCG:OFF /MACHINE:X86 kernel32.lib user32.lib legacy_stdio_definitions.lib
