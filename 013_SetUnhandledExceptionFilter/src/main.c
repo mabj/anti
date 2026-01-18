@@ -33,14 +33,14 @@ being_debugged:
 
 int main() {
     if (!SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)unhandled_exception_filter)) {
-        MessageBoxA(NULL, "[!] Could not set Unhandled Exception Filter", "Anti-debug 001", MB_OK);
+        MessageBoxA(NULL, "[!] Could not set Unhandled Exception Filter", "Anti-debug 013", MB_OK);
         return -1;
     }
 
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 001", MB_OK);
+        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 013", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 001", MB_OK);
+        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 013", MB_OK);
 
     return 0;
 }
