@@ -29,8 +29,8 @@ BOOL _check_tag(char *, char *);
 BOOL _scan_key(HKEY, char *);
 
 int main (int argc, char *argv[]) {
-    for (int i=0; i < (sizeof(BLACKLIST)/sizeof(BLACKLIST[0])); i++)
-        for (int u=0; u < (sizeof(REGISTRY_KEYS)/sizeof(REGISTRY_KEYS[0])); u++) {
+    for (unsigned int i=0; i < (sizeof(BLACKLIST)/sizeof(BLACKLIST[0])); i++)
+        for (unsigned int u=0; u < (sizeof(REGISTRY_KEYS)/sizeof(REGISTRY_KEYS[0])); u++) {
             if (_check_tag((char *) REGISTRY_KEYS[u], (char *) BLACKLIST[i])) {
                 printf("[+] Sandbox has been detected.\n");
                 return 0;
@@ -74,9 +74,6 @@ BOOL _scan_key(HKEY hKey, char *tag) {
 
     DWORD i, retCode;
 
-    TCHAR  achValue[MAX_VALUE_NAME];
-    DWORD cchValue = MAX_VALUE_NAME;
-
     // Get the class name and the value count.
     retCode = RegQueryInfoKey(
         hKey,                    // key handle
@@ -103,12 +100,13 @@ BOOL _scan_key(HKEY hKey, char *tag) {
                      NULL,
                      NULL,
                      &ftLastWriteTime);
-            if (retCode == ERROR_SUCCESS)
+            if (retCode == ERROR_SUCCESS) {
                 for(int i = 0; achKey[i]; i++)
                     achKey[i] = tolower(achKey[i]);
 
                 if (strstr((char *)achKey, (char *)tag) != NULL)
                     return TRUE;
+            }
         }
     }
 

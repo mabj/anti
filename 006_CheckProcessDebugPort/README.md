@@ -9,7 +9,7 @@ Key characteristics:
 - Bypasses some user-mode debugger detection evasion techniques
 - Requires linking against `ntdll.dll`
 
-## Build
+## Build (Docker)
 
 ```
 $ make build-image
