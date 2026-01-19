@@ -32,7 +32,7 @@ const char *BLACKLIST[] = {
 BOOL _check_if_process_exists(char *);
 
 int main (int argc, char *argv[]) {
-    for (int i=0; i < (sizeof(BLACKLIST)/sizeof(BLACKLIST[0])); i++)
+    for (unsigned int i=0; i < (sizeof(BLACKLIST)/sizeof(BLACKLIST[0])); i++)
         if (_check_if_process_exists((char *) BLACKLIST[i])) {
             printf("[+] Sandbox has been detected.\n");
             break;
