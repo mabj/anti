@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
-        HANDLE tst = CreateMutex(NULL, FALSE, "SANDBOX_DETECTED");
+        CreateMutex(NULL, FALSE, "SANDBOX_DETECTED");
         printf("[+] Sandbox has been detected.\n");
         OutputDebugStringA("[+] A sandbox has been detected.");
         CloseHandle(mh); 
