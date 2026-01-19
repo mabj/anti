@@ -26,7 +26,7 @@ BOOL _check_if_module_is_loaded(char *);
 BOOL _check_process(DWORD, char *);
 
 int main (int argc, char *argv[]) {
-    for (int i=0; i < (sizeof(BLACKLIST)/sizeof(BLACKLIST[0])); i++) 
+    for (unsigned int i=0; i < (sizeof(BLACKLIST)/sizeof(BLACKLIST[0])); i++) 
         if (_check_if_module_is_loaded((char *) BLACKLIST[i])) {
             printf("[+] Sandbox has been detected.\n");
             break;
