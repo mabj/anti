@@ -86,3 +86,8 @@ The implementation creates a handle to a mutex, protects it with `HANDLE_FLAG_PR
 This anti-debug technique detects debuggers by examining heap flags.
 
 - https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation
+
+## [017_RtlQueryProcessDebugInformation] Detects Debugger by checking heap flags
+This anti-debug technique detects debuggers by examining heap flags.
+
+- https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation
