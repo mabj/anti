@@ -91,3 +91,9 @@ This anti-debug technique detects debuggers by examining heap flags.
 This anti-debug technique detects debuggers by examining heap flags.
 
 - https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessdebuginformation
+
+## [018_FindWindow] Detects debugging tools by checking for the presence of windows with titles associated with known debuggers.
+Uses the `FindWindowA` function to check for the existence of windows with titles that are commonly used by debuggers and analysis tools.
+
+ - https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa
+
