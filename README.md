@@ -56,8 +56,8 @@ Searches window names according to a list of pre-defined names used by analysis 
 
  - https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa
 
-## [011_PhantomMW] Uses a hidden secondary desktop to imitate a user and bypass AVs' behaviour analysis. 
-Did not see this implemented in any malware family so far.
+## [011_ProcessDebugObjectHandle] Checks if a process is being debugged by querying the `ProcessDebugObjectHandle`.
+This anti-debug technique checks if a process is being debugged by querying the `ProcessDebugObjectHandle` using `NtQueryInformationProcess`.
 
  - https://ieeexplore.ieee.org/abstract/document/9186656
  - https://github.com/gnxbr/Fully-Undetectable-Techniques/tree/main/user-imitating
@@ -70,4 +70,19 @@ Checks being debugged flag inside PEB structure.
 ## [013_SetUnhandledExceptionFilter] Detects Debugger by setting handler to Unhandled Exception Filter (UEF)
 Checks if debugger is taking over exception handling chain. 
 
-https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
+- https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
+
+## [014_CLoseHandle] Detects Debugger by checking behavior of CloseHandle API
+Chacks if CloseHandle is raising an exception in case of invalid handle is passed as parameter. 
+
+- https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
+
+## [015_SetHandleInformation] Detects Debugger by abusing the behavior of SetHandleInformation API
+The implementation creates a handle to a mutex, protects it with `HANDLE_FLAG_PROTECT_FROM_CLOSE`, then attempts closure in a structured exception handling block.
+
+- https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/SetHandleInformation_API.cpp
+
+## [016_RtlQueryProcessHeapInformation] Detects Debugger by checking heap flags
+This anti-debug technique detects debuggers by examining heap flags.
+
+- https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation
