@@ -72,7 +72,7 @@ Checks if debugger is taking over exception handling chain.
 
 - https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
 
-## [014_CLoseHandle] Detects Debugger by checking behavior of CloseHandle API
+## [014_CloseHandle] Detects Debugger by checking behavior of CloseHandle API
 Chacks if CloseHandle is raising an exception in case of invalid handle is passed as parameter. 
 
 - https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
@@ -90,4 +90,4 @@ This anti-debug technique detects debuggers by examining heap flags.
 ## [017_RtlQueryProcessDebugInformation] Detects Debugger by checking heap flags
 This anti-debug technique detects debuggers by examining heap flags.
 
-- https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation
+- https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessdebuginformation
