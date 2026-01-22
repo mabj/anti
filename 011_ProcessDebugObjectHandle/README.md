@@ -5,4 +5,3 @@ This anti-debug technique checks if a process is being debugged by querying the 
 ## Key Characteristics:
 - **Method**: Uses `NtQueryInformationProcess` with `ProcessDebugObjectHandle` (class `0x1e`).
 - **Detection**: A non-zero handle indicates an active debugger.
-- **Limitation**: Does not work for 32-bit executables running under WoW (Windows-on-Windows) mode.

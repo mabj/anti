@@ -15,10 +15,8 @@ bool __is_debugged() {
     if (hNtdll) {
         TNtQueryInformationProcess pfnNtQueryInformationProcess = (TNtQueryInformationProcess)GetProcAddress(
             hNtdll, "NtQueryInformationProcess");
-        MessageBoxA(NULL, "[+] AQUI 1.", "Anti-debug 011", MB_OK);
 
         if (pfnNtQueryInformationProcess) {
-            MessageBoxA(NULL, "[+] AQUI 2.", "Anti-debug 011", MB_OK);
             DWORD dwReturned;
             HANDLE hProcessDebugObject = 0;
             const DWORD ProcessDebugObjectHandle = 0x1e;
@@ -29,8 +27,6 @@ bool __is_debugged() {
                 sizeof(HANDLE),
                 &dwReturned);
     
-
-            MessageBoxA(NULL, "[+] AQUI 3.", "Anti-debug 011", MB_OK);
             if (NT_SUCCESS(status) && (0 != hProcessDebugObject))
                 return true;
         }
