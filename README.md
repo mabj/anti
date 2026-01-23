@@ -104,3 +104,6 @@ This technique retrieves the shell window (typically the desktop) and gets its p
 - https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowthreadprocessid
 - https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_process_basic_information
 
+## [020_DbgPrint] Detects debuggers by checking for exceptions when calling DbgPrint
+This technique detects debuggers by calling `DbgPrint` and checking if an exception (`DBG_PRINTEXCEPTION_C`) occurs. However, note that this method is ineffective on Windows 10 64-bit systems, as confirmed in testing.
+
