@@ -97,3 +97,10 @@ Uses the `FindWindowA` function to check for the existence of windows with title
 
  - https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa
 
+## [019_GetShellWindow] Detects debuggers by comparing the parent process ID against the shell window's process ID
+This technique retrieves the shell window (typically the desktop) and gets its process ID (explorer). Then, it checks the parent process ID of the current process. If the parent process is not explorer, it assumes the process is being debugged.
+
+- https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow
+- https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowthreadprocessid
+- https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_process_basic_information
+
