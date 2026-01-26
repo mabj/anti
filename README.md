@@ -117,3 +117,8 @@ This technique allocates executable memory with special monitoring flags, then c
 This technique uses the `GetThreadContext` API to inspect debug registers (Dr0-Dr7). If any registers are set, it indicates hardware breakpoints are active, suggesting debugger presence.
 
  - https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext
+
+## [023_NtSetInformationThread] Hides the current thread from debuggers using NtSetInformationThread
+This technique uses the `NtSetInformationThread` function with `ThreadHideFromDebugger` (0x11) to make the current thread invisible to debuggers. If successful, the thread detaches from any attached debugger and continues execution normally.
+
+ - https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FThread%2FNtSetInformationThread.html
