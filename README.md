@@ -113,3 +113,7 @@ This technique allocates executable memory with special monitoring flags, then c
  - https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-getwritewatch
  - https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-resetwritewatch
 
+## [022_GetThreadContext] Detects debuggers by checking hardware breakpoint registers
+This technique uses the `GetThreadContext` API to inspect debug registers (Dr0-Dr7). If any registers are set, it indicates hardware breakpoints are active, suggesting debugger presence.
+
+ - https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext
