@@ -107,3 +107,9 @@ This technique retrieves the shell window (typically the desktop) and gets its p
 ## [020_DbgPrint] Detects debuggers by checking for exceptions when calling DbgPrint
 This technique detects debuggers by calling `DbgPrint` and checking if an exception (`DBG_PRINTEXCEPTION_C`) occurs. However, note that this method is ineffective on Windows 10 64-bit systems, as confirmed in testing.
 
+## [021_GetWriteWatch] Detects debuggers by monitoring protected memory regions for unexpected writes
+This technique allocates executable memory with special monitoring flags, then continuously checks for unexpected modifications to these memory regions. Analysis tools like debuggers often modify protected memory regions to insert breakpoints, which this technique can detect.
+
+ - https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-getwritewatch
+ - https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-resetwritewatch
+
