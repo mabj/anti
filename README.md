@@ -122,3 +122,9 @@ This technique uses the `GetThreadContext` API to inspect debug registers (Dr0-D
 This technique uses the `NtSetInformationThread` function with `ThreadHideFromDebugger` (0x11) to make the current thread invisible to debuggers. If successful, the thread detaches from any attached debugger and continues execution normally.
 
  - https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FThread%2FNtSetInformationThread.html
+
+## [024_NtQueryObject] Detects debuggers by querying for the presence of DebugObject
+This technique uses the `NtQueryObject` function to enumerate all object types and checks for the presence of a "DebugObject". If such an object exists and has a count greater than zero, it indicates the presence of a debugger.
+
+ - https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryobject
+ - https://anti-debug.checkpoint.com/techniques/misc.html#debugobject
