@@ -128,3 +128,8 @@ This technique uses the `NtQueryObject` function to enumerate all object types a
 
  - https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryobject
  - https://anti-debug.checkpoint.com/techniques/misc.html#debugobject
+
+## [025_RaiseException] Detects debuggers by raising a DBG_CONTROL_C exception
+This technique uses structured exception handling (SEH) to raise a `DBG_CONTROL_C` exception. If the exception is handled by the program's exception handler, it indicates the absence of a debugger. If the exception is intercepted by a debugger (and not passed to the program), the handler does not run and the function returns true (debugger present).
+
+ - https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-raiseexception
