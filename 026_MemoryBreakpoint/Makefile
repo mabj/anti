@@ -1,4 +1,4 @@
-MAIN_NAME=anti_debug_memory_breakpoint_watchdog
+MAIN_NAME=anti_debug_software_breakpoint_watchdog
 
 CC32 = i686-w64-mingw32-gcc -m32
 CC64 = x86_64-w64-mingw32-gcc -m64
@@ -17,13 +17,13 @@ build:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
 
 build-amd64:
-	$(CC64) -o bin/sample_MemoryBreakpointWatchdog_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC64) -o bin/sample_SoftwareBreakpointWatchdog_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 build-x86:
-	$(CC32) -o bin/sample_MemoryBreakpointWatchdog_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC32) -o bin/sample_SoftwareBreakpointWatchdog_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 enter:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
 
 clean:
-	rm -rf bin/sample_MemoryBreakpointWatchdog_*.exe
+	rm -rf bin/sample_SoftwareBreakpointWatchdog_*.exe

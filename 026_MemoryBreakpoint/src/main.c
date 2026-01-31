@@ -32,7 +32,7 @@ bool __is_pattern_inside_function(BYTE pattern, PVOID func_addr, unsigned int fu
     return false;
 }
 
-DWORD WINAPI memory_breakpoint_watchdog(LPVOID param) {
+DWORD WINAPI software_breakpoint_watchdog(LPVOID param) {
     PMEMORY_WATCHDOG_PARAM wd_param = (PMEMORY_WATCHDOG_PARAM) param;
 
     while(true) {
@@ -87,7 +87,7 @@ bool __is_debugged() {
     HANDLE t_handle = CreateThread( 
         NULL,                       // default security attributes
         0,                          // use default stack size  
-        memory_breakpoint_watchdog, // thread function name
+        software_breakpoint_watchdog, // thread function name
         &m_wd,                      // argument to thread function 
         0,                          // use default creation flags 
         &tid                        // returns the thread identifier
