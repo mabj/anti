@@ -1,6 +1,7 @@
 # Context
 
 This technique implements a memory breakpoint detection mechanism by:
+
 - Periodically scanning function bytecode for the `0xCC` pattern (INT3 breakpoint instruction)
 - Using a dedicated watchdog thread to monitor specific functions
 - Scanning until `RET` instruction (`0xC3`) or known function size
@@ -12,4 +13,4 @@ The implementation creates a persistent background check that can detect softwar
 
 ## References
 
-- https://anti-debug.checkpoint.com/techniques/process-memory.html#software-breakpoints
+- <https://anti-debug.checkpoint.com/techniques/process-memory.html#software-breakpoints>
