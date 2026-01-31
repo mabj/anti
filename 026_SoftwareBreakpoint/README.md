@@ -8,7 +8,7 @@ This technique implements a memory breakpoint detection mechanism by:
 
 The implementation creates a persistent background check that can detect software breakpoints inserted by debuggers in critical functions.
 
-![Tool Output](doc/images/memory_breakpoint_watchdog_001.png)
+![Tool Output](doc/images/software_breakpoint_watchdog_001.png)
 
 ## References
 
