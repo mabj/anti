@@ -133,3 +133,9 @@ This technique uses the `NtQueryObject` function to enumerate all object types a
 This technique uses structured exception handling (SEH) to raise a `DBG_CONTROL_C` exception. If the exception is handled by the program's exception handler, it indicates the absence of a debugger. If the exception is intercepted by a debugger (and not passed to the program), the handler does not run and the function returns true (debugger present).
 
  - https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-raiseexception
+
+## [026_MemoryBreakpoint] Detects debuggers by scanning for breakpoints (INT3) in watched functions
+This technique periodically scans the memory of specific functions for the presence of breakpoints (0xCC, the opcode for INT3). If found, it indicates that a debugger has set a breakpoint in the function.
+
+ - https://en.wikipedia.org/wiki/INT_(x86_instruction)#INT3
+ - https://anti-debug.checkpoint.com/techniques/process-memory.html#software-breakpoints
