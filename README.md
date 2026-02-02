@@ -173,3 +173,12 @@ This technique uses the `_ReturnAddress` intrinsic to get the return address of 
 
 - <https://docs.microsoft.com/en-us/cpp/intrinsics/returnaddress?view=msvc-170>
 - <https://anti-debug.checkpoint.com/techniques/process-memory.html#anti-step-over>
+
+## [028_MemoryBreakpoint] Detects debuggers using guard page exception behavior
+
+This technique allocates executable memory, writes a RET instruction (0xC3) to it, and marks the page as a guard page. It then attempts to execute the memory location within a structured exception handler. If the guard page exception is caught (STATUS_GUARD_PAGE_VIOLATION), it indicates no debugger is present. If the code executes normally, it means a debugger intercepted and handled the exception.
+
+> PS: This technique works only in OllyDbg and ImmunityDbg (not in x64dbg).
+
+- <https://anti-debug.checkpoint.com/techniques/process-memory.html#memory-breakpoints>
+- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/MemoryBreakpoints_PageGuard.cpp>
