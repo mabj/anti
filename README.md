@@ -182,3 +182,26 @@ This technique allocates executable memory, writes a RET instruction (0xC3) to i
 
 - <https://anti-debug.checkpoint.com/techniques/process-memory.html#memory-breakpoints>
 - <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/MemoryBreakpoints_PageGuard.cpp>
+
+## [029_NtQueryVirtualMemory_WorkingSetList] Detects debuggers by checking working set page attributes
+
+This technique uses the `NtQueryVirtualMemory` function with `MemoryWorkingSetList` to inspect memory page attributes. It checks if the page containing the detection function is marked as private (not shared) or has a zero share count - indicators that a debugger may have modified the page (e.g., by setting breakpoints).
+
+- <https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryvirtualmemory>
+- <https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/sysinfo/meminfo_workingset.htm>
+
+
+## [030_DbgBreakPoint_patch] Patches DbgBreakPoint to prevent debugger attachment
+
+This technique patches the `DbgBreakPoint` function in ntdll.dll by replacing its first instruction with a `RET` (0xC3) to prevent debuggers from breaking in. It then enters an infinite loop to simulate normal operation.
+
+- <https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-with-breakpoints>
+- <https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FDebugging%2FDbgBreakPoint.html>
+
+## [030_DbgBreakPoint_patch] Patches DbgBreakPoint to prevent debugger attachment
+
+This technique patches the `DbgBreakPoint` function in ntdll.dll by replacing its first instruction with a `RET` (0xC3) to prevent debuggers from breaking in. It then enters an infinite loop to simulate normal operation.
+
+- <https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-with-breakpoints>
+- <https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FDebugging%2FDbgBreakPoint.html>
+
