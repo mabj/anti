@@ -13,11 +13,11 @@ This anti-debug technique patches the `DbgBreakPoint` function in ntdll.dll to p
 
 ## Build (Docker)
 
-```
-$ make build-image
-$ make build
+```[bash]
+make build-image
+make build
 ```
 
 ## References
 
-- https://anti-debug.checkpoint.com/techniques/process-memory.html#patch_ntdll_dbgbreakpoint
+- <https://anti-debug.checkpoint.com/techniques/process-memory.html#patch_ntdll_dbgbreakpoint>
