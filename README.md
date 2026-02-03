@@ -190,18 +190,11 @@ This technique uses the `NtQueryVirtualMemory` function with `MemoryWorkingSetLi
 - <https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryvirtualmemory>
 - <https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/sysinfo/meminfo_workingset.htm>
 
-
 ## [030_DbgBreakPoint_patch] Patches DbgBreakPoint to prevent debugger attachment
 
 This technique patches the `DbgBreakPoint` function in ntdll.dll by replacing its first instruction with a `RET` (0xC3) to prevent debuggers from breaking in. It then enters an infinite loop to simulate normal operation.
 
-- <https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-with-breakpoints>
-- <https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FDebugging%2FDbgBreakPoint.html>
+> This technique does not work with x64dbg. I was able to attach the debug to the patched process every time.
 
-## [030_DbgBreakPoint_patch] Patches DbgBreakPoint to prevent debugger attachment
-
-This technique patches the `DbgBreakPoint` function in ntdll.dll by replacing its first instruction with a `RET` (0xC3) to prevent debuggers from breaking in. It then enters an infinite loop to simulate normal operation.
-
-- <https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-with-breakpoints>
-- <https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FDebugging%2FDbgBreakPoint.html>
-
+- <https://anti-debug.checkpoint.com/techniques/process-memory.html#patch_ntdll_dbgbreakpoint>
+- <https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-dbgbreakpoint>
