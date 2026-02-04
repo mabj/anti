@@ -198,3 +198,11 @@ This technique patches the `DbgBreakPoint` function in ntdll.dll by replacing it
 
 - <https://anti-debug.checkpoint.com/techniques/process-memory.html#patch_ntdll_dbgbreakpoint>
 - <https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-dbgbreakpoint>
+
+## [031_DbgUiRemoteBreakin_hook] Patches DbgUiRemoteBreakin to prevent debugger attachment
+
+This technique patches the `DbgUiRemoteBreakin` function in ntdll.dll to terminate the current process instead of breaking into the debugger. This prevents debuggers from attaching to the process.
+
+> This technique does not work with x64dbg. It works with WinDBG, OllyDbg and ImmunityDebugger.
+
+- <https://anti-debug.checkpoint.com/techniques/interactive-debugging.html#dbguiremotebreakin>
