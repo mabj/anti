@@ -206,3 +206,26 @@ This technique patches the `DbgUiRemoteBreakin` function in ntdll.dll to termina
 > This technique does not work with x64dbg. It works with WinDBG, OllyDbg and ImmunityDebugger.
 
 - <https://anti-debug.checkpoint.com/techniques/interactive-debugging.html#dbguiremotebreakin>
+
+## [032_INT3] Detects debugger using vectored exception handling for breakpoints
+
+This technique uses a custom vectored exception handler to detect debugger presence by:
+
+1. Registering a handler for breakpoint exceptions (EXCEPTION_BREAKPOINT)
+2. Triggering a breakpoint (INT3) with `__debugbreak()`
+3. Checking if the handler was invoked (no debugger present) or not (debugger present)
+
+- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
+- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
+
+## [033_INT3_V2] Detects debugger using vectored exception handling for breakpoints (version 2)
+
+This technique improves upon the previous INT3 approach by:
+
+1. Using a vectored exception handler to intercept breakpoint exceptions
+2. Allocating executable memory containing an INT3 instruction (0xCD03)
+3. Checking if the exception is handled by the program (no debugger) or intercepted by a debugger
+4. Increasing EIP/RIP to continue execution after handling
+
+- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
+- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
