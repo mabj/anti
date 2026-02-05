@@ -274,3 +274,10 @@ This technique uses shellcode to manipulate the Trap Flag in EFLAGS register via
 This technique uses instruction prefixes (REP and FS segment override) before the ICEBP (INT 0x1) instruction to detect debugger presence. It registers a vectored exception handler, allocates executable memory with shellcode containing prefixed ICEBP (0xF3 0x64 0xF1), and checks if the exception is handled by the program or intercepted by a debugger.
 
 - <https://anti-debug.checkpoint.com/techniques/assembly.html#instruction_prefixes>
+
+## [039_self_debugging] Detects debuggers by attempting to debug itself
+
+This technique spawns a second instance of the process that attempts to attach as a debugger to the parent process using `DebugActiveProcess`. Since only one debugger can be attached to a process at a time, if the attachment fails, it indicates another debugger is already present. The technique uses an event object to signal the result back to the parent process.
+
+- <https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocess>
+- <https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocessstop>
