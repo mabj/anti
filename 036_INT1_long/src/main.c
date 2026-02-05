@@ -26,7 +26,7 @@ bool __is_debugged() {
 	SYSTEM_INFO si;
     GetSystemInfo(&si);
 
-	PBYTE shellcode = (PBYTE) VirtualAlloc(NULL, si.dwPageSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE); // INT3 v2 0xCD 0x03
+	PBYTE shellcode = (PBYTE) VirtualAlloc(NULL, si.dwPageSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 	shellcode[0] = '\xCD'; // INT 0x1 (ICEBP)
 	shellcode[1] = '\x01';
 	shellcode[2] = '\xC3'; // ret
