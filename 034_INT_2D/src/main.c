@@ -1,10 +1,7 @@
 #include <windows.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <intrin.h>
-
-
-// Shamesly copied from the greatest: 
-//      https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp
 
 static bool SwallowedException = true;
 
@@ -30,10 +27,31 @@ bool __is_debugged() {
 	SYSTEM_INFO si;
     GetSystemInfo(&si);
 
-	PBYTE shellcode = (PBYTE) VirtualAlloc(NULL, si.dwPageSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE); // INT3 v2 0xCD 0x03
-	shellcode[0] = '\xCD'; //INT3
-	shellcode[1] = '\x03';
-	shellcode[2] = '\xC3'; //ret
+	PBYTE shellcode = (PBYTE) VirtualAlloc(
+		NULL,
+		si.dwPageSize,
+		MEM_COMMIT | MEM_RESERVE,
+		PAGE_EXECUTE_READWRITE
+	);
+
+	if(!shellcode) {
+		printf("[!] Could not allocate memory to INT2D shellcode.\n");
+		return false;
+	}
+
+	#ifdef _WIN64
+		shellcode[0] = '\x48'; // XOR rax, rax
+		shellcode[1] = '\x31';
+		shellcode[2] = '\xC0';
+	#else
+		shellcode[0] = '\x31'; // XOR eax, eax
+		shellcode[1] = '\xC0';
+		shellcode[2] = '\x90'; // NOP
+	#endif
+	shellcode[3] = '\xCD'; // INT 0x2D
+	shellcode[4] = '\x2D';
+	shellcode[5] = '\x90'; // NOP
+	shellcode[6] = '\xC3'; //ret
 
 	void (*foo)() = (void(*)())shellcode;
 	foo();
