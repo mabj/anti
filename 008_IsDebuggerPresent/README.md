@@ -6,4 +6,4 @@ IsDebuggerPresent checks the BeingDebugged flag in the Process Execution Block (
 
 ## References
 
-- https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent
+- <https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent>

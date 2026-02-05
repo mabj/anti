@@ -16,4 +16,4 @@ The implementation creates a mutex, protects it with `HANDLE_FLAG_PROTECT_FROM_C
 
 ## References
 
-- https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/SetHandleInformation_API.cpp
+- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/SetHandleInformation_API.cpp>

@@ -10,4 +10,4 @@ This anti-debug technique checks if the current process was launched by Explorer
 
 ## References
 
-- https://anti-debug.checkpoint.com/techniques/misc.html#parent-process-check-ntqueryinformationprocess
+- <https://anti-debug.checkpoint.com/techniques/misc.html#parent-process-check-ntqueryinformationprocess>

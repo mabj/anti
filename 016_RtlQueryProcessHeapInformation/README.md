@@ -9,11 +9,11 @@ This anti-debug technique detects debuggers by examining heap flags.
 
 ## Build (Docker)
 
-```
-$ make build-image
-$ make build
+```[text]
+make build-image
+make build
 ```
 
 ## References
 
-- https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation
+- <https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation>

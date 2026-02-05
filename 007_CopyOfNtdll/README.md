@@ -6,4 +6,5 @@
 - Technique bypasses EDR hooks by loading clean ntdll copy
 
 ## References
-- https://bobvanderstaak.medium.com/unhooking-edr-by-remapping-ntdll-dll-101a99887dfe
+
+- <https://bobvanderstaak.medium.com/unhooking-edr-by-remapping-ntdll-dll-101a99887dfe>

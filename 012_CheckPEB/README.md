@@ -2,7 +2,7 @@
 
 The PEB (Process Execution Block) holds a Byte flag that indicates that the current process is attached to a debugger.
 
-```
+```[text]
 typedef struct _PEB {
   BYTE                          Reserved1[2];
   BYTE                          BeingDebugged;    // <<<-------
@@ -28,4 +28,4 @@ typedef struct _PEB {
 
 ## References
 
-- https://learn.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb
+- <https://learn.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb>

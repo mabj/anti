@@ -3,6 +3,7 @@
 This anti-debug technique uses structured exception handling (SEH) to detect debuggers by raising a `DBG_CONTROL_C` exception and observing its handling behavior.
 
 Key characteristics:
+
 - Raises a control-C exception (`DBG_CONTROL_C`) that debuggers typically intercept
 - Uses SEH blocks (`__try`/`__except`) to handle the exception
 - Returns `false` when the exception is handled by the program (no debugger)
@@ -18,5 +19,5 @@ The technique exploits how debuggers handle exceptions - when attached, they cat
 
 ## References
 
-- https://anti-debug.checkpoint.com/techniques/exceptions.html#raiseexception
-- https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-raiseexception
+- <https://anti-debug.checkpoint.com/techniques/exceptions.html#raiseexception>
+- <https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-raiseexception>
