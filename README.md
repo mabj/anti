@@ -262,3 +262,10 @@ This technique uses the two-byte form of INT 1 (0xCD 0x01) to detect debugger pr
 4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
 
 - <https://anti-debug.checkpoint.com/techniques/assembly.html#ice>
+
+
+## [037_popfd_trap] Detects debugger using POPFD to set the Trap Flag
+
+This technique uses shellcode to manipulate the Trap Flag in EFLAGS register via POPFD instruction. It pushes EFLAGS onto the stack, modifies it to set the Trap Flag (bit 8), then pops it back. This triggers a single-step exception that is caught by a vectored exception handler if no debugger is present, or intercepted by the debugger if one is attached.
+
+- <https://anti-debug.checkpoint.com/techniques/assembly.html#popf-and-trap-flag>
