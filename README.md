@@ -240,3 +240,14 @@ This technique uses the INT 2D (kernel debugger interrupt) instruction to detect
 4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
 
 - <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
+
+## [035_ICEBP] Detects debugger using ICEBP instruction (0xF1)
+
+This technique uses the ICEBP (INT 0x1) instruction to detect debugger presence by:
+
+1. Registering a vectored exception handler for breakpoint exceptions
+2. Allocating executable memory and writing shellcode containing ICEBP (0xF1)
+3. Executing the shellcode and checking if the exception is handled by the program or intercepted by a debugger
+4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
+
+- <https://anti-debug.checkpoint.com/techniques/assembly.html#ice>

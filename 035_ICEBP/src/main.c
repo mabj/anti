@@ -2,10 +2,6 @@
 #include <stdbool.h>
 #include <intrin.h>
 
-
-// Shamesly copied from the greatest: 
-//      https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp
-
 static bool SwallowedException = true;
 
 static LONG CALLBACK VectoredHandler(_In_ PEXCEPTION_POINTERS ExceptionInfo) {
@@ -31,9 +27,8 @@ bool __is_debugged() {
     GetSystemInfo(&si);
 
 	PBYTE shellcode = (PBYTE) VirtualAlloc(NULL, si.dwPageSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE); // INT3 v2 0xCD 0x03
-	shellcode[0] = '\xCD'; //INT3
-	shellcode[1] = '\x03';
-	shellcode[2] = '\xC3'; //ret
+	shellcode[0] = '\xF1'; // INT 0x1 (ICE)
+	shellcode[1] = '\xC3'; // ret
 
 	void (*foo)() = (void(*)())shellcode;
 	foo();
@@ -46,9 +41,9 @@ bool __is_debugged() {
 
 int main() {
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 012", MB_OK);
+        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 035", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 012", MB_OK);
+        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 035", MB_OK);
 
     return 0;
 }
