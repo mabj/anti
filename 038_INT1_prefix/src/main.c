@@ -6,13 +6,7 @@ static bool SwallowedException = true;
 
 static LONG CALLBACK VectoredHandler(_In_ PEXCEPTION_POINTERS ExceptionInfo) {
 	SwallowedException = FALSE;
-	if (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_BREAKPOINT) {
-		//Increase EIP/RIP to continue execution.
-#ifdef _WIN64
-		ExceptionInfo->ContextRecord->Rip++;
-#else
-		ExceptionInfo->ContextRecord->Eip++;
-#endif
+	if (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_SINGLE_STEP) {
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
 	return EXCEPTION_CONTINUE_SEARCH;
@@ -33,8 +27,10 @@ bool __is_debugged() {
 		PAGE_EXECUTE_READWRITE
 	);
 
-	shellcode[0] = '\xF1'; // INT 0x1 (ICE)
-	shellcode[1] = '\xC3'; // ret
+	shellcode[0] = '\xF3'; // INT 0x1 (ICEBP with Prefix) 
+	shellcode[1] = '\x64';
+	shellcode[2] = '\xF1';
+	shellcode[3] = '\xC3'; // ret
 
 	void (*foo)() = (void(*)())shellcode;
 	foo();
@@ -47,9 +43,9 @@ bool __is_debugged() {
 
 int main() {
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 035", MB_OK);
+        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 038", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 035", MB_OK);
+        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 038", MB_OK);
 
     return 0;
 }
