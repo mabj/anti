@@ -207,7 +207,7 @@ This technique patches the `DbgUiRemoteBreakin` function in ntdll.dll to termina
 
 - <https://anti-debug.checkpoint.com/techniques/interactive-debugging.html#dbguiremotebreakin>
 
-## [032_INT3] Detects debugger using vectored exception handling for breakpoints
+## [032_INT3] Detects debugger using INT3 (0xC3)
 
 This technique uses a custom vectored exception handler to detect debugger presence by:
 
@@ -218,7 +218,7 @@ This technique uses a custom vectored exception handler to detect debugger prese
 - <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
 - <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
 
-## [033_INT3_V2] Detects debugger using vectored exception handling for breakpoints (version 2)
+## [033_INT3_long] Detects debugger using long version of INT3 (0xCD03)
 
 This technique improves upon the previous INT3 approach by:
 
@@ -228,4 +228,15 @@ This technique improves upon the previous INT3 approach by:
 4. Increasing EIP/RIP to continue execution after handling
 
 - <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
+- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
+
+## [034_INT_2D] Detects debugger using vectored exception handling with INT 2D instruction
+
+This technique uses the INT 2D (kernel debugger interrupt) instruction to detect debugger presence by:
+
+1. Registering a vectored exception handler for breakpoint exceptions
+2. Allocating executable memory and writing shellcode containing INT 2D (0xCD2D)
+3. Executing the shellcode and checking if the exception is handled by the program or intercepted by a debugger
+4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
+
 - <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
