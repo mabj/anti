@@ -1,16 +1,36 @@
 # Context
 
-The self-debugging technique detects debuggers by exploiting the Windows limitation that only one debugger can be attached to a process at a time. The program spawns a child instance of itself and attempts to attach it as a debugger to the parent process. If the attachment succeeds, no external debugger is present; if it fails, another debugger is already attached.
+This technique exploits the Windows limitation that only one debugger can be attached to a process at a time. The program spawns a child instance of itself and attempts to attach it as a debugger to the parent process. If the attachment succeeds, no external debugger is present. If it fails, another debugger is already attached.
 
-## Key Points
+Key aspects:
+- Creates a child process of itself, passing the parent's PID as a command-line argument
+- Child process attempts to attach as a debugger using `DebugActiveProcess()`
+- Enables `SE_DEBUG_NAME` privilege to allow debugging operations
+- Uses a Windows named event object ("SelfDebugging") for synchronization between parent and child
+- If `DebugActiveProcess()` succeeds, no external debugger is attached
+- If attachment fails, signals that an external debugger is already present
+- Immediately detaches with `DebugActiveProcessStop()` if successful
+- Exploits the Windows restriction that prevents multiple debuggers from attaching simultaneously
+- More sophisticated than flag-based detection methods
+- Cannot be easily bypassed by PEB manipulation
 
-- **Process spawning**: Creates a child process of itself, passing the parent's PID as a command-line argument
-- **DebugActiveProcess attempt**: Child process tries to attach as a debugger to the parent using [`DebugActiveProcess()`](https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocess)
-- **Privilege elevation**: Enables [`SE_DEBUG_NAME`](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants) privilege to allow debugging operations
-- **Named event synchronization**: Uses a Windows event object (`SelfDebugging`) for communication between parent and child processes
-- **Detection logic**: If attachment fails, signals that an external debugger is already attached; if successful, immediately detaches with [`DebugActiveProcessStop()`](https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocessstop)
-- **Single debugger limitation**: Exploits the Windows restriction that prevents multiple debuggers from attaching to the same process simultaneously
+## Build
+
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#instruction_prefixes>
+- [Check Point: Self-Debugging Technique](https://anti-debug.checkpoint.com/techniques/process.html#debugactiveprocess)
+- [Microsoft: DebugActiveProcess function](https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocess)
+- [Microsoft: DebugActiveProcessStop function](https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocessstop)

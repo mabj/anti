@@ -1,38 +1,31 @@
-# Observed ITW during analysis of Trik/Phorpiex spambot
+# Context
 
-## File Information
+This method detects behavioral changes caused by hooks on sleep calls by forcing a race condition. The technique was observed in-the-wild during analysis of Trik/Phorpiex spambot samples and relies on the timing of mutex creation to detect if Sleep() has been hooked or shortcutted by sandbox environments.
 
-| Property | Value |
-| -------- | ----- |
-| File Size | 68096 bytes |
-| File Type | PE32 executable (GUI) Intel 80386, for MS Windows |
-| MD5 | 0330ca15737b3fb862072cfa22bafe01 |
-| SHA1 | 633026b9467600e9617e76e3e8dfaebe5ac9f91f |
-| SHA256 | cacec7cf35fc455c63afb772f3ef8084c2badfcd73d68d9d17878017eeaa21d8 |
+Key aspects:
+- Creates a named mutex after calling Sleep() to establish timing expectations
+- Persists itself to %APPDATA% and executes the persisted binary
+- The persisted instance deletes the original binary and computes the main payload
+- If the mutex already exists on startup, terminates immediately
+- Main payload only executes if Sleep() runs normally without hooks
+- Exploits sandbox behavior where Sleep() is commonly hooked to accelerate analysis
 
-## Technique Description
+## Build
 
-This method detects behavioral changes (caused by hooks) on sleep calls by forcing a race condition.
+### Using Docker (Recommended)
 
-### Pseudo-code Implementation
-
-```[text]
-sleep(n)
-creates named mutex "12345"
-terminates if mutex "12345" exists
-
-if running version is inside persisted directory
-    deletes original binary
-    computes main payload
-    delete mutex "12345"
-    terminates
-else
-    persists itself in %APPDATA%
-    executes persisted binary
-    do some computation (just to cover the time taken for setup persisted version)
-    terminates
+```bash
+make build-image  # First time only
+make build
 ```
 
-## Technical Explanation
+### Alternative: MinGW
 
-The outcome is that the main payload is not executed if Sleep() is shortcutted by hooks. Sleep() is hooked by default in many sandboxes as an attempt to trick malware families that purposely implement delays so automated analyses would timeout.
+```bash
+make
+```
+
+## References
+
+- [Microsoft: Sleep function](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep)
+- [Microsoft: CreateMutex function](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexa)

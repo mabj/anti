@@ -1,19 +1,32 @@
 # Context
 
-This anti-debug technique uses `SetHandleInformation()` to protect a mutex handle from being closed. When the process attempts to close this protected handle:
+This technique uses SetHandleInformation() to protect a handle from being closed by setting the HANDLE_FLAG_PROTECT_FROM_CLOSE flag. When the process attempts to close this protected handle, it generates an exception. The technique exploits how debuggers intercept and handle these exceptions differently than normal exception handlers.
 
+Key aspects:
+- Creates a mutex handle for testing
+- Protects the handle using `SetHandleInformation()` with `HANDLE_FLAG_PROTECT_FROM_CLOSE` flag
+- Attempts to close the protected handle inside structured exception handling (__try/__except)
 - If a debugger is attached, it catches the exception first
-- If no debugger is attached, the program's exception handler catches it
-- The technique exploits how debuggers intercept exception handling
-
-The implementation creates a mutex, protects it with `HANDLE_FLAG_PROTECT_FROM_CLOSE`, then attempts closure in a structured exception handling block.
+- If no debugger is present, the program's exception handler catches it
+- Similar to CloseHandle technique but more explicit about protection
+- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 
-1. Make sure Visual Studio is installed (`vc.exe` is required because of `__try` and `__except`)
-2. update the variable `$vcVarsPath` of the `build.ps1`with the path to VC
-3. Run `make` using powershell
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/SetHandleInformation_API.cpp>
+- [Microsoft: SetHandleInformation function](https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-sethandleinformation)
+- [al-khaser: SetHandleInformation Implementation](https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/SetHandleInformation_API.cpp)

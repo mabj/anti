@@ -1,18 +1,32 @@
 # Context
 
-This anti-debug technique uses the Windows Native API `NtSetInformationThread` with the `ThreadHideFromDebugger` (0x11) information class to:
+This technique uses the Windows Native API NtSetInformationThread with the ThreadHideFromDebugger information class to detach debuggers from the current thread. This causes the debugger to lose control of the thread without terminating the process, effectively breaking debugging sessions.
 
-- Detach debuggers from the current thread by setting THREAD_INFORMATION_CLASS to 0x11 (ThreadHideFromDebugger)
-- Prevent debuggers from receiving thread events and exceptions
-- Cause debuggers to lose control of the thread without terminating the process
-- Typically used in combination with infinite loops to maintain execution control
+Key aspects:
+- Calls `NtSetInformationThread()` with `ThreadHideFromDebugger` class (0x11)
+- Detaches debuggers from the current thread without terminating execution
+- Prevents debuggers from receiving thread events and exceptions
+- Debuggers lose control and cannot continue stepping or breaking
+- Typically combined with infinite loops to maintain execution after detachment
+- Does not terminate the process, only hides it from debuggers
+- Effective defensive technique against active debugging
 
-The code demonstrates this by:
+## Build
 
-1. Calling `NtSetInformationThread(GetCurrentThread(), 0x11, NULL, 0)`
-2. Entering an infinite loop to keep the process running after debugger detachment
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://anti-debug.checkpoint.com/techniques/interactive.html#ntsetinformationthread>
-- <https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntsetinformationthread>
+- [Check Point: NtSetInformationThread](https://anti-debug.checkpoint.com/techniques/interactive.html#ntsetinformationthread)
+- [Microsoft: NtSetInformationThread function](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntsetinformationthread)

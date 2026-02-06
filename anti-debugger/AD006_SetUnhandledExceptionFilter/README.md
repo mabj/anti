@@ -1,23 +1,33 @@
 # Context
 
-There are four mechanisms to handle custom exceptions on Windows:
+This technique detects debuggers by setting an Unhandled Exception Filter (UEF) and triggering an exception. Windows provides four mechanisms to handle exceptions in order: Debugger, Vectored Exception Handlers (VEH), Frame-based SEH (try/except), and Unhandled Exception Filter (UEF) as the last resort. If a debugger is attached, it captures exceptions before they reach the UEF handler.
 
-1. Debugger;
-2. Vectored Exception Handlers (VEH): Global handlers to the whole process
-3. Frame-based SEH: the try/except blocks of C++;
-4. Unhandled Exception Filter (UEF): The "last resort" handler;
+Key aspects:
+- Sets a custom exception handler using `SetUnhandledExceptionFilter()`
+- Triggers an INT3 (0xCC) exception intentionally
+- If debugger is present, it captures the exception before UEF handler executes
+- If no debugger, execution flows to the UEF handler as expected
+- Can be combined with Vectored Exception Handlers for more sophisticated detection
+- Exploits the exception handling chain priority in Windows
 
-In this example, the sample sets a UEF handler and expects that the execution flows gets to the
-end of the handling chain. If the process is getting debugged, the debugger will capture the the
-INT3 (0xCC) exception before it gets to the UEF handler.
+## Build
+
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://anti-debug.checkpoint.com/techniques/exceptions.html>
-- <https://www.sonicwall.com/blog/guloader-demystified-unraveling-its-vectored-exception-handler-approach>
-- <https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter>
-- <https://wiki.osdev.org/Inline_Assembly>
-- <https://billdemirkapi.me/exception-oriented-programming-abusing-exceptions-for-code-execution-part-1/>
-- <https://www.ibm.com/think/x-force/using-veh-for-defense-evasion-process-injection>
-- <https://momo5502.com/posts/2024-09-07-a-journey-through-kiuserexceptiondispatcher/>
-- <https://blog.elmo.sg/posts/structured-exception-handler-x64/>
+- [Check Point: Exception-based Anti-Debug Techniques](https://anti-debug.checkpoint.com/techniques/exceptions.html)
+- [Microsoft: SetUnhandledExceptionFilter function](https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter)
+- [GuLoader: Vectored Exception Handler Approach](https://www.sonicwall.com/blog/guloader-demystified-unraveling-its-vectored-exception-handler-approach)
+- [Exception-Oriented Programming](https://billdemirkapi.me/exception-oriented-programming-abusing-exceptions-for-code-execution-part-1/)

@@ -1,16 +1,33 @@
 # Context
 
-This technique implements a memory breakpoint detection mechanism by:
+This technique implements a continuous memory breakpoint detection mechanism by scanning function bytecode for the 0xCC pattern (INT3 breakpoint instruction). It uses a dedicated watchdog thread to monitor critical functions for software breakpoints inserted by debuggers.
 
-- Periodically scanning function bytecode for the `0xCC` pattern (INT3 breakpoint instruction)
-- Using a dedicated watchdog thread to monitor specific functions
-- Scanning until `RET` instruction (`0xC3`) or known function size
-- Printing warnings when breakpoints are detected in monitored functions
+Key aspects:
+- Periodically scans function bytecode for the `0xCC` pattern (INT3 instruction)
+- Uses a dedicated watchdog thread to continuously monitor specific functions
+- Scans until RET instruction (`0xC3`) or known function size is reached
+- Prints warnings when software breakpoints are detected in monitored functions
+- Can monitor multiple functions simultaneously
+- Creates a persistent background check that runs throughout execution
+- Effective against standard software breakpoints used by debuggers
+- Can detect breakpoints set after the program starts
 
-The implementation creates a persistent background check that can detect software breakpoints inserted by debuggers in critical functions.
+## Build
 
-![Tool Output](doc/images/software_breakpoint_watchdog_001.png)
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#software-breakpoints>
+- [Check Point: Software Breakpoints Detection](https://anti-debug.checkpoint.com/techniques/process-memory.html#software-breakpoints)
+- [Microsoft: Software Breakpoints](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/x86-architecture)

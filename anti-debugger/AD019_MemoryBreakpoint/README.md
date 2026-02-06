@@ -1,23 +1,35 @@
 # Context
 
-This technique uses guard page exceptions to detect debugger presence. It works by:
+This technique uses guard page exceptions to detect debugger presence. It allocates memory with PAGE_GUARD protection and attempts to execute code in it. The technique exploits the fact that debuggers may suppress or handle guard page violations differently than normal exception handlers.
 
-- Allocating executable memory and writing a `RET` instruction (`0xC3`)
-- Marking the page as a guard page using `VirtualProtect()`
-- Attempting to execute the `RET` in a protected `__try` block
-- Checking if a `STATUS_GUARD_PAGE_VIOLATION` exception occurs:
-  - Exception caught: No debugger present
-  - Exception not caught: Debugger present (likely suppressing the exception)
-
-> Note: This technique works on OllyDbg/ImmunityDBG but not x64dbg
+Key aspects:
+- Allocates executable memory with `VirtualAlloc()`
+- Writes a simple RET instruction (`0xC3`) to the allocated memory
+- Marks the page as a guard page using `VirtualProtect()` with `PAGE_EXECUTE_READ | PAGE_GUARD`
+- Attempts to execute the RET instruction in a protected __try block
+- Checks if a `STATUS_GUARD_PAGE_VIOLATION` exception (0x80000001) occurs
+- If exception is caught by the program, no debugger is present
+- If exception is not caught (suppressed by debugger), debugger is detected
+- Note: Works on OllyDbg and ImmunityDbg but not x64dbg
+- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 
-1. Make sure Visual Studio is installed (`vc.exe` is required because of `__try` and `__except`)
-2. update the variable `$vcVarsPath` of the `build.ps1`with the path to VC
-3. Run `make` using powershell
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#memory-breakpoints>
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/MemoryBreakpoints_PageGuard.cpp>
+- [Check Point: Memory Breakpoints (Page Guard)](https://anti-debug.checkpoint.com/techniques/process-memory.html#memory-breakpoints)
+- [Microsoft: VirtualProtect function](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualprotect)
+- [al-khaser: MemoryBreakpoints Implementation](https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/MemoryBreakpoints_PageGuard.cpp)

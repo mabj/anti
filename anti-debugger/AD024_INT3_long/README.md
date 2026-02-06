@@ -1,17 +1,33 @@
 # Context
 
-This anti-debug technique uses a vectored exception handler to detect debuggers by triggering an INT3 breakpoint. The technique relies on the fact that debuggers will typically catch breakpoint exceptions before the program's own handlers can process them.
+This technique uses a vectored exception handler to detect debuggers by triggering an INT3 breakpoint using the two-byte form (0xCD 0x03). The technique relies on the fact that debuggers typically catch breakpoint exceptions before the program's own handlers can process them.
 
-Key points:
-
-- Uses a custom vectored exception handler (`VectoredHandler`) to intercept `EXCEPTION_BREAKPOINT`
-- Allocates executable memory containing an `INT3` instruction (`\xCD\x03`) followed by a `RET`
+Key aspects:
+- Registers a custom vectored exception handler (VEH) to intercept `EXCEPTION_BREAKPOINT`
+- Allocates executable memory containing the two-byte INT3 instruction (`0xCD 0x03`)
+- Writes shellcode with INT3 followed by RET instruction
 - Executes the shellcode to trigger a breakpoint exception
-- If a debugger is attached, it catches the exception first and the handler's `SwallowedException` flag remains `true`
-- If no debugger is present, the program's handler processes the exception and sets `SwallowedException` to `false`
-- The technique uses the two-byte `INT3` instruction (`0xCD 0x03`) instead of the more common one-byte `0xCC` to avoid simple breakpoint scanners
+- If debugger is attached, it catches the exception first and `SwallowedException` remains true
+- If no debugger is present, the VEH processes the exception and sets `SwallowedException` to false
+- Uses the two-byte INT3 (`0xCD 0x03`) instead of one-byte `0xCC` to evade simple scanners
+- More sophisticated than basic INT3 detection
+
+## Build
+
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
+- [Check Point: INT3 Instruction](https://anti-debug.checkpoint.com/techniques/assembly.html#int3)
+- [al-khaser: Interrupt_3 Implementation](https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp)

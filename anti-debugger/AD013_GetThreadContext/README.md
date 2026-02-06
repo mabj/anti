@@ -1,16 +1,34 @@
 # Context
 
-This anti-debug technique detects debuggers by checking hardware breakpoint registers via the `GetThreadContext` API. Debuggers set hardware breakpoints using CPU debug registers (DR0-DR7). If any debug register contains non-zero values, it indicates active debugging.
+This technique detects debuggers by checking hardware breakpoint registers via the GetThreadContext API. Debuggers use CPU debug registers (DR0-DR7) to set hardware breakpoints. By reading these registers, the technique can detect if any hardware breakpoints are currently active.
 
-Key points:
+Key aspects:
+- Uses `GetThreadContext()` with `CONTEXT_DEBUG_REGISTERS` flag
+- Retrieves the thread context containing debug register values
+- Checks DR0, DR1, DR2, and DR3 registers (hardware breakpoint addresses)
+- Checks DR6 (debug status register) and DR7 (debug control register)
+- Non-zero values in any debug register indicate active hardware breakpoints
+- Effective against hardware-based debugging techniques
+- Can be bypassed by clearing debug registers before the check
+- More reliable than software breakpoint detection
 
-- Uses `GetThreadContext` with `CONTEXT_DEBUG_REGISTERS` flag
-- Checks DR0, DR1, DR2, DR3, DR6, and DR7 registers
-- Non-zero values in any register indicate debugger presence
-- Effective against hardware-based debugging
-- Can be bypassed by clearing debug registers before detection
+## Build
+
+### Using Docker (Recommended)
+
+```bash
+make build-image  # First time only
+make build
+```
+
+### Alternative: MinGW
+
+```bash
+make
+```
 
 ## References
 
-- <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext>
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#hardware-breakpoints>
+- [Microsoft: GetThreadContext function](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext)
+- [Check Point: Hardware Breakpoints Detection](https://anti-debug.checkpoint.com/techniques/process-memory.html#hardware-breakpoints)
+- [Intel: Debug Registers](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
