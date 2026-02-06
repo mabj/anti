@@ -3,6 +3,7 @@
 This anti-sandbox technique detects API hooking by analyzing the behavior of consecutive `BlockInput()` calls.
 
 Key aspects:
+
 - Calls `BlockInput(true)` twice consecutively to block keyboard and mouse input
 - `BlockInput()` normally returns FALSE on second call (input already blocked)
 - In sandboxes with hooked APIs, the second call may incorrectly return TRUE
