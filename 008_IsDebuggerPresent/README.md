@@ -1,6 +1,6 @@
 # Context
 
-This technique checks if the current process is attached to a debugger by calling IsDebuggerPresent API from Kernel32. 
+This technique checks if the current process is attached to a debugger by calling IsDebuggerPresent API from Kernel32.
 
 IsDebuggerPresent checks the BeingDebugged flag in the Process Execution Block (PEB).
 

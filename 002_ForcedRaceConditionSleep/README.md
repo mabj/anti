@@ -3,7 +3,7 @@
 ## File Information
 
 | Property | Value |
-|----------|-------|
+| -------- | ----- |
 | File Size | 68096 bytes |
 | File Type | PE32 executable (GUI) Intel 80386, for MS Windows |
 | MD5 | 0330ca15737b3fb862072cfa22bafe01 |

@@ -12,4 +12,4 @@ Key aspects of this technique:
 
 ## References
 
-- https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-seterrormode
+- <https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-seterrormode>
