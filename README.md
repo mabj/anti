@@ -3,15 +3,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
-[![Techniques](https://img.shields.io/badge/Techniques-39-brightgreen.svg)]()
-[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-30-red.svg)](anti-debugger/)
+[![Techniques](https://img.shields.io/badge/Techniques-40-brightgreen.svg)]()
+[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-31-red.svg)](anti-debugger/)
 [![Anti-Sandbox](https://img.shields.io/badge/Anti--Sandbox-9-orange.svg)](anti-sandbox/)
 
 > A comprehensive, practical collection of anti-analysis techniques used in modern malware, designed for security researchers, malware analysts, and reverse engineers.
 
 ## About
 
-This repository documents 39 real-world anti-analysis techniques discovered during malware research and reverse engineering. Each technique is implemented as a standalone proof-of-concept with source code, build instructions, and detailed documentation.
+This repository documents 40 real-world anti-analysis techniques discovered during malware research and reverse engineering. Each technique is implemented as a standalone proof-of-concept with source code, build instructions, and detailed documentation.
 
 **Purpose**: Educational resource for understanding how malware evades detection and analysis tools.
 
@@ -19,7 +19,7 @@ This repository documents 39 real-world anti-analysis techniques discovered duri
 
 **Technique Breakdown**:
 
-- 🛡️ **Anti-Debugger** (30 techniques): Detect debuggers and prevent debugging
+- 🛡️ **Anti-Debugger** (31 techniques): Detect debuggers and prevent debugging
 - 🔍 **Anti-Sandbox** (9 techniques): Detect sandboxes, VMs, and automated analysis
 - 🔒 **Anti-Reversing** (0 techniques): Reserved for future code protection techniques
 
@@ -50,7 +50,7 @@ This repository documents 39 real-world anti-analysis techniques discovered duri
 
 Techniques are organized by category in dedicated directories:
 
-- `anti-debugger/` - 30 techniques for detecting debuggers
+- `anti-debugger/` - 31 techniques for detecting debuggers
 - `anti-sandbox/` - 9 techniques for detecting sandboxes and VMs
 - `anti-reversing/` - Reserved for future anti-reversing techniques
 
@@ -68,8 +68,8 @@ This collection organizes anti-analysis techniques into three main categories:
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>39 Total] --> B[Anti-Debugger<br/>30 techniques<br/>77%]
-    A --> C[Anti-Sandbox<br/>9 techniques<br/>23%]
+    A[Anti-Analysis Techniques<br/>40 Total] --> B[Anti-Debugger<br/>31 techniques<br/>77.5%]
+    A --> C[Anti-Sandbox<br/>9 techniques<br/>22.5%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -92,13 +92,13 @@ graph TB
 
 ### Category Descriptions
 
-- **Anti-Debugger** (30 techniques): Techniques that detect debuggers attached to or monitoring the process. Includes PEB checks, exception-based detection, breakpoint scanning, and self-protection mechanisms.
+- **Anti-Debugger** (31 techniques): Techniques that detect debuggers attached to or monitoring the process. Includes PEB checks, exception-based detection, breakpoint scanning, and self-protection mechanisms.
 
 - **Anti-Sandbox** (9 techniques): Techniques that detect automated analysis environments, virtual machines, sandboxes, or analysis tools in the system. Includes environment checks, VM artifact detection, and timing-based detection.
 
 - **Anti-Reversing** (0 techniques): Reserved for future techniques that actively hinder reverse engineering through code obfuscation, anti-disassembly, control flow flattening, or other code protection mechanisms. No techniques implemented yet.
 
-> 📊 **Distribution**: 77% Anti-Debugger | 23% Anti-Sandbox | 0% Anti-Reversing
+> 📊 **Distribution**: 77.5% Anti-Debugger | 22.5% Anti-Sandbox | 0% Anti-Reversing
 
 For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/diagrams/taxonomy.md)
 
@@ -147,6 +147,7 @@ For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/
 | [AD028](anti-debugger/AD028_popfd_trap/) | POPFD Trap Flag | Anti-Debugger | Windows | Manipulates Trap Flag via POPFD to trigger single-step |
 | [AD029](anti-debugger/AD029_INT1_prefix/) | INT1 with Prefixes | Anti-Debugger | Windows | Uses instruction prefixes before ICEBP |
 | [AD030](anti-debugger/AD030_self_debugging/) | Self-Debugging | Anti-Debugger | Windows | Attempts to debug itself to detect existing debugger |
+| [AD031](anti-debugger/AD031_GenerateConsoleCtrlEvent/) | GenerateConsoleCtrlEvent | Anti-Debugger | Windows | Detects debugger by checking console control event handling |
 
 ## Building Techniques
 
