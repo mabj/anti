@@ -84,10 +84,10 @@ graph TB
     D --> D1[Future: Code Obfuscation]
     D --> D2[Future: Anti-Disassembly]
 
-    style A fill:#e1f5ff
-    style B fill:#ffebee
-    style C fill:#fff3e0
-    style D fill:#f3e5f5
+    style A fill:#4A90E2,stroke:#2E5C8A,stroke-width:3px,color:#fff
+    style B fill:#E74C3C,stroke:#C0392B,stroke-width:2px,color:#fff
+    style C fill:#F39C12,stroke:#D68910,stroke-width:2px,color:#fff
+    style D fill:#9B59B6,stroke:#7D3C98,stroke-width:2px,color:#fff
 ```
 
 ### Category Descriptions
