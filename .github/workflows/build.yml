@@ -1,0 +1,122 @@
+name: Build All Techniques
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Techniques
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Install MinGW cross-compiler
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mingw-w64 gcc make
+
+    - name: Find all techniques
+      id: find-techniques
+      run: |
+        echo "Found techniques:"
+        ls -d [0-9][0-9][0-9]_* 2>/dev/null | sort || echo "No technique directories found"
+
+    - name: Build techniques
+      run: |
+        set +e  # Don't fail on first error
+
+        BUILD_FAILED=0
+        BUILD_SUCCESS=0
+        BUILD_SKIPPED=0
+
+        echo "========================================="
+        echo "Building Anti-Analysis Techniques"
+        echo "========================================="
+        echo ""
+
+        for dir in [0-9][0-9][0-9]_*/; do
+          if [ -d "$dir" ]; then
+            TECHNIQUE=$(basename "$dir")
+            echo "----------------------------------------"
+            echo "Building: $TECHNIQUE"
+            echo "----------------------------------------"
+
+            cd "$dir"
+
+            # Check if Makefile exists
+            if [ -f "Makefile" ]; then
+              # Create bin directory if it doesn't exist
+              mkdir -p bin
+
+              # Try to build without Docker first (direct compilation)
+              if make build-x86 build-amd64 2>&1; then
+                echo "✓ Successfully built $TECHNIQUE"
+                BUILD_SUCCESS=$((BUILD_SUCCESS + 1))
+              else
+                echo "✗ Failed to build $TECHNIQUE"
+                BUILD_FAILED=$((BUILD_FAILED + 1))
+              fi
+            else
+              echo "⊘ No Makefile found, skipping $TECHNIQUE"
+              BUILD_SKIPPED=$((BUILD_SKIPPED + 1))
+            fi
+
+            cd ..
+            echo ""
+          fi
+        done
+
+        echo "========================================="
+        echo "Build Summary"
+        echo "========================================="
+        echo "Successful: $BUILD_SUCCESS"
+        echo "Failed: $BUILD_FAILED"
+        echo "Skipped: $BUILD_SKIPPED"
+        echo "========================================="
+
+        # Exit with error if any builds failed
+        if [ $BUILD_FAILED -gt 0 ]; then
+          echo ""
+          echo "⚠️  Some builds failed. Please review the output above."
+          exit 1
+        fi
+
+        echo ""
+        echo "✓ All builds completed successfully!"
+
+    - name: List built binaries
+      if: success()
+      run: |
+        echo "Built binaries:"
+        find . -name "*.exe" -type f | sort
+
+    - name: Upload build artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: anti-analysis-techniques
+        path: |
+          [0-9][0-9][0-9]_*/bin/*.exe
+        retention-days: 30
+
+    - name: Build statistics
+      if: always()
+      run: |
+        echo "Build Statistics"
+        echo "================"
+        TOTAL_DIRS=$(ls -d [0-9][0-9][0-9]_*/ 2>/dev/null | wc -l)
+        TOTAL_MAKEFILES=$(find [0-9][0-9][0-9]_*/ -name "Makefile" 2>/dev/null | wc -l)
+        TOTAL_BINARIES=$(find [0-9][0-9][0-9]_*/ -name "*.exe" 2>/dev/null | wc -l)
+
+        echo "Total technique directories: $TOTAL_DIRS"
+        echo "Directories with Makefile: $TOTAL_MAKEFILES"
+        echo "Total binaries built: $TOTAL_BINARIES"

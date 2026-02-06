@@ -1,3 +1,6 @@
+ROADMAP.md
+IMPLEMENTATION_SUMMARY.md
+
 # Prerequisites
 *.d
 
@@ -30,3 +33,4 @@
 *.exe
 *.out
 *.app
+

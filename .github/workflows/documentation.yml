@@ -1,0 +1,166 @@
+name: Documentation Check
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - '**.md'
+      - '.github/workflows/documentation.yml'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - '**.md'
+  workflow_dispatch:
+
+jobs:
+  markdown-lint:
+    name: Check Markdown Files
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install markdownlint-cli
+      run: |
+        npm install -g markdownlint-cli
+
+    - name: Create markdownlint config
+      run: |
+        cat > .markdownlint.json << 'EOF'
+        {
+          "default": true,
+          "MD013": false,
+          "MD033": false,
+          "MD041": false,
+          "MD034": false,
+          "MD024": false
+        }
+        EOF
+
+    - name: Lint Markdown files
+      run: |
+        echo "Checking Markdown files for formatting issues..."
+        markdownlint '**/*.md' --ignore node_modules --ignore .github || true
+        echo "Markdown lint complete"
+
+  link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check links in Markdown files
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'no'
+        config-file: '.github/markdown-link-check-config.json'
+        check-modified-files-only: 'no'
+      continue-on-error: true
+
+  readme-check:
+    name: Validate README Structure
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check main README exists
+      run: |
+        if [ ! -f "README.md" ]; then
+          echo "Error: README.md not found"
+          exit 1
+        fi
+        echo "✓ README.md exists"
+
+    - name: Check required sections in README
+      run: |
+        echo "Checking for required sections in README.md..."
+
+        REQUIRED_SECTIONS=(
+          "## About"
+          "## Quick Start"
+          "## Technique Index"
+          "## Contributing"
+          "## License"
+        )
+
+        MISSING_SECTIONS=()
+
+        for section in "${REQUIRED_SECTIONS[@]}"; do
+          if ! grep -q "$section" README.md; then
+            MISSING_SECTIONS+=("$section")
+          fi
+        done
+
+        if [ ${#MISSING_SECTIONS[@]} -gt 0 ]; then
+          echo "⚠️  Warning: The following sections are missing from README.md:"
+          printf '%s\n' "${MISSING_SECTIONS[@]}"
+        else
+          echo "✓ All required sections found in README.md"
+        fi
+
+    - name: Check technique README files
+      run: |
+        echo "Checking technique directories for README files..."
+
+        MISSING_README=()
+
+        for dir in [0-9][0-9][0-9]_*/; do
+          if [ -d "$dir" ]; then
+            TECHNIQUE=$(basename "$dir")
+            if [ ! -f "$dir/README.md" ]; then
+              MISSING_README+=("$TECHNIQUE")
+            fi
+          fi
+        done
+
+        if [ ${#MISSING_README[@]} -gt 0 ]; then
+          echo "⚠️  Warning: The following techniques are missing README.md:"
+          printf '%s\n' "${MISSING_README[@]}"
+        else
+          echo "✓ All technique directories have README.md files"
+        fi
+
+  documentation-report:
+    name: Generate Documentation Report
+    runs-on: ubuntu-latest
+    needs: [markdown-lint, link-check, readme-check]
+    if: always()
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Generate documentation statistics
+      run: |
+        echo "Documentation Statistics"
+        echo "========================"
+        echo ""
+
+        # Count markdown files
+        TOTAL_MD=$(find . -name "*.md" ! -path "./node_modules/*" ! -path "./.git/*" | wc -l)
+        echo "Total Markdown files: $TOTAL_MD"
+
+        # Count technique directories
+        TOTAL_TECHNIQUES=$(ls -d [0-9][0-9][0-9]_*/ 2>/dev/null | wc -l)
+        echo "Total technique directories: $TOTAL_TECHNIQUES"
+
+        # Count techniques with README
+        TECHNIQUES_WITH_README=$(find [0-9][0-9][0-9]_*/ -name "README.md" 2>/dev/null | wc -l)
+        echo "Techniques with README: $TECHNIQUES_WITH_README"
+
+        # Check for documentation files
+        echo ""
+        echo "Documentation Files:"
+        [ -f "README.md" ] && echo "  ✓ README.md" || echo "  ✗ README.md (missing)"
+        [ -f "CONTRIBUTING.md" ] && echo "  ✓ CONTRIBUTING.md" || echo "  ✗ CONTRIBUTING.md (missing)"
+        [ -f "LICENSE" ] && echo "  ✓ LICENSE" || echo "  ✗ LICENSE (missing)"
+        [ -f "CODE_OF_CONDUCT.md" ] && echo "  ✓ CODE_OF_CONDUCT.md" || echo "  ✗ CODE_OF_CONDUCT.md (missing)"
+
+        echo ""
+        echo "Documentation coverage: $(awk "BEGIN {printf \"%.1f\", ($TECHNIQUES_WITH_README/$TOTAL_TECHNIQUES)*100}")%"
