@@ -28,7 +28,7 @@ jobs:
       id: find-techniques
       run: |
         echo "Found techniques:"
-        ls -d [0-9][0-9][0-9]_* 2>/dev/null | sort || echo "No technique directories found"
+        find anti-debugger anti-sandbox anti-reversing -maxdepth 1 -type d -name "[0-9][0-9][0-9]_*" 2>/dev/null | sort || echo "No technique directories found"
 
     - name: Build techniques
       run: |
@@ -43,35 +43,42 @@ jobs:
         echo "========================================="
         echo ""
 
-        for dir in [0-9][0-9][0-9]_*/; do
-          if [ -d "$dir" ]; then
-            TECHNIQUE=$(basename "$dir")
+        # Build techniques from all category directories
+        for category in anti-debugger anti-sandbox anti-reversing; do
+          if [ -d "$category" ]; then
+            echo "Category: $category"
             echo "----------------------------------------"
-            echo "Building: $TECHNIQUE"
-            echo "----------------------------------------"
 
-            cd "$dir"
+            for dir in $category/[0-9][0-9][0-9]_*/; do
+              if [ -d "$dir" ]; then
+                TECHNIQUE=$(basename "$dir")
+                echo "Building: $category/$TECHNIQUE"
+                echo "----------------------------------------"
 
-            # Check if Makefile exists
-            if [ -f "Makefile" ]; then
-              # Create bin directory if it doesn't exist
-              mkdir -p bin
+                cd "$dir"
 
-              # Try to build without Docker first (direct compilation)
-              if make build-x86 build-amd64 2>&1; then
-                echo "✓ Successfully built $TECHNIQUE"
-                BUILD_SUCCESS=$((BUILD_SUCCESS + 1))
-              else
-                echo "✗ Failed to build $TECHNIQUE"
-                BUILD_FAILED=$((BUILD_FAILED + 1))
+                # Check if Makefile exists
+                if [ -f "Makefile" ]; then
+                  # Create bin directory if it doesn't exist
+                  mkdir -p bin
+
+                  # Try to build without Docker first (direct compilation)
+                  if make build-x86 build-amd64 2>&1; then
+                    echo "✓ Successfully built $category/$TECHNIQUE"
+                    BUILD_SUCCESS=$((BUILD_SUCCESS + 1))
+                  else
+                    echo "✗ Failed to build $category/$TECHNIQUE"
+                    BUILD_FAILED=$((BUILD_FAILED + 1))
+                  fi
+                else
+                  echo "⊘ No Makefile found, skipping $category/$TECHNIQUE"
+                  BUILD_SKIPPED=$((BUILD_SKIPPED + 1))
+                fi
+
+                cd ../..
+                echo ""
               fi
-            else
-              echo "⊘ No Makefile found, skipping $TECHNIQUE"
-              BUILD_SKIPPED=$((BUILD_SKIPPED + 1))
-            fi
-
-            cd ..
-            echo ""
+            done
           fi
         done
 
@@ -97,7 +104,7 @@ jobs:
       if: success()
       run: |
         echo "Built binaries:"
-        find . -name "*.exe" -type f | sort
+        find anti-debugger anti-sandbox anti-reversing -name "*.exe" -type f 2>/dev/null | sort
 
     - name: Upload build artifacts
       if: success()
@@ -105,7 +112,9 @@ jobs:
       with:
         name: anti-analysis-techniques
         path: |
-          [0-9][0-9][0-9]_*/bin/*.exe
+          anti-debugger/*/bin/*.exe
+          anti-sandbox/*/bin/*.exe
+          anti-reversing/*/bin/*.exe
         retention-days: 30
 
     - name: Build statistics
@@ -113,9 +122,9 @@ jobs:
       run: |
         echo "Build Statistics"
         echo "================"
-        TOTAL_DIRS=$(ls -d [0-9][0-9][0-9]_*/ 2>/dev/null | wc -l)
-        TOTAL_MAKEFILES=$(find [0-9][0-9][0-9]_*/ -name "Makefile" 2>/dev/null | wc -l)
-        TOTAL_BINARIES=$(find [0-9][0-9][0-9]_*/ -name "*.exe" 2>/dev/null | wc -l)
+        TOTAL_DIRS=$(find anti-debugger anti-sandbox anti-reversing -maxdepth 1 -type d -name "[0-9][0-9][0-9]_*" 2>/dev/null | wc -l)
+        TOTAL_MAKEFILES=$(find anti-debugger anti-sandbox anti-reversing -name "Makefile" 2>/dev/null | wc -l)
+        TOTAL_BINARIES=$(find anti-debugger anti-sandbox anti-reversing -name "*.exe" 2>/dev/null | wc -l)
 
         echo "Total technique directories: $TOTAL_DIRS"
         echo "Directories with Makefile: $TOTAL_MAKEFILES"
