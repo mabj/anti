@@ -1,283 +1,157 @@
 # Anti-Analysis Technique Collection
 
-Knowledge base of anti-analysis techniques found during malware analyses.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
+[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-orange.svg)](https://www.linux.org/)
+
+> A comprehensive, practical collection of anti-analysis techniques used in modern malware, designed for security researchers, malware analysts, and reverse engineers.
+
+## About
+
+This repository documents 39 real-world anti-analysis techniques discovered during malware research and reverse engineering. Each technique is implemented as a standalone proof-of-concept with source code, build instructions, and detailed documentation.
+
+**Purpose**: Educational resource for understanding how malware evades detection and analysis tools.
+
+**Audience**: Security researchers, malware analysts, reverse engineers, and defensive security professionals.
+
+## Table of Contents
+
+- [Anti-Analysis Technique Collection](#anti-analysis-technique-collection)
+  - [About](#about)
+  - [Table of Contents](#table-of-contents)
+  - [Quick Start](#quick-start)
+  - [Technique Categories](#technique-categories)
+  - [Technique Index](#technique-index)
+  - [Building Techniques](#building-techniques)
+    - [General Build Process](#general-build-process)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Resources](#resources)
+    - [Anti-Analysis References](#anti-analysis-references)
+    - [Microsoft Documentation](#microsoft-documentation)
+  - [Disclaimer](#disclaimer)
+
+## Quick Start
+
+Each technique is contained in its own numbered directory (e.g., `001_SetErrorMode/`, `002_ForcedRaceConditionSleep/`). To explore a technique:
+
+1. Navigate to the technique directory
+2. Read the `README.md` for detailed explanation
+3. Review the source code
+4. Follow build instructions in the technique's README
+5. Test in a safe, isolated environment
+
+## Technique Categories
+
+This collection organizes anti-analysis techniques into the following categories:
+
+- **Debugger Detection**: Techniques that detect the presence of debuggers
+- **Timing Checks**: Methods that detect analysis through timing anomalies
+- **Environment Detection**: Checks for sandboxes, virtual machines, and analysis tools
+- **Memory Protection**: Techniques that monitor or protect memory from tampering
+- **Process/Thread Manipulation**: Methods involving process or thread behavior
+- **Exception Handling**: Techniques exploiting exception handling mechanisms
+- **Self-Protection**: Methods that prevent or hinder analysis
+
+## Technique Index
+
+| # | Technique Name | Category | Platform | Description |
+| --- | --- | --- | --- | --- |
+| [001](001_SetErrorMode/) | SetErrorMode | Environment Detection | Windows | Detects sandbox by inspecting SetErrorMode behavior for hooks |
+| [002](002_ForcedRaceConditionSleep/) | Forced Race Condition Sleep | Timing Checks | Windows | Forces race condition to detect changes in sleep() behavior |
+| [003](003_CheckProcessList/) | Check Process List | Environment Detection | Windows | Scans process list for known analysis tool names |
+| [004](004_CheckLoadedModules/) | Check Loaded Modules | Environment Detection | Windows | Detects injected DLLs from analysis tools in current process |
+| [005](005_CheckDeviceNames/) | Check Device Names | Environment Detection | Windows | Searches Windows Registry for VM-related device names |
+| [006](006_CheckProcessDebugPort/) | Check Process Debug Port | Debugger Detection | Windows | Queries ProcessDebugPort via NtQueryInformationProcess |
+| [007](007_CopyOfNtdll/) | Copy of ntdll.dll | Self-Protection | Windows | Loads clean ntdll.dll copy to bypass hooked functions |
+| [008](008_IsDebuggerPresent/) | IsDebuggerPresent | Debugger Detection | Windows | Checks PEB debug flag using IsDebuggerPresent API |
+| [009](009_CheckRemoteDebuggerPresent/) | CheckRemoteDebuggerPresent | Debugger Detection | Windows | Detects debugger attached to specific process |
+| [010](010_FindWindow/) | FindWindow | Environment Detection | Windows | Searches for windows with known analysis tool names |
+| [011](011_ProcessDebugObjectHandle/) | ProcessDebugObjectHandle | Debugger Detection | Windows | Queries ProcessDebugObjectHandle to detect debugging |
+| [012](012_CheckPEB/) | Check PEB | Debugger Detection | Windows | Directly inspects debug flags in PEB structure |
+| [013](013_SetUnhandledExceptionFilter/) | SetUnhandledExceptionFilter | Exception Handling | Windows | Detects debugger takeover of exception handling chain |
+| [014](014_CloseHandle/) | CloseHandle Exception | Exception Handling | Windows | Checks if CloseHandle raises exception on invalid handle |
+| [015](015_SetHandleInformation/) | SetHandleInformation | Exception Handling | Windows | Abuses HANDLE_FLAG_PROTECT_FROM_CLOSE to detect debugger |
+| [016](016_RtlQueryProcessHeapInformation/) | RtlQueryProcessHeapInformation | Debugger Detection | Windows | Detects debugger by examining heap flags |
+| [017](017_RtlQueryProcessDebugInformation/) | RtlQueryProcessDebugInformation | Debugger Detection | Windows | Checks heap flags via RtlQueryProcessDebugInformation |
+| [018](018_FindWindow/) | FindWindow (Debugger Titles) | Environment Detection | Windows | Searches for window titles of known debuggers |
+| [019](019_GetShellWindow/) | GetShellWindow | Environment Detection | Windows | Compares parent PID against shell window PID |
+| [020](020_DbgPrint/) | DbgPrint Exception | Exception Handling | Windows | Detects debugger via DbgPrint exception behavior |
+| [021](021_GetWriteWatch/) | GetWriteWatch | Memory Protection | Windows | Monitors protected memory for unexpected writes |
+| [022](022_GetThreadContext/) | GetThreadContext | Debugger Detection | Windows | Inspects hardware breakpoint registers (Dr0-Dr7) |
+| [023](023_NtSetInformationThread/) | NtSetInformationThread | Process/Thread Manipulation | Windows | Hides thread from debugger using ThreadHideFromDebugger |
+| [024](024_NtQueryObject/) | NtQueryObject | Debugger Detection | Windows | Enumerates object types looking for DebugObject |
+| [025](025_RaiseException/) | RaiseException DBG_CONTROL_C | Exception Handling | Windows | Raises DBG_CONTROL_C to detect exception interception |
+| [026](026_MemoryBreakpoint/) | Memory Breakpoint INT3 | Memory Protection | Windows | Scans function memory for breakpoints (0xCC) |
+| [027](027_AntiStepOver/) | Anti-Step-Over | Memory Protection | Windows | Checks for breakpoint at function return address |
+| [028](028_MemoryBreakpoint/) | Guard Page | Memory Protection | Windows | Uses guard page exception to detect debugger |
+| [029](029_NtQueryVirtualMemory_WorkingSetList/) | NtQueryVirtualMemory WorkingSetList | Memory Protection | Windows | Checks working set page attributes for modifications |
+| [030](030_DbgBreakPoint_patch/) | DbgBreakPoint Patch | Self-Protection | Windows | Patches DbgBreakPoint to prevent debugger attachment |
+| [031](031_DbgUiRemoteBreakin_hook/) | DbgUiRemoteBreakin Hook | Self-Protection | Windows | Patches DbgUiRemoteBreakin to block debugger attachment |
+| [032](032_INT3/) | INT3 (0xC3) | Exception Handling | Windows | Uses vectored exception handler with INT3 instruction |
+| [033](033_INT3_long/) | INT3 Long Form (0xCD03) | Exception Handling | Windows | Uses long form of INT3 for debugger detection |
+| [034](034_INT_2D/) | INT 2D | Exception Handling | Windows | Kernel debugger interrupt for detection |
+| [035](035_INT1/) | INT1 ICEBP (0xF1) | Exception Handling | Windows | Uses ICEBP instruction for debugger detection |
+| [036](036_INT1_long/) | INT1 Long Form (0xCD01) | Exception Handling | Windows | Two-byte form of INT 1 for detection |
+| [037](037_popfd_trap/) | POPFD Trap Flag | Exception Handling | Windows | Manipulates Trap Flag via POPFD to trigger single-step |
+| [038](038_INT1_prefix/) | INT1 with Prefixes | Exception Handling | Windows | Uses instruction prefixes before ICEBP |
+| [039](039_self_debugging/) | Self-Debugging | Debugger Detection | Windows | Attempts to debug itself to detect existing debugger |
+
+## Building Techniques
+
+Most techniques include:
 
-## [001_SetErrorMode] Sandbox detection technique by inspect SetErrorMode behavior
+- **Source code** (`main.c` or similar)
+- **Build script** (`build.sh` or `build.bat`)
+- **README** with detailed explanation and references
 
-Uses calls to SetErrorMode to detect changes (hooks) in the default behavior or SetErrorMode windows API call.
+### General Build Process
 
-- <https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-seterrormode>
-- <https://www.cyberbit.com/formbook-research-hints-large-data-theft-attack-brewing/>
+For Windows techniques:
 
-## [002_ForcedRaceConditionSleep] Forces a race condition in order to detect changes in sleep() call behavior
+```[bash]
+# Using build script
+./build.sh
 
-This method terminates the process if a mutex still exists by spawing the same process twice. The trick is that this mutex will still exist in the second process if the default behavior of sleep() is untouched.
+# Or manually with GCC/MinGW
+gcc -o technique.exe main.c
+```
 
-- <https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-createmutexa>
-- <https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499->
-- <https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep>
-- <http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FThread%2FNtDelayExecution>.
-- <https://docs.microsoft.com/en-us/windows/win32/sync/using-named-objects>
+Refer to individual technique READMEs for specific build requirements and dependencies.
 
-## [003_CheckProcessList] Checks host processes agains a list of pre-defined process names
+## Contributing
 
-Iterates through the process list checking them against a "blacklist" and terminates analysis tools or the execution of the current process in case of a match.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
 
-- <https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes>
+- Submitting new techniques
+- Reporting issues
+- Improving documentation
+- Code style requirements
 
-## [004_CheckLoadedModules] Checks DLLs loaded in the current process against a pre-defined list
+## License
 
-Sometimes analysis tools and sandboxes injects DLLs in targetted processes in order to inspect their execution behaviour.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- <https://docs.microsoft.com/en-us/windows/win32/toolhelp/taking-a-snapshot-and-viewing-processes>
+## Resources
 
-## [005_CheckDeviceNames] Check devices names in the Windows Registry
+### Anti-Analysis References
 
-This technique searches for specific keys in the Windows Registry regarding device names. Virtual machine technologies leaves a lot of traces if not fine tunned. Malware families use this technique to check if the main executable is running under a virtualized environment.
+- [CheckPoint Anti-Debug Techniques](https://anti-debug.checkpoint.com/)
+- [Al-Khaser Anti-Malware Scanner](https://github.com/LordNoteworthy/al-khaser)
+- [Malware Analysis Bootcamp](https://www.malwaretech.com/)
 
-- <https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/>
+### Microsoft Documentation
 
-## [006_CheckProcessDebugPort] Fetches "ProcessDebugPort" data by calling "NtQueryInformationProcess"
+- [Windows API Documentation](https://docs.microsoft.com/en-us/windows/win32/api/)
+- [Undocumented NT Internals](http://undocumented.ntinternals.net/)
 
-Usually this technique is used together with technique #007 so this avoids hooks to this specfic API call ("NtQueryInformationProcess").
+## Disclaimer
 
-- <https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/>
+This repository is for **educational and research purposes only**. The techniques documented here are used by malware authors to evade detection. Understanding these techniques helps security professionals build better defenses.
 
-## [007_CopyOfNtdll] Loads a copy of ntdll.dll and uses it instead the original library
+**Do not use these techniques for malicious purposes.**
 
-This technique is used to hide behavioural data in case sandboxes do not propagate hooks.
+---
 
-- <https://research.checkpoint.com/2019/2019-resurgence-of-smokeloader/>
-
-## [008_IsDebuggerPresent] Checks debug flag by using "IsDebuggerPresent" call
-
-Checks if any debugger is attached to the current process by inspecting debug flag in PEB. There are many ways to achieve this and one of them is calling the "IsDebuggerPresent" call.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent>
-
-## [009_CheckRemoteDebuggerPresent] Checks debug flag by using "CheckRemoteDebuggerPresent" call
-
-Checks if any debugger is attached to an specific process.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-checkremotedebuggerpresent>
-
-## [010_FindWindow] Checks open windows for known analysis tool names
-
-Searches window names according to a list of pre-defined names used by analysis tools.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa>
-
-## [011_ProcessDebugObjectHandle] Checks if a process is being debugged by querying the `ProcessDebugObjectHandle`
-
-This anti-debug technique checks if a process is being debugged by querying the `ProcessDebugObjectHandle` using `NtQueryInformationProcess`.
-
-- <https://ieeexplore.ieee.org/abstract/document/9186656>
-- <https://github.com/gnxbr/Fully-Undetectable-Techniques/tree/main/user-imitating>
-
-## [012_CheckPEB] Checks debug flags located inside PEB structure
-
-Checks being debugged flag inside PEB structure.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb>
-
-## [013_SetUnhandledExceptionFilter] Detects Debugger by setting handler to Unhandled Exception Filter (UEF)
-
-Checks if debugger is taking over exception handling chain.
-
-- <https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter>
-
-## [014_CloseHandle] Detects Debugger by checking behavior of CloseHandle API
-
-Chacks if CloseHandle is raising an exception in case of invalid handle is passed as parameter.
-
-- <https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle>
-
-## [015_SetHandleInformation] Detects Debugger by abusing the behavior of SetHandleInformation API
-
-The implementation creates a handle to a mutex, protects it with `HANDLE_FLAG_PROTECT_FROM_CLOSE`, then attempts closure in a structured exception handling block.
-
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/SetHandleInformation_API.cpp>
-
-## [016_RtlQueryProcessHeapInformation] Detects Debugger by checking heap flags
-
-This anti-debug technique detects debuggers by examining heap flags.
-
-- <https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessheapinformation>
-
-## [017_RtlQueryProcessDebugInformation] Detects Debugger by checking heap flags
-
-This anti-debug technique detects debuggers by examining heap flags.
-
-- <https://anti-debug.checkpoint.com/techniques/debug-flags.html#using-win32-api-checks-rtlqueryprocessdebuginformation>
-
-## [018_FindWindow] Detects debugging tools by checking for the presence of windows with titles associated with known debuggers
-
-Uses the `FindWindowA` function to check for the existence of windows with titles that are commonly used by debuggers and analysis tools.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-findwindowa>
-
-## [019_GetShellWindow] Detects debuggers by comparing the parent process ID against the shell window's process ID
-
-This technique retrieves the shell window (typically the desktop) and gets its process ID (explorer). Then, it checks the parent process ID of the current process. If the parent process is not explorer, it assumes the process is being debugged.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getshellwindow>
-- <https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowthreadprocessid>
-- <https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_process_basic_information>
-
-## [020_DbgPrint] Detects debuggers by checking for exceptions when calling DbgPrint
-
-This technique detects debuggers by calling `DbgPrint` and checking if an exception (`DBG_PRINTEXCEPTION_C`) occurs. However, note that this method is ineffective on Windows 10 64-bit systems, as confirmed in testing.
-
-## [021_GetWriteWatch] Detects debuggers by monitoring protected memory regions for unexpected writes
-
-This technique allocates executable memory with special monitoring flags, then continuously checks for unexpected modifications to these memory regions. Analysis tools like debuggers often modify protected memory regions to insert breakpoints, which this technique can detect.
-
-- <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-getwritewatch>
-- <https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-resetwritewatch>
-
-## [022_GetThreadContext] Detects debuggers by checking hardware breakpoint registers
-
-This technique uses the `GetThreadContext` API to inspect debug registers (Dr0-Dr7). If any registers are set, it indicates hardware breakpoints are active, suggesting debugger presence.
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext>
-
-## [023_NtSetInformationThread] Hides the current thread from debuggers using NtSetInformationThread
-
-This technique uses the `NtSetInformationThread` function with `ThreadHideFromDebugger` (0x11) to make the current thread invisible to debuggers. If successful, the thread detaches from any attached debugger and continues execution normally.
-
-- <https://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FThread%2FNtSetInformationThread.html>
-
-## [024_NtQueryObject] Detects debuggers by querying for the presence of DebugObject
-
-This technique uses the `NtQueryObject` function to enumerate all object types and checks for the presence of a "DebugObject". If such an object exists and has a count greater than zero, it indicates the presence of a debugger.
-
-- <https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryobject>
-- <https://anti-debug.checkpoint.com/techniques/misc.html#debugobject>
-
-## [025_RaiseException] Detects debuggers by raising a DBG_CONTROL_C exception
-
-This technique uses structured exception handling (SEH) to raise a `DBG_CONTROL_C` exception. If the exception is handled by the program's exception handler, it indicates the absence of a debugger. If the exception is intercepted by a debugger (and not passed to the program), the handler does not run and the function returns true (debugger present).
-
-- <https://docs.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-raiseexception>
-
-## [026_MemoryBreakpoint] Detects debuggers by scanning for breakpoints (INT3) in watched functions
-
-This technique periodically scans the memory of specific functions for the presence of breakpoints (0xCC, the opcode for INT3). If found, it indicates that a debugger has set a breakpoint in the function.
-
-- <https://en.wikipedia.org/wiki/INT_(x86_instruction)#INT3>
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#software-breakpoints>
-
-## [027_AntiStepOver] Detects debugger by checking for breakpoint at function return address
-
-This technique uses the `_ReturnAddress` intrinsic to get the return address of the current function and checks if the instruction at that address is `INT3` (0xCC). If so, it indicates that a debugger has placed a breakpoint (for step-over) and the function returns early, avoiding the normal execution path.
-
-- <https://docs.microsoft.com/en-us/cpp/intrinsics/returnaddress?view=msvc-170>
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#anti-step-over>
-
-## [028_MemoryBreakpoint] Detects debuggers using guard page exception behavior
-
-This technique allocates executable memory, writes a RET instruction (0xC3) to it, and marks the page as a guard page. It then attempts to execute the memory location within a structured exception handler. If the guard page exception is caught (STATUS_GUARD_PAGE_VIOLATION), it indicates no debugger is present. If the code executes normally, it means a debugger intercepted and handled the exception.
-
-> PS: This technique works only in OllyDbg and ImmunityDbg (not in x64dbg).
-
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#memory-breakpoints>
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/MemoryBreakpoints_PageGuard.cpp>
-
-## [029_NtQueryVirtualMemory_WorkingSetList] Detects debuggers by checking working set page attributes
-
-This technique uses the `NtQueryVirtualMemory` function with `MemoryWorkingSetList` to inspect memory page attributes. It checks if the page containing the detection function is marked as private (not shared) or has a zero share count - indicators that a debugger may have modified the page (e.g., by setting breakpoints).
-
-- <https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntqueryvirtualmemory>
-- <https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/sysinfo/meminfo_workingset.htm>
-
-## [030_DbgBreakPoint_patch] Patches DbgBreakPoint to prevent debugger attachment
-
-This technique patches the `DbgBreakPoint` function in ntdll.dll by replacing its first instruction with a `RET` (0xC3) to prevent debuggers from breaking in. It then enters an infinite loop to simulate normal operation.
-
-> This technique does not work with x64dbg. I was able to attach the debug to the patched process every time.
-
-- <https://anti-debug.checkpoint.com/techniques/process-memory.html#patch_ntdll_dbgbreakpoint>
-- <https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-dbgbreakpoint>
-
-## [031_DbgUiRemoteBreakin_hook] Patches DbgUiRemoteBreakin to prevent debugger attachment
-
-This technique patches the `DbgUiRemoteBreakin` function in ntdll.dll to terminate the current process instead of breaking into the debugger. This prevents debuggers from attaching to the process.
-
-> This technique does not work with x64dbg. It works with WinDBG, OllyDbg and ImmunityDebugger.
-
-- <https://anti-debug.checkpoint.com/techniques/interactive-debugging.html#dbguiremotebreakin>
-
-## [032_INT3] Detects debugger using INT3 (0xC3)
-
-This technique uses a custom vectored exception handler to detect debugger presence by:
-
-1. Registering a handler for breakpoint exceptions (EXCEPTION_BREAKPOINT)
-2. Triggering a breakpoint (INT3) with `__debugbreak()`
-3. Checking if the handler was invoked (no debugger present) or not (debugger present)
-
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
-
-## [033_INT3_long] Detects debugger using long version of INT3 (0xCD03)
-
-This technique improves upon the previous INT3 approach by:
-
-1. Using a vectored exception handler to intercept breakpoint exceptions
-2. Allocating executable memory containing an INT3 instruction (0xCD03)
-3. Checking if the exception is handled by the program (no debugger) or intercepted by a debugger
-4. Increasing EIP/RIP to continue execution after handling
-
-- <https://github.com/ayoubfaouzi/al-khaser/blob/master/al-khaser/AntiDebug/Interrupt_3.cpp>
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
-
-## [034_INT_2D] Detects debugger using vectored exception handling with INT 2D instruction
-
-This technique uses the INT 2D (kernel debugger interrupt) instruction to detect debugger presence by:
-
-1. Registering a vectored exception handler for breakpoint exceptions
-2. Allocating executable memory and writing shellcode containing INT 2D (0xCD2D)
-3. Executing the shellcode and checking if the exception is handled by the program or intercepted by a debugger
-4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
-
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#int3>
-
-## [035_INT1] Detects debugger using INT1 (0xF1)
-
-This technique uses the ICEBP (INT 0x1) instruction to detect debugger presence by:
-
-1. Registering a vectored exception handler for breakpoint exceptions
-2. Allocating executable memory and writing shellcode containing ICEBP (0xF1)
-3. Executing the shellcode and checking if the exception is handled by the program or intercepted by a debugger
-4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
-
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#ice>
-
-## [036_INT1_long] Detects debugger using long version of INT 1 (0xCD01)
-
-This technique uses the two-byte form of INT 1 (0xCD 0x01) to detect debugger presence by:
-
-1. Registering a vectored exception handler for breakpoint exceptions
-2. Allocating executable memory and writing shellcode containing INT 1 in long form (0xCD 0x01)
-3. Executing the shellcode and checking if the exception is handled by the program or intercepted by a debugger
-4. If the handler is invoked, no debugger is present; if bypassed, a debugger intercepted the exception
-
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#ice>
-
-## [037_popfd_trap] Detects debugger using POPFD to set the Trap Flag
-
-This technique uses shellcode to manipulate the Trap Flag in EFLAGS register via POPFD instruction. It pushes EFLAGS onto the stack, modifies it to set the Trap Flag (bit 8), then pops it back. This triggers a single-step exception that is caught by a vectored exception handler if no debugger is present, or intercepted by the debugger if one is attached.
-
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#popf-and-trap-flag>
-
-## [038_INT1_prefix] Detects debugger using INT1 (ICEBP) with instruction prefixes
-
-This technique uses instruction prefixes (REP and FS segment override) before the ICEBP (INT 0x1) instruction to detect debugger presence. It registers a vectored exception handler, allocates executable memory with shellcode containing prefixed ICEBP (0xF3 0x64 0xF1), and checks if the exception is handled by the program or intercepted by a debugger.
-
-- <https://anti-debug.checkpoint.com/techniques/assembly.html#instruction_prefixes>
-
-## [039_self_debugging] Detects debuggers by attempting to debug itself
-
-This technique spawns a second instance of the process that attempts to attach as a debugger to the parent process using `DebugActiveProcess`. Since only one debugger can be attached to a process at a time, if the attachment fails, it indicates another debugger is already present. The technique uses an event object to signal the result back to the parent process.
-
-- <https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocess>
-- <https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-debugactiveprocessstop>
+**Note**: Some techniques may not work on all Windows versions or with all debuggers. Compatibility notes are included in individual technique documentation where applicable.
