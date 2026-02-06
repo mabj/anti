@@ -8,7 +8,7 @@ assignees: ''
 
 ## Technique Information
 
-**Technique Number and Name**: (e.g., 012_CheckPEB)
+**Technique ID and Name**: (e.g., AD005_CheckPEB)
 
 **Affected File(s)**: (e.g., main.c, build.sh)
 

@@ -49,11 +49,12 @@ This repository documents 39 real-world anti-analysis techniques discovered duri
 ## Quick Start
 
 Techniques are organized by category in dedicated directories:
+
 - `anti-debugger/` - 30 techniques for detecting debuggers
 - `anti-sandbox/` - 9 techniques for detecting sandboxes and VMs
 - `anti-reversing/` - Reserved for future anti-reversing techniques
 
-Each technique is in its own numbered directory (e.g., `anti-sandbox/001_SetErrorMode/`, `anti-debugger/008_IsDebuggerPresent/`). To explore a technique:
+Each technique is in its own directory with category prefix (e.g., `anti-sandbox/AS001_SetErrorMode/`, `anti-debugger/AD002_IsDebuggerPresent/`). To explore a technique:
 
 1. Navigate to the category directory, then technique subdirectory
 2. Read the `README.md` for detailed explanation
@@ -103,47 +104,49 @@ For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/
 
 ## Technique Index
 
-| # | Technique Name | Category | Platform | Description |
+| ID | Technique Name | Category | Platform | Description |
 | --- | --- | --- | --- | --- |
-| [001](anti-sandbox/001_SetErrorMode/) | SetErrorMode | Anti-Sandbox | Windows | Detects sandbox by inspecting SetErrorMode behavior for hooks |
-| [002](anti-sandbox/002_ForcedRaceConditionSleep/) | Forced Race Condition Sleep | Anti-Sandbox | Windows | Forces race condition to detect changes in sleep() behavior |
-| [003](anti-sandbox/003_CheckProcessList/) | Check Process List | Anti-Sandbox | Windows | Scans process list for known analysis tool names |
-| [004](anti-sandbox/004_CheckLoadedModules/) | Check Loaded Modules | Anti-Sandbox | Windows | Detects injected DLLs from analysis tools in current process |
-| [005](anti-sandbox/005_CheckRegistryKeys/) | Check Device Names | Anti-Sandbox | Windows | Searches Windows Registry for VM-related device names |
-| [006](anti-debugger/006_CheckProcessDebugPort/) | Check Process Debug Port | Anti-Debugger | Windows | Queries ProcessDebugPort via NtQueryInformationProcess |
-| [007](anti-sandbox/007_CopyOfNtdll/) | Copy of ntdll.dll | Anti-Sandbox | Windows | Loads clean ntdll.dll copy to bypass hooked functions |
-| [008](anti-debugger/008_IsDebuggerPresent/) | IsDebuggerPresent | Anti-Debugger | Windows | Checks PEB debug flag using IsDebuggerPresent API |
-| [009](anti-debugger/009_CheckRemoteDebuggerPresent/) | CheckRemoteDebuggerPresent | Anti-Debugger | Windows | Detects debugger attached to specific process |
-| [010](anti-sandbox/010_EnumWindowsProc/) | FindWindow | Anti-Sandbox | Windows | Searches for windows with known analysis tool names |
-| [011](anti-debugger/011_ProcessDebugObjectHandle/) | ProcessDebugObjectHandle | Anti-Debugger | Windows | Queries ProcessDebugObjectHandle to detect debugging |
-| [012](anti-debugger/012_CheckPEB/) | Check PEB | Anti-Debugger | Windows | Directly inspects debug flags in PEB structure |
-| [013](anti-debugger/013_SetUnhandledExceptionFilter/) | SetUnhandledExceptionFilter | Anti-Debugger | Windows | Detects debugger takeover of exception handling chain |
-| [014](anti-debugger/014_CloseHandle/) | CloseHandle Exception | Anti-Debugger | Windows | Checks if CloseHandle raises exception on invalid handle |
-| [015](anti-debugger/015_SetHandleInformation/) | SetHandleInformation | Anti-Debugger | Windows | Abuses HANDLE_FLAG_PROTECT_FROM_CLOSE to detect debugger |
-| [016](anti-debugger/016_RtlQueryProcessHeapInformation/) | RtlQueryProcessHeapInformation | Anti-Debugger | Windows | Detects debugger by examining heap flags |
-| [017](anti-debugger/017_RtlQueryProcessDebugInformation/) | RtlQueryProcessDebugInformation | Anti-Debugger | Windows | Checks heap flags via RtlQueryProcessDebugInformation |
-| [018](anti-sandbox/018_FindWindow/) | FindWindow (Debugger Titles) | Anti-Sandbox | Windows | Searches for window titles of known debuggers |
-| [019](anti-sandbox/019_GetShellWindow/) | GetShellWindow | Anti-Sandbox | Windows | Compares parent PID against shell window PID |
-| [020](anti-debugger/020_DbgPrint/) | DbgPrint Exception | Anti-Debugger | Windows | Detects debugger via DbgPrint exception behavior |
-| [021](anti-debugger/021_GetWriteWatch/) | GetWriteWatch | Anti-Debugger | Windows | Monitors protected memory for debugger modifications |
-| [022](anti-debugger/022_GetThreadContext/) | GetThreadContext | Anti-Debugger | Windows | Inspects hardware breakpoint registers (Dr0-Dr7) |
-| [023](anti-debugger/023_NtSetInformationThread/) | NtSetInformationThread | Anti-Debugger | Windows | Hides thread from debugger using ThreadHideFromDebugger |
-| [024](anti-debugger/024_NtQueryObject/) | NtQueryObject | Anti-Debugger | Windows | Enumerates object types looking for DebugObject |
-| [025](anti-debugger/025_RaiseException/) | RaiseException DBG_CONTROL_C | Anti-Debugger | Windows | Raises DBG_CONTROL_C to detect exception interception |
-| [026](anti-debugger/026_SoftwareBreakpoint/) | Memory Breakpoint INT3 | Anti-Debugger | Windows | Scans function memory for breakpoints (0xCC) |
-| [027](anti-debugger/027_AntiStepOver/) | Anti-Step-Over | Anti-Debugger | Windows | Checks for breakpoint at function return address |
-| [028](anti-debugger/028_MemoryBreakpoint/) | Guard Page | Anti-Debugger | Windows | Uses guard page exception to detect debugger |
-| [029](anti-debugger/029_NtQueryVirtualMemory_WorkingSetList/) | NtQueryVirtualMemory WorkingSetList | Anti-Debugger | Windows | Checks working set page attributes for modifications |
-| [030](anti-debugger/030_DbgBreakPoint_patch/) | DbgBreakPoint Patch | Anti-Debugger | Windows | Patches DbgBreakPoint to prevent debugger attachment |
-| [031](anti-debugger/031_DbgUiRemoteBreakin_hook/) | DbgUiRemoteBreakin Hook | Anti-Debugger | Windows | Patches DbgUiRemoteBreakin to block debugger attachment |
-| [032](anti-debugger/032_INT3/) | INT3 (0xC3) | Anti-Debugger | Windows | Uses vectored exception handler with INT3 instruction |
-| [033](anti-debugger/033_INT3_long/) | INT3 Long Form (0xCD03) | Anti-Debugger | Windows | Uses long form of INT3 for debugger detection |
-| [034](anti-debugger/034_INT2D/) | INT 2D | Anti-Debugger | Windows | Kernel debugger interrupt for detection |
-| [035](anti-debugger/035_INT1/) | INT1 ICEBP (0xF1) | Anti-Debugger | Windows | Uses ICEBP instruction for debugger detection |
-| [036](anti-debugger/036_INT1_long/) | INT1 Long Form (0xCD01) | Anti-Debugger | Windows | Two-byte form of INT 1 for detection |
-| [037](anti-debugger/037_popfd_trap/) | POPFD Trap Flag | Anti-Debugger | Windows | Manipulates Trap Flag via POPFD to trigger single-step |
-| [038](anti-debugger/038_INT1_prefix/) | INT1 with Prefixes | Anti-Debugger | Windows | Uses instruction prefixes before ICEBP |
-| [039](anti-debugger/039_self_debugging/) | Self-Debugging | Anti-Debugger | Windows | Attempts to debug itself to detect existing debugger |
+| **Anti-Sandbox** | | | | |
+| [AS001](anti-sandbox/AS001_SetErrorMode/) | SetErrorMode | Anti-Sandbox | Windows | Detects sandbox by inspecting SetErrorMode behavior for hooks |
+| [AS002](anti-sandbox/AS002_ForcedRaceConditionSleep/) | Forced Race Condition Sleep | Anti-Sandbox | Windows | Forces race condition to detect changes in sleep() behavior |
+| [AS003](anti-sandbox/AS003_CheckProcessList/) | Check Process List | Anti-Sandbox | Windows | Scans process list for known analysis tool names |
+| [AS004](anti-sandbox/AS004_CheckLoadedModules/) | Check Loaded Modules | Anti-Sandbox | Windows | Detects injected DLLs from analysis tools in current process |
+| [AS005](anti-sandbox/AS005_CheckRegistryKeys/) | Check Device Names | Anti-Sandbox | Windows | Searches Windows Registry for VM-related device names |
+| [AS006](anti-sandbox/AS006_CopyOfNtdll/) | Copy of ntdll.dll | Anti-Sandbox | Windows | Loads clean ntdll.dll copy to bypass hooked functions |
+| [AS007](anti-sandbox/AS007_EnumWindowsProc/) | FindWindow | Anti-Sandbox | Windows | Searches for windows with known analysis tool names |
+| [AS008](anti-sandbox/AS008_FindWindow/) | FindWindow (Debugger Titles) | Anti-Sandbox | Windows | Searches for window titles of known debuggers |
+| [AS009](anti-sandbox/AS009_GetShellWindow/) | GetShellWindow | Anti-Sandbox | Windows | Compares parent PID against shell window PID |
+| **Anti-Debugger** | | | | |
+| [AD001](anti-debugger/AD001_CheckProcessDebugPort/) | Check Process Debug Port | Anti-Debugger | Windows | Queries ProcessDebugPort via NtQueryInformationProcess |
+| [AD002](anti-debugger/AD002_IsDebuggerPresent/) | IsDebuggerPresent | Anti-Debugger | Windows | Checks PEB debug flag using IsDebuggerPresent API |
+| [AD003](anti-debugger/AD003_CheckRemoteDebuggerPresent/) | CheckRemoteDebuggerPresent | Anti-Debugger | Windows | Detects debugger attached to specific process |
+| [AD004](anti-debugger/AD004_ProcessDebugObjectHandle/) | ProcessDebugObjectHandle | Anti-Debugger | Windows | Queries ProcessDebugObjectHandle to detect debugging |
+| [AD005](anti-debugger/AD005_CheckPEB/) | Check PEB | Anti-Debugger | Windows | Directly inspects debug flags in PEB structure |
+| [AD006](anti-debugger/AD006_SetUnhandledExceptionFilter/) | SetUnhandledExceptionFilter | Anti-Debugger | Windows | Detects debugger takeover of exception handling chain |
+| [AD007](anti-debugger/AD007_CloseHandle/) | CloseHandle Exception | Anti-Debugger | Windows | Checks if CloseHandle raises exception on invalid handle |
+| [AD008](anti-debugger/AD008_SetHandleInformation/) | SetHandleInformation | Anti-Debugger | Windows | Abuses HANDLE_FLAG_PROTECT_FROM_CLOSE to detect debugger |
+| [AD009](anti-debugger/AD009_RtlQueryProcessHeapInformation/) | RtlQueryProcessHeapInformation | Anti-Debugger | Windows | Detects debugger by examining heap flags |
+| [AD010](anti-debugger/AD010_RtlQueryProcessDebugInformation/) | RtlQueryProcessDebugInformation | Anti-Debugger | Windows | Checks heap flags via RtlQueryProcessDebugInformation |
+| [AD011](anti-debugger/AD011_DbgPrint/) | DbgPrint Exception | Anti-Debugger | Windows | Detects debugger via DbgPrint exception behavior |
+| [AD012](anti-debugger/AD012_GetWriteWatch/) | GetWriteWatch | Anti-Debugger | Windows | Monitors protected memory for debugger modifications |
+| [AD013](anti-debugger/AD013_GetThreadContext/) | GetThreadContext | Anti-Debugger | Windows | Inspects hardware breakpoint registers (Dr0-Dr7) |
+| [AD014](anti-debugger/AD014_NtSetInformationThread/) | NtSetInformationThread | Anti-Debugger | Windows | Hides thread from debugger using ThreadHideFromDebugger |
+| [AD015](anti-debugger/AD015_NtQueryObject/) | NtQueryObject | Anti-Debugger | Windows | Enumerates object types looking for DebugObject |
+| [AD016](anti-debugger/AD016_RaiseException/) | RaiseException DBG_CONTROL_C | Anti-Debugger | Windows | Raises DBG_CONTROL_C to detect exception interception |
+| [AD017](anti-debugger/AD017_SoftwareBreakpoint/) | Memory Breakpoint INT3 | Anti-Debugger | Windows | Scans function memory for breakpoints (0xCC) |
+| [AD018](anti-debugger/AD018_AntiStepOver/) | Anti-Step-Over | Anti-Debugger | Windows | Checks for breakpoint at function return address |
+| [AD019](anti-debugger/AD019_MemoryBreakpoint/) | Guard Page | Anti-Debugger | Windows | Uses guard page exception to detect debugger |
+| [AD020](anti-debugger/AD020_NtQueryVirtualMemory_WorkingSetList/) | NtQueryVirtualMemory WorkingSetList | Anti-Debugger | Windows | Checks working set page attributes for modifications |
+| [AD021](anti-debugger/AD021_DbgBreakPoint_patch/) | DbgBreakPoint Patch | Anti-Debugger | Windows | Patches DbgBreakPoint to prevent debugger attachment |
+| [AD022](anti-debugger/AD022_DbgUiRemoteBreakin_hook/) | DbgUiRemoteBreakin Hook | Anti-Debugger | Windows | Patches DbgUiRemoteBreakin to block debugger attachment |
+| [AD023](anti-debugger/AD023_INT3/) | INT3 (0xC3) | Anti-Debugger | Windows | Uses vectored exception handler with INT3 instruction |
+| [AD024](anti-debugger/AD024_INT3_long/) | INT3 Long Form (0xCD03) | Anti-Debugger | Windows | Uses long form of INT3 for debugger detection |
+| [AD025](anti-debugger/AD025_INT2D/) | INT 2D | Anti-Debugger | Windows | Kernel debugger interrupt for detection |
+| [AD026](anti-debugger/AD026_INT1/) | INT1 ICEBP (0xF1) | Anti-Debugger | Windows | Uses ICEBP instruction for debugger detection |
+| [AD027](anti-debugger/AD027_INT1_long/) | INT1 Long Form (0xCD01) | Anti-Debugger | Windows | Two-byte form of INT 1 for detection |
+| [AD028](anti-debugger/AD028_popfd_trap/) | POPFD Trap Flag | Anti-Debugger | Windows | Manipulates Trap Flag via POPFD to trigger single-step |
+| [AD029](anti-debugger/AD029_INT1_prefix/) | INT1 with Prefixes | Anti-Debugger | Windows | Uses instruction prefixes before ICEBP |
+| [AD030](anti-debugger/AD030_self_debugging/) | Self-Debugging | Anti-Debugger | Windows | Attempts to debug itself to detect existing debugger |
 
 ## Building Techniques
 
@@ -189,9 +192,9 @@ cl /Fe:technique.exe src/main.c
 1. **Navigate to technique directory**:
 
    ```bash
-   cd anti-sandbox/001_SetErrorMode/
+   cd anti-sandbox/AS001_SetErrorMode/
    # or
-   cd anti-debugger/008_IsDebuggerPresent/
+   cd anti-debugger/AD002_IsDebuggerPresent/
    ```
 
 2. **Check build requirements** in the technique's README
