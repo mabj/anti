@@ -4,8 +4,8 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![Techniques](https://img.shields.io/badge/Techniques-39-brightgreen.svg)]()
-[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-30-red.svg)]()
-[![Anti-Sandbox](https://img.shields.io/badge/Anti--Sandbox-9-orange.svg)]()
+[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-30-red.svg)](anti-debugger/)
+[![Anti-Sandbox](https://img.shields.io/badge/Anti--Sandbox-9-orange.svg)](anti-sandbox/)
 
 > A comprehensive, practical collection of anti-analysis techniques used in modern malware, designed for security researchers, malware analysts, and reverse engineers.
 
@@ -18,6 +18,7 @@ This repository documents 39 real-world anti-analysis techniques discovered duri
 **Audience**: Security researchers, malware analysts, reverse engineers, and defensive security professionals.
 
 **Technique Breakdown**:
+
 - 🛡️ **Anti-Debugger** (30 techniques): Detect debuggers and prevent debugging
 - 🔍 **Anti-Sandbox** (9 techniques): Detect sandboxes, VMs, and automated analysis
 - 🔒 **Anti-Reversing** (0 techniques): Reserved for future code protection techniques
@@ -186,6 +187,7 @@ cl /Fe:technique.exe src/main.c
 ### General Build Process
 
 1. **Navigate to technique directory**:
+
    ```bash
    cd anti-sandbox/001_SetErrorMode/
    # or
@@ -195,12 +197,14 @@ cl /Fe:technique.exe src/main.c
 2. **Check build requirements** in the technique's README
 
 3. **Build using Docker** (most techniques):
+
    ```bash
    make build-image  # First time only
    make build
    ```
 
 4. **Or build with MinGW** (if installed):
+
    ```bash
    make
    ```
