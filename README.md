@@ -4,8 +4,8 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![Techniques](https://img.shields.io/badge/Techniques-41-brightgreen.svg)]()
-[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-31-red.svg)](anti-debugger/)
-[![Anti-Sandbox](https://img.shields.io/badge/Anti--Sandbox-10-orange.svg)](anti-sandbox/)
+[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-33-red.svg)](anti-debugger/)
+[![Anti-Sandbox](https://img.shields.io/badge/Anti--Sandbox-8-orange.svg)](anti-sandbox/)
 
 > A comprehensive, practical collection of anti-analysis techniques used in modern malware, designed for security researchers, malware analysts, and reverse engineers.
 
@@ -19,8 +19,8 @@ This repository documents 41 real-world anti-analysis techniques discovered duri
 
 **Technique Breakdown**:
 
-- 🛡️ **Anti-Debugger** (31 techniques): Detect debuggers and prevent debugging
-- 🔍 **Anti-Sandbox** (10 techniques): Detect sandboxes, VMs, and automated analysis
+- 🛡️ **Anti-Debugger** (33 techniques): Detect debuggers and prevent debugging
+- 🔍 **Anti-Sandbox** (8 techniques): Detect sandboxes, VMs, and automated analysis
 - 🔒 **Anti-Reversing** (0 techniques): Reserved for future code protection techniques
 
 ## Table of Contents
@@ -50,8 +50,8 @@ This repository documents 41 real-world anti-analysis techniques discovered duri
 
 Techniques are organized by category in dedicated directories:
 
-- `anti-debugger/` - 31 techniques for detecting debuggers
-- `anti-sandbox/` - 10 techniques for detecting sandboxes and VMs
+- `anti-debugger/` - 33 techniques for detecting debuggers
+- `anti-sandbox/` - 8 techniques for detecting sandboxes and VMs
 - `anti-reversing/` - Reserved for future anti-reversing techniques
 
 Each technique is in its own directory with category prefix (e.g., `anti-sandbox/AS001_SetErrorMode/`, `anti-debugger/AD002_IsDebuggerPresent/`). To explore a technique:
@@ -68,8 +68,8 @@ This collection organizes anti-analysis techniques into three main categories:
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>41 Total] --> B[Anti-Debugger<br/>31 techniques<br/>75.6%]
-    A --> C[Anti-Sandbox<br/>10 techniques<br/>24.4%]
+    A[Anti-Analysis Techniques<br/>41 Total] --> B[Anti-Debugger<br/>33 techniques<br/>80.5%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>19.5%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -92,13 +92,13 @@ graph TB
 
 ### Category Descriptions
 
-- **Anti-Debugger** (31 techniques): Techniques that detect debuggers attached to or monitoring the process. Includes PEB checks, exception-based detection, breakpoint scanning, and self-protection mechanisms.
+- **Anti-Debugger** (33 techniques): Techniques that detect debuggers attached to or monitoring the process. Includes PEB checks, exception-based detection, breakpoint scanning, and self-protection mechanisms.
 
-- **Anti-Sandbox** (10 techniques): Techniques that detect automated analysis environments, virtual machines, sandboxes, or analysis tools in the system. Includes environment checks, VM artifact detection, and timing-based detection.
+- **Anti-Sandbox** (8 techniques): Techniques that detect automated analysis environments, virtual machines, sandboxes, or analysis tools in the system. Includes environment checks, VM artifact detection, and timing-based detection.
 
 - **Anti-Reversing** (0 techniques): Reserved for future techniques that actively hinder reverse engineering through code obfuscation, anti-disassembly, control flow flattening, or other code protection mechanisms. No techniques implemented yet.
 
-> 📊 **Distribution**: 75.6% Anti-Debugger | 24.4% Anti-Sandbox | 0% Anti-Reversing
+> 📊 **Distribution**: 80.5% Anti-Debugger | 19.5% Anti-Sandbox | 0% Anti-Reversing
 
 For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/diagrams/taxonomy.md)
 
@@ -114,9 +114,7 @@ For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/
 | [AS005](anti-sandbox/AS005_CheckRegistryKeys/) | Check Device Names | Anti-Sandbox | Windows | Searches Windows Registry for VM-related device names |
 | [AS006](anti-sandbox/AS006_CopyOfNtdll/) | Copy of ntdll.dll | Anti-Sandbox | Windows | Loads clean ntdll.dll copy to bypass hooked functions |
 | [AS007](anti-sandbox/AS007_EnumWindowsProc/) | FindWindow | Anti-Sandbox | Windows | Searches for windows with known analysis tool names |
-| [AS008](anti-sandbox/AS008_FindWindow/) | FindWindow (Debugger Titles) | Anti-Sandbox | Windows | Searches for window titles of known debuggers |
-| [AS009](anti-sandbox/AS009_GetShellWindow/) | GetShellWindow | Anti-Sandbox | Windows | Compares parent PID against shell window PID |
-| [AS010](anti-sandbox/AS010_BlockInput/) | BlockInput | Anti-Sandbox | Windows | Detects API hooking by analyzing BlockInput behavior |
+| [AS008](anti-sandbox/AS008_BlockInput/) | BlockInput | Anti-Sandbox | Windows | Detects API hooking by analyzing BlockInput behavior |
 | **Anti-Debugger** | | | | |
 | [AD001](anti-debugger/AD001_CheckProcessDebugPort/) | Check Process Debug Port | Anti-Debugger | Windows | Queries ProcessDebugPort via NtQueryInformationProcess |
 | [AD002](anti-debugger/AD002_IsDebuggerPresent/) | IsDebuggerPresent | Anti-Debugger | Windows | Checks PEB debug flag using IsDebuggerPresent API |
@@ -149,6 +147,8 @@ For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/
 | [AD029](anti-debugger/AD029_INT1_prefix/) | INT1 with Prefixes | Anti-Debugger | Windows | Uses instruction prefixes before ICEBP |
 | [AD030](anti-debugger/AD030_self_debugging/) | Self-Debugging | Anti-Debugger | Windows | Attempts to debug itself to detect existing debugger |
 | [AD031](anti-debugger/AD031_GenerateConsoleCtrlEvent/) | GenerateConsoleCtrlEvent | Anti-Debugger | Windows | Detects debugger by checking console control event handling |
+| [AD032](anti-debugger/AD032_GetShellWindow/) | GetShellWindow | Anti-Debugger | Windows | Compares parent PID against Explorer to detect abnormal execution |
+| [AD033](anti-debugger/AD033_FindWindow/) | FindWindow | Anti-Debugger | Windows | Detects debuggers by searching for known window class names |
 
 ## Building Techniques
 

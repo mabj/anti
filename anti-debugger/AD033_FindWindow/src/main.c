@@ -27,9 +27,9 @@ bool __is_debugged() {
 
 int main() {
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] Could detect debugging tool!", "Anti-debug 018", MB_OK);
+        MessageBoxA(NULL, "[+] Could detect debugging tool!", "Anti-debug 033", MB_OK);
     else
-        MessageBoxA(NULL, "[+] Could NOT detect debugging tool!", "Anti-debug 018", MB_OK);
+        MessageBoxA(NULL, "[+] Could NOT detect debugging tool!", "Anti-debug 033", MB_OK);
 
     return 0;
 }

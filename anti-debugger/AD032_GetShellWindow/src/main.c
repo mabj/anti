@@ -35,9 +35,9 @@ bool __is_debugged() {
 
 int main() {
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 019", MB_OK);
+        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 032", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 019", MB_OK);
+        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 032", MB_OK);
 
     return 0;
 }

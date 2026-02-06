@@ -11,9 +11,9 @@ bool __is_hooked() {
 
 int main() {
     if(__is_hooked())
-        MessageBoxA(NULL, "[+] user32.BlockInput API is hooked.", "Anti-sandbox 010", MB_OK);
+        MessageBoxA(NULL, "[+] user32.BlockInput API is hooked.", "Anti-sandbox 008", MB_OK);
     else
-        MessageBoxA(NULL, "[+] user32.BlockInput API is NOT hooked.", "Anti-sandbox 010", MB_OK);
+        MessageBoxA(NULL, "[+] user32.BlockInput API is NOT hooked.", "Anti-sandbox 008", MB_OK);
 
     return 0;
 }
