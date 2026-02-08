@@ -84,7 +84,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | SetHandleInformation | AD008 | Yes | - |
 | DbgPrint exception | AD011 | - | Yes |
 | RaiseException (DBG_CONTROL_C) | AD016 | - | Yes |
-| OutputDebugString | Yes | Yes | Yes |
+| OutputDebugString | AD011 | Yes | Yes |
 
 ### 3.4 Assembly / Interrupt-Based
 
