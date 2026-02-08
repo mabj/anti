@@ -201,12 +201,12 @@ td:first-child{color:#1a8a1a;white-space:nowrap}
 /_/   \_\_| \_| |_| |___|   /_/   \_\_| \_/_/   \_\_____|_| |____/___|____/
 </pre>
 <div class="subtitle">[ ANTI-ANALYSIS TECHNIQUE COLLECTION ]</div>
-<div class="subtitle">- 47 techniques for the curious mind -</div>
+<div class="subtitle">- 49 techniques for the curious mind -</div>
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">47</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">39</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">49</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">41</div><div class="lbl">ANTI-DEBUG</div></div>
 <div class="stat"><div class="num">8</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
@@ -250,7 +250,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-debugger.db</p>
 
-<h2> ANTI-DEBUGGER :: 39 techniques </h2>
+<h2> ANTI-DEBUGGER :: 41 techniques </h2>
 <span class="cat-label cat-ad">ANTI-DEBUGGER</span>
 
 <table>
@@ -262,6 +262,8 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD004_ProcessDebugObjectHandle">AD004</a></td><td>ProcessDebugObjectHandle</td><td>Queries ProcessDebugObjectHandle to detect debugging</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD005_CheckPEB">AD005</a></td><td>CheckPEB</td><td>Directly inspects debug flags in PEB structure</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD015_NtQueryObject">AD015</a></td><td>NtQueryObject</td><td>Enumerates object types looking for DebugObject</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD040_ProcessDebugFlags">AD040</a></td><td>ProcessDebugFlags</td><td>Queries ProcessDebugFlags via NtQueryInformationProcess</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD041_NtGlobalFlag">AD041</a></td><td>NtGlobalFlag</td><td>Checks PEB NtGlobalFlag for heap debugging flags set by debugger</td></tr>
 <tr><td colspan="3" style="color:#1a3a1a">--- Exception-Based ---</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD006_SetUnhandledExceptionFilter">AD006</a></td><td>SetUnhandledExceptionFilter</td><td>Detects debugger takeover of exception handling chain</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD007_CloseHandle">AD007</a></td><td>CloseHandle</td><td>Checks if CloseHandle raises exception on invalid handle</td></tr>

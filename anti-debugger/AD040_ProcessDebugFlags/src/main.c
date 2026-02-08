@@ -4,16 +4,19 @@
 
 bool __is_debugged() {
     NTSTATUS status;
-    DWORD debug_port = 0;
+
+    DWORD dwProcessDebugFlags;
+    const DWORD ProcessDebugFlags = 0x1f;
 
     status = NtQueryInformationProcess(
         GetCurrentProcess(),
-        ProcessDebugPort,
-        &debug_port,
-        sizeof(debug_port),
-        NULL);
-    
-    return status == 0x00000000 && debug_port != 0;
+        ProcessDebugFlags,
+        &dwProcessDebugFlags,
+        sizeof(DWORD),
+        NULL
+    );
+
+    return NT_SUCCESS(status) && (0 == dwProcessDebugFlags); 
 }
 
 int main (int argc, char *argv[]) {
