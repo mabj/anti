@@ -9,8 +9,6 @@ Key characteristics:
 - Compares elapsed time against a predefined threshold (in milliseconds)
 - Debugger single-stepping or breakpoints inflate the measured time well beyond the threshold
 
-
-
 ## Build
 
 ### Using Docker (Recommended)
@@ -28,5 +26,5 @@ make
 
 ## References
 
-- [Microsoft: PEB Structure](https://learn.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb)
-- [Check Point: PEB BeingDebugged Flag](https://anti-debug.checkpoint.com/techniques/debug-flags.html#manual-checks-beingdebugged)
+- [Microsoft: timeGetTime](https://learn.microsoft.com/en-us/windows/win32/api/timeapi/nf-timeapi-timegettime)
+- [Check Point: timeGetTime](https://anti-debug.checkpoint.com/techniques/timing.html#timegettime)
