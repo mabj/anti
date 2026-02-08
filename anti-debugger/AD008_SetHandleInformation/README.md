@@ -5,11 +5,11 @@ This technique uses SetHandleInformation() to protect a handle from being closed
 Key aspects:
 - Creates a mutex handle for testing
 - Protects the handle using `SetHandleInformation()` with `HANDLE_FLAG_PROTECT_FROM_CLOSE` flag
-- Attempts to close the protected handle inside structured exception handling (__try/__except)
-- If a debugger is attached, it catches the exception first
-- If no debugger is present, the program's exception handler catches it
+- Attempts to close the protected handle
+- Uses Vectored Exception Handling (VEH) to catch the exception
+- If a debugger is attached, closing the protected handle raises an exception
+- If no debugger is present, CloseHandle fails silently
 - Similar to CloseHandle technique but more explicit about protection
-- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 

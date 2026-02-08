@@ -4,12 +4,11 @@ This technique uses structured exception handling (SEH) to detect debuggers by r
 
 Key aspects:
 - Raises a `DBG_CONTROL_C` exception (0x40010005) that debuggers typically intercept
-- Uses SEH blocks (__try/__except) to handle the exception
+- Uses Vectored Exception Handling (VEH) to catch the exception
 - Returns false when the exception is handled by the program's handler (no debugger)
 - Returns true when the exception is intercepted by a debugger
 - Exploits the exception handling priority where debuggers get first chance at exceptions
 - Control-C exceptions are specifically designed to be caught by debuggers
-- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 

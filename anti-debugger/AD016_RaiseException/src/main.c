@@ -1,13 +1,28 @@
 #include <windows.h>
 #include <stdbool.h>
 
+#ifndef DBG_CONTROL_C
+#define DBG_CONTROL_C ((DWORD)0x40010005)
+#endif
+
+static bool ExceptionCaught = false;
+
+static LONG CALLBACK VectoredHandler(_In_ PEXCEPTION_POINTERS ExceptionInfo) {
+	if (ExceptionInfo->ExceptionRecord->ExceptionCode == DBG_CONTROL_C) {
+		ExceptionCaught = true;
+		return EXCEPTION_CONTINUE_EXECUTION;
+	}
+	return EXCEPTION_CONTINUE_SEARCH;
+}
+
 bool __is_debugged() {
-    __try {
-        RaiseException(DBG_CONTROL_C, 0, 0, NULL);
-        return true;
-    } __except(DBG_CONTROL_C == GetExceptionCode() ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
-        return false;
-    }
+	PVOID Handle = AddVectoredExceptionHandler(1, VectoredHandler);
+	ExceptionCaught = false;
+	RaiseException(DBG_CONTROL_C, 0, 0, NULL);
+	RemoveVectoredExceptionHandler(Handle);
+	// If exception was caught by our handler, no debugger is present
+	// If debugger intercepted the exception, debugger is present
+	return !ExceptionCaught;
 }
 
 int main() {

@@ -4,13 +4,12 @@ This technique uses the DbgPrint function from ntdll.dll to detect debugger pres
 
 Key aspects:
 - Loads ntdll.dll and resolves the `DbgPrint` function pointer
-- Calls `DbgPrint` inside a structured exception handler (__try/__except)
+- Calls `DbgPrint` with a Vectored Exception Handler (VEH) installed
 - Checks if exception code is DBG_PRINTEXCEPTION_C (0x40010006)
 - Returns true if no exception occurs, indicating debugger is attached
 - Returns false if exception occurs, indicating no debugger
 - Exploits debugger handling of debug print messages
 - Note: This technique does not work on Windows 10 64-bit systems
-- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 

@@ -6,12 +6,11 @@ Key aspects:
 - Allocates executable memory with `VirtualAlloc()`
 - Writes a simple RET instruction (`0xC3`) to the allocated memory
 - Marks the page as a guard page using `VirtualProtect()` with `PAGE_EXECUTE_READ | PAGE_GUARD`
-- Attempts to execute the RET instruction in a protected __try block
+- Attempts to execute the RET instruction with a Vectored Exception Handler (VEH) installed
 - Checks if a `STATUS_GUARD_PAGE_VIOLATION` exception (0x80000001) occurs
 - If exception is caught by the program, no debugger is present
 - If exception is not caught (suppressed by debugger), debugger is detected
 - Note: Works on OllyDbg and ImmunityDbg but not x64dbg
-- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 

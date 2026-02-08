@@ -5,34 +5,46 @@
 
 #include <windows.h>
 #include <stdbool.h>
-#include <winternl.h>
+
+#ifndef DBG_PRINTEXCEPTION_C
+#define DBG_PRINTEXCEPTION_C ((DWORD)0x40010006)
+#endif
+
+static bool ExceptionCaught = false;
+
+static LONG CALLBACK VectoredHandler(_In_ PEXCEPTION_POINTERS ExceptionInfo) {
+	if (ExceptionInfo->ExceptionRecord->ExceptionCode == DBG_PRINTEXCEPTION_C) {
+		ExceptionCaught = true;
+		return EXCEPTION_CONTINUE_EXECUTION;
+	}
+	return EXCEPTION_CONTINUE_SEARCH;
+}
 
 bool __is_debugged() {
     // Declare DbgPrint as a function pointer
     typedef ULONG (__cdecl *DbgPrintPtr)(PCSTR Format, ...);
-    
+
     // Resolve DbgPrint from ntdll.dll
     HMODULE hNtdll = LoadLibraryA("ntdll.dll");
     if (!hNtdll) {
         return false;
     }
-    
+
     DbgPrintPtr pDbgPrint = (DbgPrintPtr)GetProcAddress(hNtdll, "DbgPrint");
     if (!pDbgPrint) {
         FreeLibrary(hNtdll);
         return false;
     }
-    
-    bool result = true;
-    __try {
-        pDbgPrint("anti-debug 020");
-    }
-    __except(GetExceptionCode() == DBG_PRINTEXCEPTION_C) {
-        result = false;
-    }
-    
+
+    PVOID Handle = AddVectoredExceptionHandler(1, VectoredHandler);
+    ExceptionCaught = false;
+    pDbgPrint("anti-debug 020");
+    RemoveVectoredExceptionHandler(Handle);
+
     FreeLibrary(hNtdll);
-    return result;
+    // If exception was caught, no debugger is present
+    // If debugger swallowed the exception, debugger is present
+    return !ExceptionCaught;
 }
 
 int main() {

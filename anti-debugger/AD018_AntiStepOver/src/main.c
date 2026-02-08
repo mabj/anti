@@ -1,18 +1,15 @@
 #include <windows.h>
 #include <stdbool.h>
 
-#include <intrin.h>
-#pragma intrinsic(_ReturnAddress)
-
 #define INT3 0xCC
 
 bool my_func() {
 
     // Checks for INT3 (EXCEPTION_BREAKPOINT) at the return address of this function
     // and returns before executing its content;
-    PVOID pRetAddress = _ReturnAddress();
+    PVOID pRetAddress = __builtin_return_address(0);
     if (*(PBYTE)pRetAddress == INT3)
-        return true; 
+        return true;
 
     // Dummy content
     for(int i = 0; i< 10; i++) {
@@ -29,9 +26,9 @@ bool __is_debugged() {
 
 int main() {
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 025", MB_OK);
+        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 018", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 025", MB_OK);
+        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 018", MB_OK);
 
     return 0;
 }

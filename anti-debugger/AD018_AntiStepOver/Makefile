@@ -1,38 +1,31 @@
 MAIN_NAME=anti_debug_antistepover
 
-# Visual Studio compiler commands
-# Use short path to avoid space issues
-CC = C:\Progra~1\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.00000\bin\Hostx64\x64\cl.exe /nologo
+CC32 = i686-w64-mingw32-gcc -m32
+CC64 = x86_64-w64-mingw32-gcc -m64
+AR = ar
+CFLAGS = -Wall -Wextra -std=c99 -static -Wno-missing-field-initializers -Wno-cast-function-type -Wno-unused-label -Wno-unused-parameter -masm=intel -Wa,--no-warn
+OPTIMIZATION_FLAGS = -Os -s -ffunction-sections -fdata-sections -fno-ident
+# -Wl -fgc-sections
+LDFLAGS = #-lshlwapi -lpsapi -lws2_32
 
-# Architecture-specific compiler flags
-CFLAGS_X86 = /W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_X86_ /arch:SSE2 /Os /GL /Gy
-CFLAGS_AMD64 = /W4 /std:c11 /MT /D_CRT_SECURE_NO_WARNINGS /EHa /D_AMD64_ /fp:fast /Os /GL /Gy /wd4312
 
-# Architecture-specific linker flags
-LDFLAGS_X86 = /link /LTCG:OFF /MACHINE:X86 kernel32.lib user32.lib legacy_stdio_definitions.lib
-LDFLAGS_AMD64 = /link /LTCG:OFF /MACHINE:X64 kernel32.lib user32.lib legacy_stdio_definitions.lib
 
-all: build-x86 build-amd64
+all: clean build-x86 build-amd64
 
-# Create build directories
-build_dirs:
-	@if not exist build\x86 mkdir build\x86
-	@if not exist build\amd64 mkdir build\amd64
+build-image:
+	docker build . -t ${MAIN_NAME}
 
-# Ensure bin directory exists
-bin: build_dirs
-	@if not exist bin mkdir bin
+build:
+	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
 
-# Build targets using PowerShell script
-build-amd64: bin
-	powershell -ExecutionPolicy Bypass -File build.ps1 amd64
-	@echo Built 64-bit executable: bin/sample_AntiStepOver_amd64.exe
+build-amd64:
+	$(CC64) -o bin/sample_AntiStepOver_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
-build-x86: bin
-	powershell -ExecutionPolicy Bypass -File build.ps1 x86
-	@echo Built 32-bit executable: bin/sample_AntiStepOver_x86.exe
+build-x86:
+	$(CC32) -o bin/sample_AntiStepOver_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+
+enter:
+	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
 
 clean:
-	if exist bin\sample_AntiStepOver_*.exe del /Q bin\sample_AntiStepOver_*.exe
-	if exist build rmdir /S /Q build
-	if exist bin rmdir /S /Q bin
+	rm -rf bin/sample_AntiStepOver_*.exe
