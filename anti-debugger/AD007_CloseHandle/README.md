@@ -6,10 +6,9 @@ Key aspects:
 - Calls `CloseHandle()` on an invalid handle or pseudo-handle
 - When a debugger is attached, CloseHandle throws an exception
 - Without a debugger, the function fails silently with a return value
-- Uses structured exception handling (__try/__except) to catch the exception
+- Uses Vectored Exception Handling (VEH) to catch the exception
 - Exception code indicates debugger presence
 - Can also test by closing a handle twice or closing FindFirstFile handles with CloseHandle instead of FindClose
-- Requires Visual Studio compiler for structured exception handling support
 
 ## Build
 

@@ -1,22 +1,29 @@
 #include <windows.h>
 #include <stdbool.h>
 
-bool __is_debugged() {
-    __try {
-        CloseHandle((HANDLE)(ULONG_PTR)0xDEADBEEF);
-    }
-    __except (EXCEPTION_INVALID_HANDLE == GetExceptionCode() ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
-        return true;
-    }
+static bool DebuggerDetected = false;
 
-    return false;
+static LONG CALLBACK VectoredHandler(_In_ PEXCEPTION_POINTERS ExceptionInfo) {
+	if (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_INVALID_HANDLE) {
+		DebuggerDetected = true;
+		return EXCEPTION_CONTINUE_EXECUTION;
+	}
+	return EXCEPTION_CONTINUE_SEARCH;
+}
+
+bool __is_debugged() {
+	PVOID Handle = AddVectoredExceptionHandler(1, VectoredHandler);
+	DebuggerDetected = false;
+	CloseHandle((HANDLE)(ULONG_PTR)0xDEADBEEF);
+	RemoveVectoredExceptionHandler(Handle);
+	return DebuggerDetected;
 }
 
 int main() {
     if(__is_debugged())
-        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 014", MB_OK);
+        MessageBoxA(NULL, "[+] The process is in Debug mode.", "Anti-debug 007", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 014", MB_OK);
+        MessageBoxA(NULL, "[+] The process is NOT in Debug mode.", "Anti-debug 007", MB_OK);
 
     return 0;
 }
