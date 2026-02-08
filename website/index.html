@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[ ANTI-ANALYSIS ] - Technique Collection</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#0a0a0a;
+  color:#33ff33;
+  font-family:'VT323','Courier New',monospace;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body::after{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,.15) 0px,
+    rgba(0,0,0,.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events:none;
+  z-index:9999;
+}
+::selection{background:#33ff33;color:#0a0a0a}
+a{color:#33ff33;text-decoration:none}
+a:hover{color:#0a0a0a;background:#33ff33}
+#crt{
+  max-width:960px;
+  margin:0 auto;
+  padding:20px;
+  border:1px solid #1a3a1a;
+  min-height:100vh;
+  box-shadow:0 0 40px rgba(51,255,51,.05) inset;
+}
+.blink{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.header{
+  text-align:center;
+  padding:30px 0 20px;
+  border-bottom:1px solid #1a3a1a;
+  margin-bottom:20px;
+}
+pre.ascii{
+  color:#33ff33;
+  font-size:11px;
+  line-height:1.1;
+  display:inline-block;
+  text-align:left;
+  text-shadow:0 0 5px rgba(51,255,51,.5);
+}
+.subtitle{
+  color:#1a8a1a;
+  font-size:14px;
+  margin-top:10px;
+  letter-spacing:2px;
+}
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin:20px 0;
+  flex-wrap:wrap;
+}
+.stat{
+  border:1px solid #1a3a1a;
+  padding:10px 20px;
+  text-align:center;
+}
+.stat .num{font-size:32px;text-shadow:0 0 10px rgba(51,255,51,.6)}
+.stat .lbl{color:#1a8a1a;font-size:13px}
+.prompt{color:#1a8a1a}
+.prompt::before{content:'root@anti:~# ';color:#33ff33}
+h2{
+  color:#33ff33;
+  font-size:18px;
+  margin:30px 0 10px;
+  text-shadow:0 0 5px rgba(51,255,51,.4);
+}
+h2::before{content:'[';color:#1a8a1a}
+h2::after{content:']';color:#1a8a1a}
+.cat-label{
+  display:inline-block;
+  padding:2px 8px;
+  font-size:13px;
+  margin-bottom:10px;
+}
+.cat-ad{border:1px solid #ff3333;color:#ff3333}
+.cat-as{border:1px solid #ff8c00;color:#ff8c00}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:10px 0 30px;
+  font-size:15px;
+}
+th{
+  text-align:left;
+  color:#1a8a1a;
+  border-bottom:1px solid #1a3a1a;
+  padding:6px 8px;
+  font-weight:normal;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+td{
+  padding:4px 8px;
+  border-bottom:1px solid #0d1a0d;
+}
+tr:hover td{background:#0d1a0d}
+td:first-child{color:#1a8a1a;white-space:nowrap}
+.separator{
+  border:none;
+  border-top:1px solid #1a3a1a;
+  margin:20px 0;
+}
+.footer{
+  text-align:center;
+  color:#1a3a1a;
+  padding:20px 0;
+  font-size:13px;
+}
+.footer a{color:#1a8a1a}
+.about{
+  border:1px solid #1a3a1a;
+  padding:15px;
+  margin:20px 0;
+  color:#1a8a1a;
+}
+.about b{color:#33ff33}
+.warn{
+  border:1px solid #ff3333;
+  padding:10px 15px;
+  margin:20px 0;
+  color:#ff3333;
+  font-size:14px;
+  text-align:center;
+}
+.visitor{
+  text-align:center;
+  margin:15px 0;
+  color:#1a3a1a;
+  font-size:13px;
+}
+.visitor img{vertical-align:middle}
+.toc{
+  columns:2;
+  column-gap:30px;
+  list-style:none;
+  margin:10px 0 20px;
+  font-size:14px;
+}
+.toc li{padding:2px 0}
+.toc li::before{content:'> ';color:#1a3a1a}
+@media(max-width:600px){
+  pre.ascii{font-size:7px}
+  .stats{gap:10px}
+  .stat{padding:8px 12px}
+  .toc{columns:1}
+  table{font-size:13px}
+}
+</style>
+</head>
+<body>
+<div id="crt">
+
+<div class="header">
+<pre class="ascii">
+    _    _   _ _____ ___        _    _   _    _    _  __   _______ ___ ____
+   / \  | \ | |_   _|_ _|      / \  | \ | |  / \  | | \ \ / / _____|_ _/ ___|
+  / _ \ |  \| | | |  | |_____ / _ \ |  \| | / _ \ | |  \ V /\___ \ | |\___ \
+ / ___ \| |\  | | |  | |_____/ ___ \| |\  |/ ___ \| |___| |  ___) || | ___) |
+/_/   \_\_| \_| |_| |___|   /_/   \_\_| \_/_/   \_\_____|_| |____/___|____/
+</pre>
+<div class="subtitle">[ ANTI-ANALYSIS TECHNIQUE COLLECTION ]</div>
+<div class="subtitle">- 47 techniques for the curious mind -</div>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="num">47</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">39</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">8</div><div class="lbl">ANTI-SANDBOX</div></div>
+</div>
+
+<div class="about">
+<b>&gt; ABOUT</b><br>
+A collection of <b>real-world anti-analysis techniques</b> discovered during malware research
+and reverse engineering. Each technique is implemented as a standalone proof-of-concept
+in C with source code, build instructions, and documentation.<br><br>
+<b>Purpose:</b> Educational resource for security researchers, malware analysts, and reverse engineers.<br>
+<b>Platform:</b> Windows | <b>Language:</b> C | <b>License:</b> MIT
+</div>
+
+<div class="warn">
+/!\ FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY /!\<br>
+Do not use these techniques for malicious purposes.
+</div>
+
+<hr class="separator">
+
+<p class="prompt">cat techniques/anti-sandbox.db</p>
+
+<h2> ANTI-SANDBOX :: 8 techniques </h2>
+<span class="cat-label cat-as">ANTI-SANDBOX</span>
+
+<table>
+<tr><th>ID</th><th>Technique</th><th>Description</th></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS001_SetErrorMode">AS001</a></td><td>SetErrorMode</td><td>Detects sandbox by inspecting SetErrorMode behavior for hooks</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS002_ForcedRaceConditionSleep">AS002</a></td><td>ForcedRaceConditionSleep</td><td>Forces race condition to detect changes in sleep() behavior</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS003_CheckProcessList">AS003</a></td><td>CheckProcessList</td><td>Scans process list for known analysis tool names</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS004_CheckLoadedModules">AS004</a></td><td>CheckLoadedModules</td><td>Detects injected DLLs from analysis tools in current process</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS005_CheckRegistryKeys">AS005</a></td><td>CheckRegistryKeys</td><td>Searches Windows Registry for VM-related device names</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS006_CopyOfNtdll">AS006</a></td><td>CopyOfNtdll</td><td>Loads clean ntdll.dll copy to bypass hooked functions</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS007_EnumWindowsProc">AS007</a></td><td>EnumWindowsProc</td><td>Searches for windows with known analysis tool names</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS008_BlockInput">AS008</a></td><td>BlockInput</td><td>Detects API hooking by analyzing BlockInput behavior</td></tr>
+</table>
+
+<p class="prompt">cat techniques/anti-debugger.db</p>
+
+<h2> ANTI-DEBUGGER :: 39 techniques </h2>
+<span class="cat-label cat-ad">ANTI-DEBUGGER</span>
+
+<table>
+<tr><th>ID</th><th>Technique</th><th>Description</th></tr>
+<tr><td colspan="3" style="color:#1a3a1a">--- PEB &amp; Process Info ---</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD001_CheckProcessDebugPort">AD001</a></td><td>CheckProcessDebugPort</td><td>Queries ProcessDebugPort via NtQueryInformationProcess</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD002_IsDebuggerPresent">AD002</a></td><td>IsDebuggerPresent</td><td>Checks PEB debug flag using IsDebuggerPresent API</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD003_CheckRemoteDebuggerPresent">AD003</a></td><td>CheckRemoteDebuggerPresent</td><td>Detects debugger attached to specific process</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD004_ProcessDebugObjectHandle">AD004</a></td><td>ProcessDebugObjectHandle</td><td>Queries ProcessDebugObjectHandle to detect debugging</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD005_CheckPEB">AD005</a></td><td>CheckPEB</td><td>Directly inspects debug flags in PEB structure</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD015_NtQueryObject">AD015</a></td><td>NtQueryObject</td><td>Enumerates object types looking for DebugObject</td></tr>
+<tr><td colspan="3" style="color:#1a3a1a">--- Exception-Based ---</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD006_SetUnhandledExceptionFilter">AD006</a></td><td>SetUnhandledExceptionFilter</td><td>Detects debugger takeover of exception handling chain</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD007_CloseHandle">AD007</a></td><td>CloseHandle</td><td>Checks if CloseHandle raises exception on invalid handle</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD008_SetHandleInformation">AD008</a></td><td>SetHandleInformation</td><td>Abuses HANDLE_FLAG_PROTECT_FROM_CLOSE to detect debugger</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD011_DbgPrint">AD011</a></td><td>DbgPrint</td><td>Detects debugger via DbgPrint exception behavior</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD016_RaiseException">AD016</a></td><td>RaiseException</td><td>Raises DBG_CONTROL_C to detect exception interception</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD023_INT3">AD023</a></td><td>INT3</td><td>Uses vectored exception handler with INT3 instruction</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD024_INT3_long">AD024</a></td><td>INT3 Long Form</td><td>Uses long form of INT3 (0xCD03) for detection</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD025_INT2D">AD025</a></td><td>INT 2D</td><td>Kernel debugger interrupt for detection</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD026_INT1">AD026</a></td><td>INT1 ICEBP</td><td>Uses ICEBP instruction (0xF1) for detection</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD027_INT1_long">AD027</a></td><td>INT1 Long Form</td><td>Two-byte form of INT 1 (0xCD01) for detection</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD028_popfd_trap">AD028</a></td><td>POPFD Trap Flag</td><td>Manipulates Trap Flag via POPFD to trigger single-step</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD029_INT1_prefix">AD029</a></td><td>INT1 with Prefixes</td><td>Uses instruction prefixes before ICEBP</td></tr>
+<tr><td colspan="3" style="color:#1a3a1a">--- Memory &amp; Breakpoints ---</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD012_GetWriteWatch">AD012</a></td><td>GetWriteWatch</td><td>Monitors protected memory for debugger modifications</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD017_SoftwareBreakpoint">AD017</a></td><td>SoftwareBreakpoint</td><td>Scans function memory for breakpoints (0xCC)</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD018_AntiStepOver">AD018</a></td><td>AntiStepOver</td><td>Checks for breakpoint at function return address</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD019_MemoryBreakpoint">AD019</a></td><td>MemoryBreakpoint</td><td>Uses guard page exception to detect debugger</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD020_NtQueryVirtualMemory_WorkingSetList">AD020</a></td><td>NtQueryVirtualMemory</td><td>Checks working set page attributes for modifications</td></tr>
+<tr><td colspan="3" style="color:#1a3a1a">--- Self-Protection ---</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD014_NtSetInformationThread">AD014</a></td><td>NtSetInformationThread</td><td>Hides thread from debugger using ThreadHideFromDebugger</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD021_DbgBreakPoint_patch">AD021</a></td><td>DbgBreakPoint Patch</td><td>Patches DbgBreakPoint to prevent debugger attachment</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD022_DbgUiRemoteBreakin_hook">AD022</a></td><td>DbgUiRemoteBreakin Hook</td><td>Patches DbgUiRemoteBreakin to block debugger attachment</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD030_self_debugging">AD030</a></td><td>Self-Debugging</td><td>Attempts to debug itself to detect existing debugger</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD034_SwitchDesktop">AD034</a></td><td>SwitchDesktop</td><td>Hides process from debugger by switching to a new desktop</td></tr>
+<tr><td colspan="3" style="color:#1a3a1a">--- Timing-Based ---</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD035_GetLocalTime">AD035</a></td><td>GetLocalTime</td><td>Detects debugger by measuring elapsed time of a workload</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD036_GetSystemTime">AD036</a></td><td>GetSystemTime</td><td>Detects debugger via UTC timing analysis of a workload</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD037_GetTickCount">AD037</a></td><td>GetTickCount</td><td>Detects debugger by comparing millisecond tick counts</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD038_QueryPerformanceCounter">AD038</a></td><td>QueryPerformanceCounter</td><td>Detects debugger using high-resolution performance counter</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD039_timeGetTime">AD039</a></td><td>timeGetTime</td><td>Detects debugger using multimedia timer elapsed time</td></tr>
+<tr><td colspan="3" style="color:#1a3a1a">--- Other Detection ---</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD009_RtlQueryProcessHeapInformation">AD009</a></td><td>RtlQueryProcessHeapInformation</td><td>Detects debugger by examining heap flags</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD010_RtlQueryProcessDebugInformation">AD010</a></td><td>RtlQueryProcessDebugInformation</td><td>Checks heap flags via RtlQueryProcessDebugInformation</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD013_GetThreadContext">AD013</a></td><td>GetThreadContext</td><td>Inspects hardware breakpoint registers (Dr0-Dr7)</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD031_GenerateConsoleCtrlEvent">AD031</a></td><td>GenerateConsoleCtrlEvent</td><td>Detects debugger by checking console control event handling</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD032_GetShellWindow">AD032</a></td><td>GetShellWindow</td><td>Compares parent PID against Explorer to detect abnormal exec</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD033_FindWindow">AD033</a></td><td>FindWindow</td><td>Detects debuggers by searching for known window class names</td></tr>
+</table>
+
+<hr class="separator">
+
+<p class="prompt">cat /etc/motd</p>
+
+<div class="about">
+<b>&gt; RESOURCES</b><br><br>
+&gt; <a href="https://anti-debug.checkpoint.com/">CheckPoint Anti-Debug Techniques</a><br>
+&gt; <a href="https://github.com/LordNoteworthy/al-khaser">Al-Khaser Anti-Malware Scanner</a><br>
+&gt; <a href="https://unprotect.it/">Unprotect Project</a><br>
+&gt; <a href="https://learn.microsoft.com/en-us/windows/win32/api/">Microsoft Win32 API Documentation</a><br>
+&gt; <a href="http://undocumented.ntinternals.net/">Undocumented NT Internals</a>
+</div>
+
+<hr class="separator">
+
+<div class="visitor">
+<br>
+YOU ARE VISITOR #<span id="vc">000000</span> SINCE 1997
+<br><br>
+[ <a href="https://github.com/mabj/anti">GITHUB</a> ]
+&nbsp;|&nbsp;
+[ <a href="mailto:">CONTACT</a> ]
+<br><br>
+&lt;-- BEST VIEWED IN NETSCAPE NAVIGATOR 4.0 AT 800x600 --&gt;
+</div>
+
+<div class="footer">
+&copy; 2026 @marcos_alvares :: all rights reserved<br>
+<span class="blink">_</span>
+</div>
+
+</div>
+
+<script>
+document.getElementById('vc').textContent=String(Math.floor(Math.random()*900000)+100000).padStart(6,'0');
+</script>
+</body>
+</html>
