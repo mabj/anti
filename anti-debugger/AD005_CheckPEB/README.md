@@ -3,6 +3,7 @@
 This technique directly checks the BeingDebugged flag in the Process Environment Block (PEB) to detect if a debugger is attached. The PEB is a data structure maintained by Windows that contains process-specific information, including debugging status. This method bypasses API calls by reading the flag directly from memory.
 
 Key aspects:
+
 - Accesses the PEB structure directly to read the BeingDebugged flag
 - The BeingDebugged flag is located at offset 0x02 in the PEB structure
 - Uses inline assembly or intrinsics to access FS/GS segment registers
