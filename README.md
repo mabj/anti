@@ -258,6 +258,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [CheckPoint Anti-Debug Techniques](https://anti-debug.checkpoint.com/)
 - [Al-Khaser Anti-Malware Scanner](https://github.com/LordNoteworthy/al-khaser)
 - [Malware Analysis Bootcamp](https://www.malwaretech.com/)
+- [The Ultimate Anti-Debugging Reference](https://pferrie.epizy.com/papers/antidebug.pdf?i=1)
+- [Apriorit Anti-Debugging with Examples](https://www.apriorit.com/dev-blog/367-anti-reverse-engineering-protection-techniques-to-use-before-releasing-software)
 
 ### Microsoft Documentation
 
