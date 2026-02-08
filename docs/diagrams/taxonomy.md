@@ -6,17 +6,18 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>39 Total] --> B[Anti-Debugger<br/>30 techniques<br/>77%]
-    A --> C[Anti-Sandbox<br/>9 techniques<br/>23%]
+    A[Anti-Analysis Techniques<br/>47 Total] --> B[Anti-Debugger<br/>39 techniques<br/>83%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>17%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
     B --> B2[Exception-Based Detection]
     B --> B3[Memory/Breakpoint Detection]
     B --> B4[Self-Protection]
+    B --> B5[Timing-Based Detection]
 
     C --> C1[Environment Detection]
-    C --> C2[VM/Sandbox Artifacts]
+    C --> C2[Hook Detection]
     C --> C3[Timing Checks]
 
     D --> D1[Future: Code Obfuscation]
@@ -32,95 +33,103 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 30
-    "Anti-Sandbox" : 9
+    "Anti-Debugger" : 39
+    "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (30)
+## Anti-Debugger Techniques (39)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>30 Techniques]
+    AD[Anti-Debugger<br/>39 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>6 techniques]
-    AD --> EXC[Exception-Based<br/>11 techniques]
+    AD --> EXC[Exception-Based<br/>12 techniques]
     AD --> MEM[Memory & Breakpoints<br/>5 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
-    AD --> OTHER[Other Detection<br/>3 techniques]
+    AD --> TIME[Timing-Based<br/>5 techniques]
+    AD --> OTHER[Other Detection<br/>6 techniques]
 
-    PEB --> PEB1[006: CheckProcessDebugPort]
-    PEB --> PEB2[008: IsDebuggerPresent]
-    PEB --> PEB3[009: CheckRemoteDebuggerPresent]
-    PEB --> PEB4[011: ProcessDebugObjectHandle]
-    PEB --> PEB5[012: CheckPEB]
-    PEB --> PEB6[024: NtQueryObject]
+    PEB --> PEB1[AD001: CheckProcessDebugPort]
+    PEB --> PEB2[AD002: IsDebuggerPresent]
+    PEB --> PEB3[AD003: CheckRemoteDebuggerPresent]
+    PEB --> PEB4[AD004: ProcessDebugObjectHandle]
+    PEB --> PEB5[AD005: CheckPEB]
+    PEB --> PEB6[AD015: NtQueryObject]
 
-    EXC --> EXC1[013: SetUnhandledExceptionFilter]
-    EXC --> EXC2[014: CloseHandle]
-    EXC --> EXC3[015: SetHandleInformation]
-    EXC --> EXC4[020: DbgPrint]
-    EXC --> EXC5[025: RaiseException]
-    EXC --> EXC6[032: INT3]
-    EXC --> EXC7[033: INT3_long]
-    EXC --> EXC8[034: INT_2D]
-    EXC --> EXC9[035: INT1]
-    EXC --> EXC10[036: INT1_long]
-    EXC --> EXC11[037: popfd_trap]
-    EXC --> EXC12[038: INT1_prefix]
+    EXC --> EXC1[AD006: SetUnhandledExceptionFilter]
+    EXC --> EXC2[AD007: CloseHandle]
+    EXC --> EXC3[AD008: SetHandleInformation]
+    EXC --> EXC4[AD011: DbgPrint]
+    EXC --> EXC5[AD016: RaiseException]
+    EXC --> EXC6[AD023: INT3]
+    EXC --> EXC7[AD024: INT3_long]
+    EXC --> EXC8[AD025: INT_2D]
+    EXC --> EXC9[AD026: INT1]
+    EXC --> EXC10[AD027: INT1_long]
+    EXC --> EXC11[AD028: popfd_trap]
+    EXC --> EXC12[AD029: INT1_prefix]
 
-    MEM --> MEM1[021: GetWriteWatch]
-    MEM --> MEM2[026: MemoryBreakpoint]
-    MEM --> MEM3[027: AntiStepOver]
-    MEM --> MEM4[028: Guard Page]
-    MEM --> MEM5[029: NtQueryVirtualMemory]
+    MEM --> MEM1[AD012: GetWriteWatch]
+    MEM --> MEM2[AD017: SoftwareBreakpoint]
+    MEM --> MEM3[AD018: AntiStepOver]
+    MEM --> MEM4[AD019: MemoryBreakpoint]
+    MEM --> MEM5[AD020: NtQueryVirtualMemory]
 
-    SELF --> SELF1[023: NtSetInformationThread]
-    SELF --> SELF2[030: DbgBreakPoint_patch]
-    SELF --> SELF3[031: DbgUiRemoteBreakin_hook]
-    SELF --> SELF4[039: self_debugging]
+    SELF --> SELF1[AD014: NtSetInformationThread]
+    SELF --> SELF2[AD021: DbgBreakPoint_patch]
+    SELF --> SELF3[AD022: DbgUiRemoteBreakin_hook]
+    SELF --> SELF4[AD030: self_debugging]
+    SELF --> SELF5[AD034: SwitchDesktop]
 
-    OTHER --> OTH1[016: RtlQueryProcessHeapInformation]
-    OTHER --> OTH2[017: RtlQueryProcessDebugInformation]
-    OTHER --> OTH3[022: GetThreadContext]
+    TIME --> TIME1[AD035: GetLocalTime]
+    TIME --> TIME2[AD036: GetSystemTime]
+    TIME --> TIME3[AD037: GetTickCount]
+    TIME --> TIME4[AD038: QueryPerformanceCounter]
+    TIME --> TIME5[AD039: timeGetTime]
+
+    OTHER --> OTH1[AD009: RtlQueryProcessHeapInformation]
+    OTHER --> OTH2[AD010: RtlQueryProcessDebugInformation]
+    OTHER --> OTH3[AD013: GetThreadContext]
+    OTHER --> OTH4[AD031: GenerateConsoleCtrlEvent]
+    OTHER --> OTH5[AD032: GetShellWindow]
+    OTHER --> OTH6[AD033: FindWindow]
 
     style AD fill:#ffebee
     style PEB fill:#ffcdd2
     style EXC fill:#ef9a9a
     style MEM fill:#e57373
     style SELF fill:#ef5350
+    style TIME fill:#ff8a65
     style OTHER fill:#f44336
 ```
 
-## Anti-Sandbox Techniques (9)
+## Anti-Sandbox Techniques (8)
 
 ```mermaid
 graph LR
-    AS[Anti-Sandbox<br/>9 Techniques]
+    AS[Anti-Sandbox<br/>8 Techniques]
 
-    AS --> ENV[Environment Detection<br/>5 techniques]
-    AS --> HOOK[Hook Detection<br/>2 techniques]
+    AS --> ENV[Environment Detection<br/>4 techniques]
+    AS --> HOOK[Hook Detection<br/>3 techniques]
     AS --> TIME[Timing Detection<br/>1 technique]
-    AS --> PROC[Process Detection<br/>1 technique]
 
-    ENV --> ENV1[003: CheckProcessList]
-    ENV --> ENV2[004: CheckLoadedModules]
-    ENV --> ENV3[005: CheckDeviceNames]
-    ENV --> ENV4[010: FindWindow]
-    ENV --> ENV5[018: FindWindow Debuggers]
+    ENV --> ENV1[AS003: CheckProcessList]
+    ENV --> ENV2[AS004: CheckLoadedModules]
+    ENV --> ENV3[AS005: CheckRegistryKeys]
+    ENV --> ENV4[AS007: EnumWindowsProc]
 
-    HOOK --> HOOK1[001: SetErrorMode]
-    HOOK --> HOOK2[007: CopyOfNtdll]
+    HOOK --> HOOK1[AS001: SetErrorMode]
+    HOOK --> HOOK2[AS006: CopyOfNtdll]
+    HOOK --> HOOK3[AS008: BlockInput]
 
-    TIME --> TIME1[002: ForcedRaceConditionSleep]
-
-    PROC --> PROC1[019: GetShellWindow]
+    TIME --> TIME1[AS002: ForcedRaceConditionSleep]
 
     style AS fill:#fff3e0
     style ENV fill:#ffe0b2
     style HOOK fill:#ffcc80
     style TIME fill:#ffb74d
-    style PROC fill:#ffa726
 ```
 
 ## Technique Timeline (Execution Flow)
@@ -142,6 +151,7 @@ sequenceDiagram
         M->>S: Check debug flags (PEB, ProcessDebugPort)
         M->>S: Test exception handling
         M->>S: Scan for breakpoints
+        M->>S: Measure timing deltas
 
         alt Debugger Detected
             M->>M: Exit, crash, or decrypt fake payload
@@ -152,6 +162,7 @@ sequenceDiagram
             M->>M: Patch anti-attach functions
             M->>M: Hide threads
             M->>M: Monitor memory modifications
+            M->>M: Switch desktop
         end
     end
 ```
@@ -176,11 +187,18 @@ mindmap
       CloseHandle
       UnhandledExceptionFilter
       DbgPrint
+    Timing-Based
+      GetLocalTime
+      GetSystemTime
+      GetTickCount
+      QueryPerformanceCounter
+      timeGetTime
     Behavioral
-      Timing Checks
       Self-Debugging
       Window Enumeration
       Process List
+      Console Control Events
+      Desktop Switching
     Protection
       Function Patching
       Thread Hiding
@@ -201,8 +219,8 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>30 techniques]
-        C2[Anti-Sandbox<br/>9 techniques]
+        C1[Anti-Debugger<br/>39 techniques]
+        C2[Anti-Sandbox<br/>8 techniques]
     end
 
     C1 -.High Effectiveness.-> T1
@@ -226,36 +244,40 @@ graph TD
         HEAP[Heap Flags]
         EXC[Exception Handling]
         MEM[Memory Scanning]
+        TIMING[Timing Analysis]
     end
 
     subgraph Specific Techniques
-        T008[008: IsDebuggerPresent]
-        T012[012: CheckPEB]
-        T016[016: RtlQueryProcessHeapInformation]
-        T017[017: RtlQueryProcessDebugInformation]
-        T013[013: SetUnhandledExceptionFilter]
-        T025[025: RaiseException]
-        T032[032-038: INT Instructions]
-        T026[026: MemoryBreakpoint]
-        T027[027: AntiStepOver]
-        T029[029: NtQueryVirtualMemory]
+        T002[AD002: IsDebuggerPresent]
+        T005[AD005: CheckPEB]
+        T009[AD009: RtlQueryProcessHeapInformation]
+        T010[AD010: RtlQueryProcessDebugInformation]
+        T006[AD006: SetUnhandledExceptionFilter]
+        T016[AD016: RaiseException]
+        T023[AD023-029: INT Instructions]
+        T017[AD017: SoftwareBreakpoint]
+        T018[AD018: AntiStepOver]
+        T020[AD020: NtQueryVirtualMemory]
+        T035[AD035-039: Timing Checks]
     end
 
-    PEB --> T008
-    PEB --> T012
-    HEAP --> T016
-    HEAP --> T017
-    EXC --> T013
-    EXC --> T025
-    EXC --> T032
-    MEM --> T026
-    MEM --> T027
-    MEM --> T029
+    PEB --> T002
+    PEB --> T005
+    HEAP --> T009
+    HEAP --> T010
+    EXC --> T006
+    EXC --> T016
+    EXC --> T023
+    MEM --> T017
+    MEM --> T018
+    MEM --> T020
+    TIMING --> T035
 
     style PEB fill:#e3f2fd
     style HEAP fill:#e8f5e9
     style EXC fill:#fff3e0
     style MEM fill:#fce4ec
+    style TIMING fill:#f3e5f5
 ```
 
 ## Usage Examples
@@ -274,6 +296,6 @@ graph TD
 
 ---
 
-**Last Updated**: 2026-02-06
-**Total Techniques**: 39
+**Last Updated**: 2026-02-08
+**Total Techniques**: 47
 **Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)
