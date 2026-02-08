@@ -71,7 +71,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | RtlQueryProcessHeapInformation | AD009 | - | Yes |
 | RtlQueryProcessDebugInformation | AD010 | - | Yes |
 | Heap Flags (direct PEB inspection) | AD042 | Yes | Yes |
-| Heap ForceFlags | - | Yes | Yes |
+| Heap ForceFlags | AD042 | Yes | Yes |
 | Heap Protection (sentinel patterns) | - | - | Yes |
 | Low Fragmentation Heap | - | Yes | - |
 
