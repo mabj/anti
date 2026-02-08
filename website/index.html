@@ -159,12 +159,33 @@ td:first-child{color:#1a8a1a;white-space:nowrap}
 }
 .toc li{padding:2px 0}
 .toc li::before{content:'> ';color:#1a3a1a}
+.search-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:20px 0;
+}
+.search-wrap .prompt{flex-shrink:0}
+.search-box{
+  flex:1;
+  background:#0a0a0a;
+  border:1px solid #1a3a1a;
+  color:#33ff33;
+  font-family:'VT323','Courier New',monospace;
+  font-size:16px;
+  padding:8px 12px;
+  outline:none;
+  caret-color:#33ff33;
+}
+.search-box::placeholder{color:#1a3a1a}
+.search-box:focus{border-color:#33ff33;box-shadow:0 0 8px rgba(51,255,51,.2)}
 @media(max-width:600px){
   pre.ascii{font-size:7px}
   .stats{gap:10px}
   .stat{padding:8px 12px}
   .toc{columns:1}
   table{font-size:13px}
+  .search-wrap{flex-direction:column;align-items:stretch}
 }
 </style>
 </head>
@@ -204,6 +225,11 @@ Do not use these techniques for malicious purposes.
 </div>
 
 <hr class="separator">
+
+<div class="search-wrap">
+<label for="search" class="prompt">grep -i</label>
+<input type="text" id="search" class="search-box" placeholder="filter techniques...">
+</div>
 
 <p class="prompt">cat techniques/anti-sandbox.db</p>
 
@@ -311,6 +337,47 @@ YOU ARE VISITOR #<span id="vc">000000</span> SINCE 1997
 
 <script>
 document.getElementById('vc').textContent=String(Math.floor(Math.random()*900000)+100000).padStart(6,'0');
+
+document.getElementById('search').addEventListener('input',function(){
+  var q=this.value.toLowerCase();
+  var tables=document.querySelectorAll('table');
+  tables.forEach(function(table){
+    var rows=table.querySelectorAll('tr');
+    var separators=[];
+    var groups=[];
+    var currentGroup=null;
+    for(var i=0;i<rows.length;i++){
+      var row=rows[i];
+      if(row.querySelector('th')){
+        row.style.display='';
+        continue;
+      }
+      var cs=row.querySelector('td[colspan]');
+      if(cs){
+        currentGroup={sep:row,rows:[]};
+        groups.push(currentGroup);
+        continue;
+      }
+      if(!q){
+        row.style.display='';
+      }else{
+        var text=row.textContent.toLowerCase();
+        row.style.display=text.indexOf(q)!==-1?'':'none';
+      }
+      if(currentGroup){
+        currentGroup.rows.push(row);
+      }
+    }
+    groups.forEach(function(g){
+      if(!q){
+        g.sep.style.display='';
+        return;
+      }
+      var anyVisible=g.rows.some(function(r){return r.style.display!=='none';});
+      g.sep.style.display=anyVisible?'':'none';
+    });
+  });
+});
 </script>
 </body>
 </html>
