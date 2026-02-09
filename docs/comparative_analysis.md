@@ -99,7 +99,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | INT1 with prefixes | AD029 | - | Yes |
 | Stack Segment Register (push ss/pop ss) | - | - | Yes |
 | Instruction Counting (HW BP) | - | - | Yes |
-| DebugBreak | - | - | Yes |
+| DebugBreak | AD023 | - | Yes |
 
 ### 3.5 Memory & Breakpoint Detection
 
