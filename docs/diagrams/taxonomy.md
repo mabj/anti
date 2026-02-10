@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>50 Total] --> B[Anti-Debugger<br/>42 techniques<br/>84.0%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>16.0%]
+    A[Anti-Analysis Techniques<br/>51 Total] --> B[Anti-Debugger<br/>43 techniques<br/>84.3%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>15.7%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,22 +33,22 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 42
+    "Anti-Debugger" : 43
     "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (42)
+## Anti-Debugger Techniques (43)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>42 Techniques]
+    AD[Anti-Debugger<br/>43 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>9 techniques]
     AD --> EXC[Exception-Based<br/>12 techniques]
     AD --> MEM[Memory & Breakpoints<br/>5 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
-    AD --> TIME[Timing-Based<br/>5 techniques]
+    AD --> TIME[Timing-Based<br/>6 techniques]
     AD --> OTHER[Other Detection<br/>6 techniques]
 
     PEB --> PEB1[AD001: CheckProcessDebugPort]
@@ -91,6 +91,7 @@ graph LR
     TIME --> TIME3[AD037: GetTickCount]
     TIME --> TIME4[AD038: QueryPerformanceCounter]
     TIME --> TIME5[AD039: timeGetTime]
+    TIME --> TIME6[AD043: RDTSC]
 
     OTHER --> OTH1[AD009: RtlQueryProcessHeapInformation]
     OTHER --> OTH2[AD010: RtlQueryProcessDebugInformation]
@@ -196,6 +197,7 @@ mindmap
       GetTickCount
       QueryPerformanceCounter
       timeGetTime
+      RDTSC
     Behavioral
       Self-Debugging
       Window Enumeration
@@ -222,7 +224,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>42 techniques]
+        C1[Anti-Debugger<br/>43 techniques]
         C2[Anti-Sandbox<br/>8 techniques]
     end
 
@@ -299,6 +301,6 @@ graph TD
 
 ---
 
-**Last Updated**: 2026-02-08
-**Total Techniques**: 50
+**Last Updated**: 2026-02-09
+**Total Techniques**: 51
 **Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)

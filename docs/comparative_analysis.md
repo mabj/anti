@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 50 techniques
+1. **This project** (`anti`) - 51 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 62 techniques
 
@@ -20,12 +20,12 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugger** | 42 techniques | ~34 techniques | 62 techniques |
+| **Anti-Debugger** | 43 techniques | ~34 techniques | 62 techniques |
 | **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
 | **Code Injection** | 0 | 7 techniques | N/A |
-| **Timing Attacks** | 5 (in anti-debugger) | 12 techniques | 7 techniques |
+| **Timing Attacks** | 6 (in anti-debugger) | 12 techniques | 7 techniques |
 | **Companion tool** | N/A | N/A | ShowStopper |
 
 ---
@@ -133,7 +133,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | GetTickCount | AD037 | - | Yes |
 | QueryPerformanceCounter | AD038 | - | Yes |
 | timeGetTime | AD039 | - | Yes |
-| RDTSC / RDPMC | - | Yes | Yes |
+| RDTSC / RDPMC | AD043 | Yes | Yes |
 | ZwGetTickCount / KiGetTickCount | - | - | Yes |
 | Sleep acceleration detection | - | Yes | - |
 | NtDelayExecution | - | Yes | - |
@@ -222,7 +222,6 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Technique | Check Point Category | Priority |
 | ----------- | --------------------- | ---------- |
-| RDTSC / RDPMC | Timing | High |
 | NtQuerySystemInformation (KernelDebugger) | Debug Flags | Medium |
 | OpenProcess (SeDebugPrivilege) | Object Handles | Medium |
 | CreateFile (exclusive open) | Object Handles | Medium |
@@ -240,7 +239,6 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Technique | Category | Priority |
 | ----------- | ---------- | ---------- |
-| RDTSC timing | Anti-Debug (Timing) | High |
 | CPUID hypervisor detection | Anti-VM | High |
 | WMI-based VM detection | Anti-VM | High |
 | VirtualBox artifact checks | Anti-VM | Medium |
@@ -297,7 +295,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 - Limited anti-sandbox coverage (8 vs Al-Khaser's 90+)
 - No anti-VM, anti-disassembly, or anti-dumping categories
-- Missing RDTSC/RDPMC timing technique (hardware-level)
+- No kernel-level anti-debug techniques (NtQuerySystemInformation KernelDebugger)
 
 **Al-Khaser**:
 
@@ -319,9 +317,9 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 42 | ~34 | 62 |
-| Shared with Check Point | 36 / 62 (58%) | ~25 / 62 (40%) | - |
-| Shared with Al-Khaser (anti-debug) | 25 / 34 (74%) | - | ~25 / 34 (74%) |
+| Total anti-debug techniques | 43 | ~34 | 62 |
+| Shared with Check Point | 37 / 62 (60%) | ~25 / 62 (40%) | - |
+| Shared with Al-Khaser (anti-debug) | 26 / 34 (76%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~15 |
 | Anti-sandbox/VM techniques | 8 | ~90+ | 0 |
 
@@ -334,19 +332,16 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 - ~~NtQueryInformationProcess (ProcessDebugFlags)~~ - Implemented as **AD040**
 - ~~PEB NtGlobalFlag (0x70)~~ - Implemented as **AD041**
 - ~~Heap Flags / ForceFlags (direct)~~ - Implemented as **AD042**
-
-### High-Priority Additions (present in both Al-Khaser and Check Point)
-
-1. **RDTSC / RDPMC** - Most precise timing method, hardware-level
+- ~~RDTSC / RDPMC~~ - Implemented as **AD043**
 
 ### Medium-Priority Additions (present in one reference)
 
-2. **NtQuerySystemInformation (KernelDebugger)** - Kernel-level detection (Check Point)
-3. **OpenProcess on csrss.exe (SeDebugPrivilege)** - Both references
-4. **CPUID hypervisor detection** - Essential anti-VM technique (Al-Khaser)
-5. **WMI-based VM queries** - Modern anti-VM standard (Al-Khaser)
-6. **Code checksums** - Active integrity monitoring (Check Point)
-7. **Anti-disassembly techniques** - New category, 6 techniques from Al-Khaser
+1. **NtQuerySystemInformation (KernelDebugger)** - Kernel-level detection (Check Point)
+2. **OpenProcess on csrss.exe (SeDebugPrivilege)** - Both references
+3. **CPUID hypervisor detection** - Essential anti-VM technique (Al-Khaser)
+4. **WMI-based VM queries** - Modern anti-VM standard (Al-Khaser)
+5. **Code checksums** - Active integrity monitoring (Check Point)
+6. **Anti-disassembly techniques** - New category, 6 techniques from Al-Khaser
 
 ### New Category Suggestions
 
