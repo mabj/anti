@@ -3,6 +3,7 @@
 This anti-debugging technique detects kernel-mode debuggers by querying system-level kernel debugger information flags.
 
 Key aspects:
+
 - Uses `NtQuerySystemInformation()` with `SystemKernelDebuggerInformation` class (0x23)
 - Queries two kernel flags: `DebuggerEnabled` and `DebuggerNotPresent`
 - Detects kernel debuggers attached at system level (WinDbg kernel mode, SoftICE)
