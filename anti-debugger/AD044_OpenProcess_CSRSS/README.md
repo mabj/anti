@@ -13,7 +13,7 @@ Key aspects:
 - Effective against debuggers running with administrator or system privileges
 - Simple technique that exploits privilege level differences between normal and debug contexts
 
->> PS: this technique seems to not work with my setup using x64dbg or WinDBG and Windows 11.
+> PS: this technique seems to not work with my setup using x64dbg or WinDBG and Windows 11.
 
 ## Build
 
