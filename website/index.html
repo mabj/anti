@@ -201,12 +201,12 @@ td:first-child{color:#1a8a1a;white-space:nowrap}
 /_/   \_\_| \_| |_| |___|   /_/   \_\_| \_/_/   \_\_____|_| |____/___|____/
 </pre>
 <div class="subtitle">[ ANTI-ANALYSIS TECHNIQUE COLLECTION ]</div>
-<div class="subtitle">- 51 techniques for the curious mind -</div>
+<div class="subtitle">- 55 techniques for the curious mind -</div>
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">51</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">43</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">55</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">47</div><div class="lbl">ANTI-DEBUG</div></div>
 <div class="stat"><div class="num">8</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
@@ -250,7 +250,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-debugger.db</p>
 
-<h2> ANTI-DEBUGGER :: 43 techniques </h2>
+<h2> ANTI-DEBUGGER :: 47 techniques </h2>
 <span class="cat-label cat-ad">ANTI-DEBUGGER</span>
 
 <table>
@@ -265,6 +265,7 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD040_ProcessDebugFlags">AD040</a></td><td>ProcessDebugFlags</td><td>Queries ProcessDebugFlags via NtQueryInformationProcess</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD041_NtGlobalFlag">AD041</a></td><td>NtGlobalFlag</td><td>Checks PEB NtGlobalFlag for heap debugging flags set by debugger</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD042_HeapFlags">AD042</a></td><td>HeapFlags</td><td>Inspects heap Flags and ForceFlags for debugger-set values</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD047_SystemKernelDebuggerInformation">AD047</a></td><td>SystemKernelDebuggerInformation</td><td>Detects kernel-mode debuggers by querying system kernel debugger flags</td></tr>
 <tr><td colspan="3" style="color:#1a3a1a">--- Exception-Based ---</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD006_SetUnhandledExceptionFilter">AD006</a></td><td>SetUnhandledExceptionFilter</td><td>Detects debugger takeover of exception handling chain</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD007_CloseHandle">AD007</a></td><td>CloseHandle</td><td>Checks if CloseHandle raises exception on invalid handle</td></tr>
@@ -284,6 +285,7 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD018_AntiStepOver">AD018</a></td><td>AntiStepOver</td><td>Checks for breakpoint at function return address</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD019_MemoryBreakpoint">AD019</a></td><td>MemoryBreakpoint</td><td>Uses guard page exception to detect debugger</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD020_NtQueryVirtualMemory_WorkingSetList">AD020</a></td><td>NtQueryVirtualMemory</td><td>Checks working set page attributes for modifications</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD045_CodeChecksum">AD045</a></td><td>CodeChecksum</td><td>Continuously monitors function checksums to detect breakpoints</td></tr>
 <tr><td colspan="3" style="color:#1a3a1a">--- Self-Protection ---</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD014_NtSetInformationThread">AD014</a></td><td>NtSetInformationThread</td><td>Hides thread from debugger using ThreadHideFromDebugger</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD021_DbgBreakPoint_patch">AD021</a></td><td>DbgBreakPoint Patch</td><td>Patches DbgBreakPoint to prevent debugger attachment</td></tr>
@@ -304,6 +306,8 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD031_GenerateConsoleCtrlEvent">AD031</a></td><td>GenerateConsoleCtrlEvent</td><td>Detects debugger by checking console control event handling</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD032_GetShellWindow">AD032</a></td><td>GetShellWindow</td><td>Compares parent PID against Explorer to detect abnormal exec</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD033_FindWindow">AD033</a></td><td>FindWindow</td><td>Detects debuggers by searching for known window class names</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD044_OpenProcess_CSRSS">AD044</a></td><td>OpenProcess CSRSS</td><td>Detects elevated debugger by attempting to open csrss.exe</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD046_CreateFileA_Exclusive">AD046</a></td><td>CreateFileA Exclusive</td><td>Detects debugger by attempting exclusive file access on executable</td></tr>
 </table>
 
 <hr class="separator">

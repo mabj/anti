@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>54 Total] --> B[Anti-Debugger<br/>46 techniques<br/>85.2%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>14.8%]
+    A[Anti-Analysis Techniques<br/>55 Total] --> B[Anti-Debugger<br/>47 techniques<br/>85.5%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>14.5%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,18 +33,18 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 46
+    "Anti-Debugger" : 47
     "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (46)
+## Anti-Debugger Techniques (47)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>46 Techniques]
+    AD[Anti-Debugger<br/>47 Techniques]
 
-    AD --> PEB[PEB & Process Info<br/>9 techniques]
+    AD --> PEB[PEB & Process Info<br/>10 techniques]
     AD --> EXC[Exception-Based<br/>12 techniques]
     AD --> MEM[Memory & Breakpoints<br/>6 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
@@ -60,6 +60,7 @@ graph LR
     PEB --> PEB7[AD040: ProcessDebugFlags]
     PEB --> PEB8[AD041: NtGlobalFlag]
     PEB --> PEB9[AD042: HeapFlags]
+    PEB --> PEB10[AD047: SystemKernelDebuggerInformation]
 
     EXC --> EXC1[AD006: SetUnhandledExceptionFilter]
     EXC --> EXC2[AD007: CloseHandle]
@@ -227,7 +228,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>46 techniques]
+        C1[Anti-Debugger<br/>47 techniques]
         C2[Anti-Sandbox<br/>8 techniques]
     end
 
@@ -305,5 +306,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-02-06
-**Total Techniques**: 54
+**Total Techniques**: 55
 **Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)
