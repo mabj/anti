@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>53 Total] --> B[Anti-Debugger<br/>45 techniques<br/>84.9%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>15.1%]
+    A[Anti-Analysis Techniques<br/>54 Total] --> B[Anti-Debugger<br/>46 techniques<br/>85.2%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>14.8%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,23 +33,23 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 45
+    "Anti-Debugger" : 46
     "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (45)
+## Anti-Debugger Techniques (46)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>45 Techniques]
+    AD[Anti-Debugger<br/>46 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>9 techniques]
     AD --> EXC[Exception-Based<br/>12 techniques]
     AD --> MEM[Memory & Breakpoints<br/>6 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
-    AD --> OTHER[Other Detection<br/>7 techniques]
+    AD --> OTHER[Other Detection<br/>8 techniques]
 
     PEB --> PEB1[AD001: CheckProcessDebugPort]
     PEB --> PEB2[AD002: IsDebuggerPresent]
@@ -101,6 +101,7 @@ graph LR
     OTHER --> OTH5[AD032: GetShellWindow]
     OTHER --> OTH6[AD033: FindWindow]
     OTHER --> OTH7[AD044: OpenProcess_CSRSS]
+    OTHER --> OTH8[AD046: CreateFileA_Exclusive]
 
     style AD fill:#ffebee
     style PEB fill:#ffcdd2
@@ -226,7 +227,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>45 techniques]
+        C1[Anti-Debugger<br/>46 techniques]
         C2[Anti-Sandbox<br/>8 techniques]
     end
 
@@ -304,5 +305,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-02-06
-**Total Techniques**: 53
+**Total Techniques**: 54
 **Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)
