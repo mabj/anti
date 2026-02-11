@@ -24,7 +24,7 @@ int main (int argc, char *argv[]) {
     if (__is_debugged())
         MessageBoxA(NULL, "[+] The process was created by Debugger.", "Anti-debug 041", MB_OK);
     else
-        MessageBoxA(NULL, "[+] The process was not created by Debugger.", "Anti-debug 041", MB_OK);
+        MessageBoxA(NULL, "[+] The process was NOT created by Debugger.", "Anti-debug 041", MB_OK);
 
     return 0;
 }

@@ -2,11 +2,11 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 51 techniques
+1. **This project** (`anti`) - 52 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 62 techniques
 
-**Date**: 2026-02-09
+**Date**: 2026-02-06
 
 ---
 
@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugger** | 43 techniques | ~34 techniques | 62 techniques |
+| **Anti-Debugger** | 44 techniques | ~34 techniques | 62 techniques |
 | **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -150,7 +150,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | FindWindow (debugger windows) | AD033 | - | Yes |
 | Parent process check (GetShellWindow) | AD032 | Yes | Yes |
 | GenerateConsoleCtrlEvent | AD031 | - | Yes |
-| OpenProcess (csrss / SeDebugPrivilege) | - | Yes | Yes |
+| OpenProcess (csrss / SeDebugPrivilege) | AD044 | Yes | Yes |
 | CreateFile (exclusive open) | - | - | Yes |
 | LoadLibrary (file handle) | - | - | Yes |
 | SwitchToThread / NtYieldExecution | - | Yes | Yes |
@@ -223,7 +223,6 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Technique | Check Point Category | Priority |
 | ----------- | --------------------- | ---------- |
 | NtQuerySystemInformation (KernelDebugger) | Debug Flags | Medium |
-| OpenProcess (SeDebugPrivilege) | Object Handles | Medium |
 | CreateFile (exclusive open) | Object Handles | Medium |
 | Code checksum monitoring | Process Memory | Medium |
 | DebugBreak | Assembly | Medium |
@@ -317,9 +316,9 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 43 | ~34 | 62 |
-| Shared with Check Point | 37 / 62 (60%) | ~25 / 62 (40%) | - |
-| Shared with Al-Khaser (anti-debug) | 26 / 34 (76%) | - | ~25 / 34 (74%) |
+| Total anti-debug techniques | 44 | ~34 | 62 |
+| Shared with Check Point | 38 / 62 (61%) | ~25 / 62 (40%) | - |
+| Shared with Al-Khaser (anti-debug) | 27 / 34 (79%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~15 |
 | Anti-sandbox/VM techniques | 8 | ~90+ | 0 |
 
@@ -333,15 +332,15 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 - ~~PEB NtGlobalFlag (0x70)~~ - Implemented as **AD041**
 - ~~Heap Flags / ForceFlags (direct)~~ - Implemented as **AD042**
 - ~~RDTSC / RDPMC~~ - Implemented as **AD043**
+- ~~OpenProcess on csrss.exe (SeDebugPrivilege)~~ - Implemented as **AD044**
 
 ### Medium-Priority Additions (present in one reference)
 
 1. **NtQuerySystemInformation (KernelDebugger)** - Kernel-level detection (Check Point)
-2. **OpenProcess on csrss.exe (SeDebugPrivilege)** - Both references
-3. **CPUID hypervisor detection** - Essential anti-VM technique (Al-Khaser)
-4. **WMI-based VM queries** - Modern anti-VM standard (Al-Khaser)
-5. **Code checksums** - Active integrity monitoring (Check Point)
-6. **Anti-disassembly techniques** - New category, 6 techniques from Al-Khaser
+2. **CPUID hypervisor detection** - Essential anti-VM technique (Al-Khaser)
+3. **WMI-based VM queries** - Modern anti-VM standard (Al-Khaser)
+4. **Code checksums** - Active integrity monitoring (Check Point)
+5. **Anti-disassembly techniques** - New category, 6 techniques from Al-Khaser
 
 ### New Category Suggestions
 
