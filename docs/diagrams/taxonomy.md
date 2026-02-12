@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>56 Total] --> B[Anti-Debugger<br/>48 techniques<br/>85.7%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>14.3%]
+    A[Anti-Analysis Techniques<br/>57 Total] --> B[Anti-Debugger<br/>49 techniques<br/>86.0%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>14.0%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,20 +33,20 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 48
+    "Anti-Debugger" : 49
     "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (48)
+## Anti-Debugger Techniques (49)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>48 Techniques]
+    AD[Anti-Debugger<br/>49 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>10 techniques]
     AD --> EXC[Exception-Based<br/>12 techniques]
-    AD --> MEM[Memory & Breakpoints<br/>6 techniques]
+    AD --> MEM[Memory & Breakpoints<br/>7 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
     AD --> OTHER[Other Detection<br/>9 techniques]
@@ -81,6 +81,7 @@ graph LR
     MEM --> MEM4[AD019: MemoryBreakpoint]
     MEM --> MEM5[AD020: NtQueryVirtualMemory]
     MEM --> MEM6[AD045: CodeChecksum]
+    MEM --> MEM7[AD049: DetectAPIPatch]
 
     SELF --> SELF1[AD014: NtSetInformationThread]
     SELF --> SELF2[AD021: DbgBreakPoint_patch]
@@ -229,7 +230,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>47 techniques]
+        C1[Anti-Debugger<br/>49 techniques]
         C2[Anti-Sandbox<br/>8 techniques]
     end
 
@@ -307,5 +308,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-02-12
-**Total Techniques**: 56
+**Total Techniques**: 57
 **Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)

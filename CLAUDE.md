@@ -149,6 +149,51 @@ This file contains mermaid diagrams and tends to drift out of sync. When adding 
 - Outputs both x86 and amd64 binaries to `bin/`
 - Dockerfile base: `ubuntu:22.04` with `nasm make mingw-w64`
 
+### Standard Makefile Template
+
+All technique Makefiles **must** follow this format (substitute `{TechniqueName}` and `{category}` accordingly):
+
+```makefile
+MAIN_NAME=anti_{category}_{technique_name_snake_case}
+
+CC32 = i686-w64-mingw32-gcc -m32
+CC64 = x86_64-w64-mingw32-gcc -m64
+AR = ar
+CFLAGS = -Wall -Wextra -std=c99 -static -Wno-missing-field-initializers -Wno-cast-function-type -Wno-unused-label -Wno-unused-parameter -masm=intel -Wa,--no-warn
+OPTIMIZATION_FLAGS = -Os -s -ffunction-sections -fdata-sections -fno-ident
+# -Wl -fgc-sections
+LDFLAGS = #-lshlwapi -lpsapi -lws2_32
+
+all: clean build-x86 build-amd64
+
+build-image:
+	docker build . -t ${MAIN_NAME}
+
+build:
+	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
+
+build-amd64:
+	$(CC64) -o bin/sample_{TechniqueName}_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+
+build-x86:
+	$(CC32) -o bin/sample_{TechniqueName}_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+
+enter:
+	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
+
+clean:
+	rm -rf bin/sample_{TechniqueName}_*.exe
+```
+
+Key conventions:
+- **`MAIN_NAME`**: `anti_{category}_{snake_case_name}` (e.g., `anti_debug_is_debugger_present`)
+- **Binary naming**: `sample_{TechniqueName}_{x86,amd64}.exe` (PascalCase technique name)
+- **`CFLAGS`**: Must include all warning flags, `-masm=intel`, and `-Wa,--no-warn`
+- **`OPTIMIZATION_FLAGS`**: Always use `-Os -s -ffunction-sections -fdata-sections -fno-ident`
+- **`LDFLAGS`**: Commented-out defaults; uncomment only the libs actually needed
+- **`clean`**: Only removes binaries (`bin/sample_*.exe`), never the `bin/` directory itself
+- **`enter`** target: Always include for interactive Docker debugging
+
 ## Important Rules
 
 - **Never modify source code** in `src/main.c` files unless explicitly asked - these are research artifacts
