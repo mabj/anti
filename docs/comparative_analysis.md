@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 57 techniques
+1. **This project** (`anti`) - 58 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugger** | 49 techniques | ~34 techniques | 61 techniques |
+| **Anti-Debugger** | 50 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -62,7 +62,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | PEB NtGlobalFlag | AD041 | Yes | Yes |
 | NtQueryObject (DebugObject) | AD015 | Yes | Yes |
 | NtQuerySystemInformation (KernelDebugger) | AD047 | - | Yes |
-| KUSER_SHARED_DATA | - | - | Yes |
+| KUSER_SHARED_DATA | AD050 | - | Yes |
 
 ### 3.2 Heap Inspection
 
@@ -225,7 +225,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | DebugBreak | Assembly | Medium |
 | Stack Segment Register | Assembly | Low |
 | Instruction Counting | Assembly | Low |
-| KUSER_SHARED_DATA | Debug Flags | Low |
+| ~~KUSER_SHARED_DATA~~ | ~~Debug Flags~~ | ~~Low~~ - Implemented as **AD050** |
 | Heap Protection (sentinel patterns) | Debug Flags | Low |
 | Selectors | Misc | Low |
 | DbgSetDebugFilterState | Misc | Low |
@@ -313,8 +313,8 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 49 | ~34 | 61 |
-| Shared with Check Point | 43 / 61 (70%) | ~25 / 61 (41%) | - |
+| Total anti-debug techniques | 50 | ~34 | 61 |
+| Shared with Check Point | 44 / 61 (72%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~14 |
 | Anti-sandbox/VM techniques | 8 | ~90+ | 0 |

@@ -201,12 +201,12 @@ td:first-child{color:#1a8a1a;white-space:nowrap}
 /_/   \_\_| \_| |_| |___|   /_/   \_\_| \_/_/   \_\_____|_| |____/___|____/
 </pre>
 <div class="subtitle">[ ANTI-ANALYSIS TECHNIQUE COLLECTION ]</div>
-<div class="subtitle">- 57 techniques for the curious mind -</div>
+<div class="subtitle">- 58 techniques for the curious mind -</div>
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">57</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">49</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">58</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">50</div><div class="lbl">ANTI-DEBUG</div></div>
 <div class="stat"><div class="num">8</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
@@ -250,7 +250,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-debugger.db</p>
 
-<h2> ANTI-DEBUGGER :: 49 techniques </h2>
+<h2> ANTI-DEBUGGER :: 50 techniques </h2>
 <span class="cat-label cat-ad">ANTI-DEBUGGER</span>
 
 <table>
@@ -266,6 +266,7 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD041_NtGlobalFlag">AD041</a></td><td>NtGlobalFlag</td><td>Checks PEB NtGlobalFlag for heap debugging flags set by debugger</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD042_HeapFlags">AD042</a></td><td>HeapFlags</td><td>Inspects heap Flags and ForceFlags for debugger-set values</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD047_SystemKernelDebuggerInformation">AD047</a></td><td>SystemKernelDebuggerInformation</td><td>Detects kernel-mode debuggers by querying system kernel debugger flags</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD050_KUSER_SHARED_DATA">AD050</a></td><td>KUSER_SHARED_DATA</td><td>Reads KdDebuggerEnabled from KUSER_SHARED_DATA to detect kernel debugger</td></tr>
 <tr><td colspan="3" style="color:#1a3a1a">--- Exception-Based ---</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD006_SetUnhandledExceptionFilter">AD006</a></td><td>SetUnhandledExceptionFilter</td><td>Detects debugger takeover of exception handling chain</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugger/AD007_CloseHandle">AD007</a></td><td>CloseHandle</td><td>Checks if CloseHandle raises exception on invalid handle</td></tr>
