@@ -4,7 +4,7 @@ This report compares three anti-analysis technique collections:
 
 1. **This project** (`anti`) - 56 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
-3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 62 techniques
+3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
 **Date**: 2026-02-12
 
@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugger** | 48 techniques | ~34 techniques | 62 techniques |
+| **Anti-Debugger** | 48 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -41,7 +41,7 @@ Check Point             ██████████████████
 
 - **This project** focuses on anti-debugger and anti-sandbox with clean, isolated implementations.
 - **Al-Khaser** is the broadest: anti-debug, anti-VM (per-hypervisor), anti-disassembly, anti-dumping, code injection, DLL injection detection, and Office macro simulation.
-- **Check Point** is the deepest on anti-debugging specifically, with 62 techniques and detailed explanations, but does not cover anti-sandbox or anti-VM.
+- **Check Point** is the deepest on anti-debugging specifically, with 61 techniques and detailed explanations, but does not cover anti-sandbox or anti-VM.
 
 ---
 
@@ -152,7 +152,6 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | GenerateConsoleCtrlEvent | AD031 | - | Yes |
 | OpenProcess (csrss / SeDebugPrivilege) | AD044 | Yes | Yes |
 | CreateFile (exclusive open) | AD046 | - | Yes |
-| LoadLibrary (file handle) | - | - | Yes |
 | LoadLibrary (file handle exclusive access) | AD048 | - | Yes |
 | SwitchToThread / NtYieldExecution | - | Yes | Yes |
 | TLS callbacks | - | Yes | - |
@@ -314,10 +313,10 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 48 | ~34 | 62 |
-| Shared with Check Point | 42 / 62 (68%) | ~25 / 62 (40%) | - |
+| Total anti-debug techniques | 48 | ~34 | 61 |
+| Shared with Check Point | 42 / 61 (69%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 27 / 34 (79%) | - | ~25 / 34 (74%) |
-| Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~15 |
+| Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~14 |
 | Anti-sandbox/VM techniques | 8 | ~90+ | 0 |
 
 ---
