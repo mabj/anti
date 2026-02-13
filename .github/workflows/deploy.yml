@@ -1,0 +1,25 @@
+name: Deploy Website to Linode
+
+on:
+  push:
+    paths:
+      - 'website/index.html'
+      - 'website/gameboy.html'
+      - 'website/hacker_90s.html'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy file via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "website/*.html"
+          target: "/var/www/html/" # Change this to your actual server path
+          strip_components: 1      # Removes the 'website/' folder prefix during copy
