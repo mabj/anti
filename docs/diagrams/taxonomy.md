@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>59 Total] --> B[Anti-Debugger<br/>51 techniques<br/>86.4%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>13.6%]
+    A[Anti-Analysis Techniques<br/>60 Total] --> B[Anti-Debugger<br/>52 techniques<br/>86.7%]
+    A --> C[Anti-Sandbox<br/>8 techniques<br/>13.3%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,19 +33,19 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 51
+    "Anti-Debugger" : 52
     "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (51)
+## Anti-Debugger Techniques (52)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>51 Techniques]
+    AD[Anti-Debugger<br/>52 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>12 techniques]
-    AD --> EXC[Exception-Based<br/>12 techniques]
+    AD --> EXC[Exception-Based<br/>13 techniques]
     AD --> MEM[Memory & Breakpoints<br/>7 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
@@ -76,6 +76,7 @@ graph LR
     EXC --> EXC10[AD027: INT1_long]
     EXC --> EXC11[AD028: popfd_trap]
     EXC --> EXC12[AD029: INT1_prefix]
+    EXC --> EXC13[AD052: InstructionCounting]
 
     MEM --> MEM1[AD012: GetWriteWatch]
     MEM --> MEM2[AD017: SoftwareBreakpoint]
@@ -232,7 +233,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>51 techniques]
+        C1[Anti-Debugger<br/>52 techniques]
         C2[Anti-Sandbox<br/>8 techniques]
     end
 
@@ -310,5 +311,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-02-12
-**Total Techniques**: 59
+**Total Techniques**: 60
 **Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)
