@@ -3,9 +3,7 @@ name: Deploy Website to Linode
 on:
   push:
     paths:
-      - 'website/index.html'
-      - 'website/gameboy.html'
-      - 'website/hacker_90s.html'
+      - 'website/**.html'
 
 jobs:
   deploy:
@@ -21,5 +19,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "website/*.html"
-          target: "/var/www/html/" # Change this to your actual server path
+          target: "/var/www/anti.alvar.es/" # Change this to your actual server path
           strip_components: 1      # Removes the 'website/' folder prefix during copy
