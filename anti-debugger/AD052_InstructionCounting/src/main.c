@@ -3,10 +3,7 @@
 #include <stdio.h>
 #include "hwbrk.h"
 
-static LONG WINAPI InstructionCountingExeptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
-{
-
-    printf("[+] Got an Exception %x\n", pExceptionInfo->ExceptionRecord->ExceptionCode);
+static LONG WINAPI InstructionCountingExeptionHandler(PEXCEPTION_POINTERS pExceptionInfo) {
     if (pExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_SINGLE_STEP)
     {
 #ifdef _WIN64
@@ -32,7 +29,7 @@ __declspec(naked) DWORD WINAPI InstructionCountingFunc(LPVOID lpThreadParameter)
         "nop\n\t"
         "nop\n\t"
         "cmp cl, 4\n\t"
-        "je %l[being_debugged]\n\t"
+        "jne %l[being_debugged]\n\t"
         :                                 // No output operands
         :                                 // No input operands
         :                                 // No clobbered registers
@@ -47,7 +44,7 @@ __declspec(naked) DWORD WINAPI InstructionCountingFunc(LPVOID lpThreadParameter)
         "nop\n\t"
         "nop\n\t"
         "cmp cl, 4\n\t"
-        "je %l[being_debugged]\n\t"
+        "jne %l[being_debugged]\n\t"
         :                                 // No output operands
         :                                 // No input operands
         :                                 // No clobbered registers
@@ -55,10 +52,10 @@ __declspec(naked) DWORD WINAPI InstructionCountingFunc(LPVOID lpThreadParameter)
     );
 #endif
 
-    ExitThread(0);
+    ExitThread(false);
 
 being_debugged:
-    ExitThread(2);
+    ExitThread(true);
 }
 
 // instruction size to NOP instructions
@@ -89,11 +86,13 @@ BOOL __is_debugged(void) {
         m_hHwBps[i] = SetHardwareBreakpoint(
             hThread, HWBRK_TYPE_CODE, HWBRK_SIZE_1, (PVOID)((DWORD_PTR)pThreadAddr + OFFSET_TO_HWBRKS + i));
 
-    ResumeThread(hThread);
 
-    // for(int i = 0; i < 10; i++) {
-    //     Sleep(10000);
-    // }
+    // MAIN CODE GOES HERE
+    // If any Hardware breakpoint is set the debugger will be detected when hThread is resumed
+    // due to re-allocation of DrX registers.
+    // This could be implemented using watchdogs checking if a new Hardware Breakpoints were set. 
+
+    ResumeThread(hThread);
     WaitForSingleObject(hThread, INFINITE);
 
     for (int i = 0; i < m_nInstructionCount; i++) {
@@ -112,9 +111,9 @@ int main(void) {
     BOOL debugger_present = __is_debugged();
 
     if (debugger_present) {
-        MessageBox(NULL, "[+] The process is in Debug mode.", "AD052_InstructionCounting", MB_OK | MB_ICONWARNING);
+        MessageBox(NULL, "[+] The process is running under a Debugger.", "AD052_InstructionCounting", MB_OK | MB_ICONWARNING);
     } else {
-        MessageBox(NULL, "[+] The process is NOT in Debug mode.", "AD052_InstructionCounting", MB_OK | MB_ICONINFORMATION);
+        MessageBox(NULL, "[+] The process is likely NOT attached to Debugger (did NOT detect any hw breakpoints).", "AD052_InstructionCounting", MB_OK | MB_ICONINFORMATION);
     }
 
     return 0;

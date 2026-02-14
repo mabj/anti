@@ -52,8 +52,6 @@ HANDLE SetHardwareBreakpoint(HANDLE hThread, enum HWBRK_TYPE Type, enum HWBRK_SI
     if (reg < 0)
         return NULL;
 
-    printf("[+] Free Dr register is %d\n", reg);
-
     int slot = -1;
     for (int i = 0; i < MAX_HWBRKS; i++) {
         if (!s_hwbrks[i].inUse) {
@@ -63,7 +61,7 @@ HANDLE SetHardwareBreakpoint(HANDLE hThread, enum HWBRK_TYPE Type, enum HWBRK_SI
     }
     if (slot < 0)
         return NULL;
-    printf("[+] Trying to set Dr%d to 0x%p", reg, s);
+
     SetDebugRegister(&ctx, reg, s);
 
     ctx.Dr7 &= ~(0xFUL << (16 + reg * 4));
@@ -88,7 +86,6 @@ HANDLE SetHardwareBreakpoint(HANDLE hThread, enum HWBRK_TYPE Type, enum HWBRK_SI
     ctx.Dr7 |= (1UL << (reg * 2));
     ctx.Dr6 = 0;
 
-    printf("[+] DR0: %#x | DR1: %#x | DR2: %#x | DR3: %#x\n", ctx.Dr0, ctx.Dr1, ctx.Dr2, ctx.Dr3);
     if (!SetThreadContext(hThread, &ctx))
         return NULL;
 

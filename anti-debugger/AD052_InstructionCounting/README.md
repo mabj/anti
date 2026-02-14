@@ -11,8 +11,6 @@ Key characteristics:
 - Debuggers that handle single-step exceptions (e.g., for stepping) will consume some exceptions, causing the count to mismatch
 - Uses `SetHardwareBreakpoint` / `RemoveHardwareBreakpoint` helpers to manage debug registers via `SetThreadContext`
 
-> This technique did NOT work on Windows 10 and x64dbg. The EXCEPTION_SINGLE_STEP exception from the Hardware Breakpoint is still raised when executing the sample without a debugger. :/
-
 ## Build
 
 ### Using Docker (Recommended)
