@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 60 techniques
+1. **This project** (`anti`) - 61 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugger** | 52 techniques | ~34 techniques | 61 techniques |
+| **Anti-Debugger** | 53 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -97,7 +97,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | INT1 long form (0xCD01) | AD027 | - | - |
 | POPFD Trap Flag | AD028 | Yes | Yes |
 | INT1 with prefixes | AD029 | - | Yes |
-| Stack Segment Register (push ss/pop ss) | - | - | Yes |
+| Stack Segment Register (push ss/pop ss) | AD053 | - | Yes |
 | Instruction Counting (HW BP) | AD052 | - | Yes |
 | DebugBreak | AD023 | - | Yes |
 
@@ -223,7 +223,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Technique | Check Point Category | Priority |
 | ----------- | --------------------- | ---------- |
 | DebugBreak | Assembly | Medium |
-| Stack Segment Register | Assembly | Low |
+| ~~Stack Segment Register~~ | ~~Assembly~~ | ~~Low~~ - Implemented as **AD053** |
 | ~~Instruction Counting~~ | ~~Assembly~~ | ~~Low~~ - Implemented as **AD052** |
 | ~~KUSER_SHARED_DATA~~ | ~~Debug Flags~~ | ~~Low~~ - Implemented as **AD050** |
 | ~~Heap Protection (sentinel patterns)~~ | ~~Debug Flags~~ | ~~Low~~ - Implemented as **AD051** |
@@ -313,10 +313,10 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 52 | ~34 | 61 |
-| Shared with Check Point | 46 / 61 (75%) | ~25 / 61 (41%) | - |
+| Total anti-debug techniques | 53 | ~34 | 61 |
+| Shared with Check Point | 47 / 61 (77%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
-| Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~13 |
+| Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~12 |
 | Anti-sandbox/VM techniques | 8 | ~90+ | 0 |
 
 ---
