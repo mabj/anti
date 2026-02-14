@@ -5,13 +5,15 @@
 
 static LONG WINAPI InstructionCountingExeptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
 {
+
+    printf("[+] Got an Exception %x\n", pExceptionInfo->ExceptionRecord->ExceptionCode);
     if (pExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_SINGLE_STEP)
     {
 #ifdef _WIN64
-        pExceptionInfo->ContextRecord->Rax += 1;
+        pExceptionInfo->ContextRecord->Rcx += 1;
         pExceptionInfo->ContextRecord->Rip += 1;
 #else
-        pExceptionInfo->ContextRecord->Eax += 1;
+        pExceptionInfo->ContextRecord->Ecx += 1;
         pExceptionInfo->ContextRecord->Eip += 1;
 #endif
         return EXCEPTION_CONTINUE_EXECUTION;
@@ -24,13 +26,13 @@ __declspec(naked) DWORD WINAPI InstructionCountingFunc(LPVOID lpThreadParameter)
 #ifdef _WIN64
     __asm__ volatile goto
     (
-        "xor rax, rax\n\t"
+        "xor rcx, rcx\n\t"
         "nop\n\t"
         "nop\n\t"
         "nop\n\t"
         "nop\n\t"
-        "cmp al, 4\n\t"
-        "jne %l[being_debugged]\n\t"
+        "cmp cl, 4\n\t"
+        "je %l[being_debugged]\n\t"
         :                                 // No output operands
         :                                 // No input operands
         :                                 // No clobbered registers
@@ -39,13 +41,13 @@ __declspec(naked) DWORD WINAPI InstructionCountingFunc(LPVOID lpThreadParameter)
 #else
     __asm__ volatile goto
     (
-        "xor eax, eax\n\t"
+        "xor ecx, ecx\n\t"
         "nop\n\t"
         "nop\n\t"
         "nop\n\t"
         "nop\n\t"
-        "cmp al, 4\n\t"
-        "jne %l[being_debugged]\n\t"
+        "cmp cl, 4\n\t"
+        "je %l[being_debugged]\n\t"
         :                                 // No output operands
         :                                 // No input operands
         :                                 // No clobbered registers
@@ -53,13 +55,18 @@ __declspec(naked) DWORD WINAPI InstructionCountingFunc(LPVOID lpThreadParameter)
     );
 #endif
 
-    ExitThread(false);
+    ExitThread(0);
 
 being_debugged:
-    ExitThread(true);
+    ExitThread(2);
 }
 
-#define OFFSET_TO_HWBRKS 0x2
+// instruction size to NOP instructions
+#ifdef _WIN64
+    #define OFFSET_TO_HWBRKS 0xA
+#else
+    #define OFFSET_TO_HWBRKS 0x7
+#endif
 
 BOOL __is_debugged(void) {
     PVOID hVeh = NULL;
@@ -83,6 +90,10 @@ BOOL __is_debugged(void) {
             hThread, HWBRK_TYPE_CODE, HWBRK_SIZE_1, (PVOID)((DWORD_PTR)pThreadAddr + OFFSET_TO_HWBRKS + i));
 
     ResumeThread(hThread);
+
+    // for(int i = 0; i < 10; i++) {
+    //     Sleep(10000);
+    // }
     WaitForSingleObject(hThread, INFINITE);
 
     for (int i = 0; i < m_nInstructionCount; i++) {
@@ -91,8 +102,8 @@ BOOL __is_debugged(void) {
     }
 
     DWORD dwThreadExitCode;
-    if (true == GetExitCodeThread(hThread, &dwThreadExitCode))
-        bDebugged = (true == dwThreadExitCode);
+    if (GetExitCodeThread(hThread, &dwThreadExitCode))
+        bDebugged = (dwThreadExitCode == 2);
 
     return bDebugged;
 }
