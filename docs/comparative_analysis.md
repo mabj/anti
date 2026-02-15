@@ -157,7 +157,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | TLS callbacks | - | Yes | - |
 | Process jobs | - | Yes | - |
 | API hook detection | AD049 | Yes | - |
-| EnumWindows + SuspendThread | - | - | Yes |
+| EnumWindows + SuspendThread | AD054 | - | Yes |
 | WudfIsAnyDebuggerPresent | - | Yes | - |
 | DbgSetDebugFilterState | - | - | Yes |
 | Selectors | - | - | Yes |
@@ -229,7 +229,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | ~~Heap Protection (sentinel patterns)~~ | ~~Debug Flags~~ | ~~Low~~ - Implemented as **AD051** |
 | Selectors | Misc | Low |
 | DbgSetDebugFilterState | Misc | Low |
-| EnumWindows + SuspendThread | Interactive | Low |
+| ~~EnumWindows + SuspendThread~~ | ~~Interactive~~ | ~~Low~~ - Implemented as **AD054** |
 
 ### 5.3 In Al-Khaser but NOT in This Project (candidates for future techniques)
 
@@ -314,9 +314,9 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
 | Total anti-debug techniques | 54 | ~34 | 61 |
-| Shared with Check Point | 47 / 61 (77%) | ~25 / 61 (41%) | - |
+| Shared with Check Point | 48 / 61 (79%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
-| Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~12 |
+| Techniques unique to project | ~3 | ~30+ (mostly anti-VM) | ~12 |
 | Anti-sandbox/VM techniques | 7 | ~90+ | 0 |
 
 ---

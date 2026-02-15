@@ -3,8 +3,10 @@ name: Build All Techniques
 on:
   push:
     branches: [ master, main ]
-  pull_request:
-    branches: [ master, main ]
+    paths:
+      - 'anti-debugging/**'
+      - 'anti-sandbox/**'
+      - 'anti-reversing/**'
   workflow_dispatch:
 
 jobs:
@@ -16,23 +18,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
-    - name: Install MinGW cross-compiler
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mingw-w64 gcc make
-
-    - name: Find all techniques
-      id: find-techniques
-      run: |
-        echo "Found techniques:"
-        find anti-debugging anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | sort || echo "No technique directories found"
-
     - name: Build techniques
       run: |
-        set +e  # Don't fail on first error
+        set +e
 
         BUILD_FAILED=0
         BUILD_SUCCESS=0
@@ -43,7 +31,6 @@ jobs:
         echo "========================================="
         echo ""
 
-        # Build techniques from all category directories
         for category in anti-debugging anti-sandbox anti-reversing; do
           if [ -d "$category" ]; then
             echo "Category: $category"
@@ -57,13 +44,17 @@ jobs:
 
                 cd "$dir"
 
-                # Check if Makefile exists
-                if [ -f "Makefile" ]; then
-                  # Create bin directory if it doesn't exist
+                if [ -f "Dockerfile" ] && [ -f "Makefile" ]; then
                   mkdir -p bin
 
-                  # Try to build without Docker first (direct compilation)
-                  if make build-x86 build-amd64 2>&1; then
+                  # Extract MAIN_NAME from Makefile for the Docker image tag
+                  MAIN_NAME=$(grep '^MAIN_NAME=' Makefile | cut -d'=' -f2)
+
+                  # Build the Docker image from the technique's Dockerfile
+                  docker build . -t "$MAIN_NAME" -q
+
+                  # Run the build inside the container (no -it for CI)
+                  if docker run --rm -v "$(pwd):/experiment" -w /experiment "$MAIN_NAME" make 2>&1; then
                     echo "✓ Successfully built $category/$TECHNIQUE"
                     BUILD_SUCCESS=$((BUILD_SUCCESS + 1))
                   else
@@ -71,7 +62,7 @@ jobs:
                     BUILD_FAILED=$((BUILD_FAILED + 1))
                   fi
                 else
-                  echo "⊘ No Makefile found, skipping $category/$TECHNIQUE"
+                  echo "⊘ Missing Dockerfile or Makefile, skipping $category/$TECHNIQUE"
                   BUILD_SKIPPED=$((BUILD_SKIPPED + 1))
                 fi
 
@@ -90,7 +81,6 @@ jobs:
         echo "Skipped: $BUILD_SKIPPED"
         echo "========================================="
 
-        # Exit with error if any builds failed
         if [ $BUILD_FAILED -gt 0 ]; then
           echo ""
           echo "⚠️  Some builds failed. Please review the output above."
@@ -100,21 +90,34 @@ jobs:
         echo ""
         echo "✓ All builds completed successfully!"
 
-    - name: List built binaries
+    - name: Package artifacts
       if: success()
       run: |
-        echo "Built binaries:"
-        find anti-debugging anti-sandbox anti-reversing -name "*.exe" -type f 2>/dev/null | sort
+        DATE=$(date -u +%Y%m%d)
+        STAGING="staging"
 
-    - name: Upload build artifacts
+        for category in anti-debugging anti-sandbox anti-reversing; do
+          if [ -d "$category" ]; then
+            find "$category" -path "*/bin/*.exe" -type f | while read -r exe; do
+              mkdir -p "$STAGING/$category"
+              cp "$exe" "$STAGING/$category/"
+            done
+          fi
+        done
+
+        tar -czf "anti_${DATE}.tar.gz" -C "$STAGING" .
+
+        echo "Archive contents:"
+        tar -tzf "anti_${DATE}.tar.gz"
+        echo ""
+        echo "Created anti_${DATE}.tar.gz ($(du -h "anti_${DATE}.tar.gz" | cut -f1))"
+
+    - name: Upload archive
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: anti-analysis-techniques
-        path: |
-          anti-debugging/*/bin/*.exe
-          anti-sandbox/*/bin/*.exe
-          anti-reversing/*/bin/*.exe
+        name: anti-analysis-archive
+        path: anti_*.tar.gz
         retention-days: 30
 
     - name: Build statistics
