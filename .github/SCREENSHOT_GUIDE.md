@@ -125,7 +125,7 @@ Here's a complete template for technique READMEs:
 ```markdown
 # [XXX] Technique Name
 
-[![Category: Anti-Debugger](https://img.shields.io/badge/Category-Anti--Debugger-red)]()
+[![Category: Anti-Debugging](https://img.shields.io/badge/Category-Anti--Debugging-red)]()
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-blue)]()
 
 ## Overview
@@ -212,7 +212,7 @@ Expected output:
 
 ---
 
-**Category**: Anti-Debugger / Anti-Sandbox / Anti-Reversing
+**Category**: Anti-Debugging / Anti-Sandbox / Anti-Reversing
 **Last Updated**: YYYY-MM-DD
 ```
 

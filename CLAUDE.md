@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is an educational research repository documenting Windows anti-analysis techniques (anti-debugger, anti-sandbox, anti-reversing) used in malware. Each technique is a standalone C proof-of-concept for security researchers and malware analysts.
+This is an educational research repository documenting Windows anti-analysis techniques (anti-debugging, anti-sandbox, anti-reversing) used in malware. Each technique is a standalone C proof-of-concept for security researchers and malware analysts.
 
 **Owner**: @marcos_alvares
 **Primary use case**: Personal malware research reference
@@ -11,7 +11,7 @@ This is an educational research repository documenting Windows anti-analysis tec
 
 ```text
 anti/
-├── anti-debugger/AD###_TechniqueName/   # Anti-debugger techniques (AD prefix)
+├── anti-debugging/AD###_TechniqueName/   # Anti-debugger techniques (AD prefix)
 ├── anti-sandbox/AS###_TechniqueName/    # Anti-sandbox techniques (AS prefix)
 ├── anti-reversing/                      # Reserved for future techniques (AR prefix)
 ├── docs/diagrams/taxonomy.md            # Visual taxonomy diagrams (mermaid)
@@ -34,7 +34,7 @@ AD###_TechniqueName/
 
 ## Naming & Numbering Conventions
 
-- **Anti-Debugger**: `AD###` (e.g., AD001, AD039) - sequential, zero-padded to 3 digits
+- **Anti-Debugging**: `AD###` (e.g., AD001, AD039) - sequential, zero-padded to 3 digits
 - **Anti-Sandbox**: `AS###` (e.g., AS001, AS008)
 - **Anti-Reversing**: `AR###` (reserved, not yet used)
 - Directory format: `{prefix}{###}_{TechniqueName}` using PascalCase for technique names (e.g., `AD035_GetLocalTime`, `AS006_CopyOfNtdll`)
@@ -84,20 +84,20 @@ make
 Update **all 8 locations** when adding a technique:
 
 1. **Badge: total count** - `[![Techniques](https://img.shields.io/badge/Techniques-{N}-brightgreen.svg)]()`
-2. **Badge: category count** - `[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-{N}-red.svg)]` or Anti-Sandbox equivalent
+2. **Badge: category count** - `[![Anti-Debugging](https://img.shields.io/badge/Anti--Debugging-{N}-red.svg)]` or Anti-Sandbox equivalent
 3. **About section** - "This repository documents {N} real-world anti-analysis techniques"
-4. **Technique Breakdown** - `**Anti-Debugger** ({N} techniques)` (under "Technique Breakdown")
-5. **Quick Start** - `anti-debugger/ - {N} techniques for detecting debuggers`
+4. **Technique Breakdown** - `**Anti-Debugging** ({N} techniques)` (under "Technique Breakdown")
+5. **Quick Start** - `anti-debugging/ - {N} techniques for detecting debuggers`
 6. **Mermaid diagram** - Update total, category count, and percentage in the `graph TB` block
-7. **Category Descriptions** - `**Anti-Debugger** ({N} techniques):` (under "Category Descriptions")
-8. **Distribution line** - `> **Distribution**: {X}% Anti-Debugger | {Y}% Anti-Sandbox | 0% Anti-Reversing`
+7. **Category Descriptions** - `**Anti-Debugging** ({N} techniques):` (under "Category Descriptions")
+8. **Distribution line** - `> **Distribution**: {X}% Anti-Debugging | {Y}% Anti-Sandbox | 0% Anti-Reversing`
 9. **Technique Index table** - Add a new row in the correct position (sorted by ID)
 
 **Percentage calculation**: `category_count / total_count * 100`, rounded to 1 decimal place.
 
 ### 3. Website (`website/index.html`)
 
-This is a single-page 90's-hacker-style static site listing all techniques. When adding a technique, add a new `<tr>` row to the correct table (Anti-Sandbox or Anti-Debugger) and under the correct subcategory section. Each row must include:
+This is a single-page 90's-hacker-style static site listing all techniques. When adding a technique, add a new `<tr>` row to the correct table (Anti-Sandbox or Anti-Debugging) and under the correct subcategory section. Each row must include:
 
 - **ID cell** with a link to the GitHub directory: `<td><a href="https://github.com/mabj/anti/tree/master/anti-{category}/{ID}_{Name}">{ID}</a></td>`
 - **Technique name** cell
@@ -113,11 +113,11 @@ This file contains mermaid diagrams and tends to drift out of sync. When adding 
 
 - Main Taxonomy diagram (totals + percentages)
 - Distribution pie chart
-- Anti-Debugger or Anti-Sandbox detail diagram (add the new technique to its subcategory)
+- Anti-Debugging or Anti-Sandbox detail diagram (add the new technique to its subcategory)
 - Effectiveness Matrix (technique counts)
 - Footer (date + total count)
 
-**Anti-Debugger subcategories** (for classification):
+**Anti-Debugging subcategories** (for classification):
 
 - **PEB & Process Info**: Techniques querying PEB, debug ports, debug objects
 - **Exception-Based**: INT instructions, exception filter abuse, handle tricks

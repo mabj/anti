@@ -2,17 +2,17 @@
 
 ## Overview
 
-Created skeleton directory structure for new anti-debugger technique using the GenerateConsoleCtrlEvent API.
+Created skeleton directory structure for new anti-debugging technique using the GenerateConsoleCtrlEvent API.
 
 **Date**: 2026-02-06
 **Technique ID**: AD031
-**Category**: Anti-Debugger
+**Category**: Anti-Debugging
 **Status**: ✅ Skeleton Created
 
 ## Directory Structure
 
 ```
-anti-debugger/AD031_GenerateConsoleCtrlEvent/
+anti-debugging/AD031_GenerateConsoleCtrlEvent/
 ├── bin/
 │   └── empty                 # Placeholder for compiled binaries
 ├── src/
@@ -119,7 +119,7 @@ Provided basic implementation structure:
 ### Using Docker (Recommended)
 
 ```bash
-cd anti-debugger/AD031_GenerateConsoleCtrlEvent/
+cd anti-debugging/AD031_GenerateConsoleCtrlEvent/
 
 # First time: build Docker image
 make build-image
@@ -136,7 +136,7 @@ ls bin/
 ### Using MinGW Directly
 
 ```bash
-cd anti-debugger/AD031_GenerateConsoleCtrlEvent/
+cd anti-debugging/AD031_GenerateConsoleCtrlEvent/
 
 # Build both architectures
 make
@@ -175,20 +175,20 @@ $ x64dbg sample_generate_console_ctrl_event_amd64.exe
 Add to technique index table:
 
 ```markdown
-| [AD031](anti-debugger/AD031_GenerateConsoleCtrlEvent/) | GenerateConsoleCtrlEvent | Anti-Debugger | Windows | Detects debuggers by checking console control event handling |
+| [AD031](anti-debugging/AD031_GenerateConsoleCtrlEvent/) | GenerateConsoleCtrlEvent | Anti-Debugging | Windows | Detects debuggers by checking console control event handling |
 ```
 
 ### Update Statistics
 
 - Total techniques: 39 → 40
-- Anti-Debugger: 30 → 31
-- Distribution: 77.5% Anti-Debugger | 22.5% Anti-Sandbox | 0% Anti-Reversing
+- Anti-Debugging: 30 → 31
+- Distribution: 77.5% Anti-Debugging | 22.5% Anti-Sandbox | 0% Anti-Reversing
 
 ## Next Steps
 
 1. **Test the implementation**:
    ```bash
-   cd anti-debugger/AD031_GenerateConsoleCtrlEvent/
+   cd anti-debugging/AD031_GenerateConsoleCtrlEvent/
    make build-image
    make build
    # Test binaries on Windows
@@ -196,7 +196,7 @@ Add to technique index table:
 
 2. **Update main README.md**:
    - Add AD031 to technique index table
-   - Update technique counts (40 total, 31 anti-debugger)
+   - Update technique counts (40 total, 31 anti-debugging)
    - Update distribution percentages
 
 3. **Update documentation**:
@@ -205,10 +205,10 @@ Add to technique index table:
 
 4. **Commit the new technique**:
    ```bash
-   git add anti-debugger/AD031_GenerateConsoleCtrlEvent/
-   git commit -m "feat: add AD031 - GenerateConsoleCtrlEvent anti-debugger technique
+   git add anti-debugging/AD031_GenerateConsoleCtrlEvent/
+   git commit -m "feat: add AD031 - GenerateConsoleCtrlEvent anti-debugging technique
 
-   New anti-debugger technique that exploits console control event handling:
+   New anti-debugging technique that exploits console control event handling:
    - Uses GenerateConsoleCtrlEvent() to detect debugger presence
    - Registers custom handler with SetConsoleCtrlHandler()
    - Detects when debuggers intercept control signals
@@ -249,7 +249,7 @@ Add to technique index table:
 
 ## Naming Convention Compliance
 
-✅ **Category Prefix**: AD (Anti-Debugger)
+✅ **Category Prefix**: AD (Anti-Debugging)
 ✅ **Counter**: 031 (next sequential number)
 ✅ **Descriptive Name**: GenerateConsoleCtrlEvent
 ✅ **Format**: AD031_GenerateConsoleCtrlEvent
@@ -270,6 +270,6 @@ Add to technique index table:
 ---
 
 **Technique ID**: AD031_GenerateConsoleCtrlEvent
-**Category**: Anti-Debugger (31st technique)
+**Category**: Anti-Debugging (31st technique)
 **Status**: Skeleton created, ready for implementation/testing
 **Next**: Test, update README.md, commit

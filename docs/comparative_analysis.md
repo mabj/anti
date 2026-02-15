@@ -20,12 +20,12 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugger** | 53 techniques | ~34 techniques | 61 techniques |
+| **Anti-Debugging** | 53 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
 | **Code Injection** | 0 | 7 techniques | N/A |
-| **Timing Attacks** | 6 (in anti-debugger) | 12 techniques | 7 techniques |
+| **Timing Attacks** | 6 (in anti-debugging) | 12 techniques | 7 techniques |
 | **Companion tool** | N/A | N/A | ShowStopper |
 
 ---
@@ -39,13 +39,13 @@ Al-Khaser               ████████████  ██████
 Check Point             ██████████████████
 ```
 
-- **This project** focuses on anti-debugger and anti-sandbox with clean, isolated implementations.
+- **This project** focuses on anti-debugging and anti-sandbox with clean, isolated implementations.
 - **Al-Khaser** is the broadest: anti-debug, anti-VM (per-hypervisor), anti-disassembly, anti-dumping, code injection, DLL injection detection, and Office macro simulation.
 - **Check Point** is the deepest on anti-debugging specifically, with 61 techniques and detailed explanations, but does not cover anti-sandbox or anti-VM.
 
 ---
 
-## 3. Anti-Debugger Technique Coverage Matrix
+## 3. Anti-Debugging Technique Coverage Matrix
 
 This matrix maps each anti-debug technique across all three projects. A checkmark indicates the technique is present.
 

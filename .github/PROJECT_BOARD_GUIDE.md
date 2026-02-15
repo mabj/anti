@@ -182,7 +182,7 @@ Apply these labels to organize cards:
 - 🧪 **testing**: Testing tasks
 
 ### Category Labels:
-- 🛡️ **anti-debugger**: Debugger detection techniques
+- 🛡️ **anti-debugging**: Debugger detection techniques
 - 🔍 **anti-sandbox**: Sandbox detection techniques
 - 🔒 **anti-reversing**: Reversing prevention techniques
 
@@ -198,7 +198,7 @@ Apply these labels to organize cards:
 
 Add these as "To Do" cards:
 
-**Anti-Debugger Ideas**:
+**Anti-Debugging Ideas**:
 - [ ] Stack cookie detection
 - [ ] TLS callbacks anti-debug
 - [ ] Parent process check (explorer.exe)
@@ -258,7 +258,7 @@ Add these as "To Do" cards:
 - **"My Work"**: Assigned to me, status: In Progress
 - **"Documentation"**: Label: documentation
 - **"High Priority"**: Priority: P0 or P1
-- **"Anti-Debugger"**: Label: anti-debugger
+- **"Anti-Debugging"**: Label: anti-debugging
 
 ## Milestones
 
@@ -357,7 +357,7 @@ This closes issue #50 and updates project board.
 1. **Create Issue**
    ```
    Title: Add technique 040: Stack Cookie Check
-   Labels: new-technique, anti-debugger, P1
+   Labels: new-technique, anti-debugging, P1
    Milestone: 50 Techniques
    ```
 

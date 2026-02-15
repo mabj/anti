@@ -4,7 +4,7 @@ This document maps all 39 techniques to the new 3-category taxonomy.
 
 ## Category Definitions
 
-### Anti-Debugger
+### Anti-Debugging
 Techniques that specifically detect the presence of debuggers attached to or monitoring the process.
 
 ### Anti-Sandbox
@@ -15,7 +15,7 @@ Techniques that actively hinder reverse engineering by modifying code, hiding in
 
 ## Categorization
 
-### Anti-Debugger (30 techniques)
+### Anti-Debugging (30 techniques)
 
 | # | Technique Name | Reason |
 |---|---|---|
@@ -70,7 +70,7 @@ No anti-reversing techniques have been implemented yet. This category is reserve
 
 ## Category Distribution
 
-- **Anti-Debugger**: 30 techniques (77%)
+- **Anti-Debugging**: 30 techniques (77%)
 - **Anti-Sandbox**: 9 techniques (23%)
 - **Anti-Reversing**: 0 techniques (0%)
 - **Total**: 39 techniques
@@ -93,4 +93,4 @@ Use these categories to:
 ---
 
 **Last Updated**: 2026-02-06
-**Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)
+**Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)

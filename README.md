@@ -4,7 +4,7 @@
 [![Language: C](https://img.shields.io/badge/Language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![Techniques](https://img.shields.io/badge/Techniques-61-brightgreen.svg)]()
-[![Anti-Debugger](https://img.shields.io/badge/Anti--Debugger-53-red.svg)](anti-debugger/)
+[![Anti-Debugging](https://img.shields.io/badge/Anti--Debugging-53-red.svg)](anti-debugging/)
 [![Anti-Sandbox](https://img.shields.io/badge/Anti--Sandbox-8-orange.svg)](anti-sandbox/)
 
 > A comprehensive, practical collection of anti-analysis techniques used in modern malware, designed for security researchers, malware analysts, and reverse engineers.
@@ -19,7 +19,7 @@ This repository documents 61 real-world anti-analysis techniques discovered duri
 
 **Technique Breakdown**:
 
-- 🛡️ **Anti-Debugger** (53 techniques): Detect debuggers and prevent debugging
+- 🛡️ **Anti-Debugging** (53 techniques): Detect debuggers and prevent debugging
 - 🔍 **Anti-Sandbox** (8 techniques): Detect sandboxes, VMs, and automated analysis
 - 🔒 **Anti-Reversing** (0 techniques): Reserved for future code protection techniques
 
@@ -50,11 +50,11 @@ This repository documents 61 real-world anti-analysis techniques discovered duri
 
 Techniques are organized by category in dedicated directories:
 
-- `anti-debugger/` - 53 techniques for detecting debuggers
+- `anti-debugging/` - 53 techniques for detecting debuggers
 - `anti-sandbox/` - 8 techniques for detecting sandboxes and VMs
 - `anti-reversing/` - Reserved for future anti-reversing techniques
 
-Each technique is in its own directory with category prefix (e.g., `anti-sandbox/AS001_SetErrorMode/`, `anti-debugger/AD002_IsDebuggerPresent/`). To explore a technique:
+Each technique is in its own directory with category prefix (e.g., `anti-sandbox/AS001_SetErrorMode/`, `anti-debugging/AD002_IsDebuggerPresent/`). To explore a technique:
 
 1. Navigate to the category directory, then technique subdirectory
 2. Read the `README.md` for detailed explanation
@@ -68,7 +68,7 @@ This collection organizes anti-analysis techniques into three main categories:
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugger<br/>53 techniques<br/>86.9%]
+    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugging<br/>53 techniques<br/>86.9%]
     A --> C[Anti-Sandbox<br/>8 techniques<br/>13.1%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
@@ -92,13 +92,13 @@ graph TB
 
 ### Category Descriptions
 
-- **Anti-Debugger** (53 techniques): Techniques that detect debuggers attached to or monitoring the process. Includes PEB checks, exception-based detection, breakpoint scanning, and self-protection mechanisms.
+- **Anti-Debugging** (53 techniques): Techniques that detect debuggers attached to or monitoring the process. Includes PEB checks, exception-based detection, breakpoint scanning, and self-protection mechanisms.
 
 - **Anti-Sandbox** (8 techniques): Techniques that detect automated analysis environments, virtual machines, sandboxes, or analysis tools in the system. Includes environment checks, VM artifact detection, and timing-based detection.
 
 - **Anti-Reversing** (0 techniques): Reserved for future techniques that actively hinder reverse engineering through code obfuscation, anti-disassembly, control flow flattening, or other code protection mechanisms. No techniques implemented yet.
 
-> 📊 **Distribution**: 86.9% Anti-Debugger | 13.1% Anti-Sandbox | 0% Anti-Reversing
+> 📊 **Distribution**: 86.9% Anti-Debugging | 13.1% Anti-Sandbox | 0% Anti-Reversing
 
 For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/diagrams/taxonomy.md)
 
@@ -115,60 +115,60 @@ For detailed taxonomy and visual diagrams, see [docs/diagrams/taxonomy.md](docs/
 | [AS006](anti-sandbox/AS006_CopyOfNtdll/) | Copy of ntdll.dll | Anti-Sandbox | Windows | Loads clean ntdll.dll copy to bypass hooked functions |
 | [AS007](anti-sandbox/AS007_EnumWindowsProc/) | FindWindow | Anti-Sandbox | Windows | Searches for windows with known analysis tool names |
 | [AS008](anti-sandbox/AS008_BlockInput/) | BlockInput | Anti-Sandbox | Windows | Detects API hooking by analyzing BlockInput behavior |
-| **Anti-Debugger** | | | | |
-| [AD001](anti-debugger/AD001_CheckProcessDebugPort/) | Check Process Debug Port | Anti-Debugger | Windows | Queries ProcessDebugPort via NtQueryInformationProcess |
-| [AD002](anti-debugger/AD002_IsDebuggerPresent/) | IsDebuggerPresent | Anti-Debugger | Windows | Checks PEB debug flag using IsDebuggerPresent API |
-| [AD003](anti-debugger/AD003_CheckRemoteDebuggerPresent/) | CheckRemoteDebuggerPresent | Anti-Debugger | Windows | Detects debugger attached to specific process |
-| [AD004](anti-debugger/AD004_ProcessDebugObjectHandle/) | ProcessDebugObjectHandle | Anti-Debugger | Windows | Queries ProcessDebugObjectHandle to detect debugging |
-| [AD005](anti-debugger/AD005_CheckPEB/) | Check PEB | Anti-Debugger | Windows | Directly inspects debug flags in PEB structure |
-| [AD006](anti-debugger/AD006_SetUnhandledExceptionFilter/) | SetUnhandledExceptionFilter | Anti-Debugger | Windows | Detects debugger takeover of exception handling chain |
-| [AD007](anti-debugger/AD007_CloseHandle/) | CloseHandle Exception | Anti-Debugger | Windows | Checks if CloseHandle raises exception on invalid handle |
-| [AD008](anti-debugger/AD008_SetHandleInformation/) | SetHandleInformation | Anti-Debugger | Windows | Abuses HANDLE_FLAG_PROTECT_FROM_CLOSE to detect debugger |
-| [AD009](anti-debugger/AD009_RtlQueryProcessHeapInformation/) | RtlQueryProcessHeapInformation | Anti-Debugger | Windows | Detects debugger by examining heap flags |
-| [AD010](anti-debugger/AD010_RtlQueryProcessDebugInformation/) | RtlQueryProcessDebugInformation | Anti-Debugger | Windows | Checks heap flags via RtlQueryProcessDebugInformation |
-| [AD011](anti-debugger/AD011_DbgPrint/) | DbgPrint Exception | Anti-Debugger | Windows | Detects debugger via DbgPrint exception behavior |
-| [AD012](anti-debugger/AD012_GetWriteWatch/) | GetWriteWatch | Anti-Debugger | Windows | Monitors protected memory for debugger modifications |
-| [AD013](anti-debugger/AD013_GetThreadContext/) | GetThreadContext | Anti-Debugger | Windows | Inspects hardware breakpoint registers (Dr0-Dr7) |
-| [AD014](anti-debugger/AD014_NtSetInformationThread/) | NtSetInformationThread | Anti-Debugger | Windows | Hides thread from debugger using ThreadHideFromDebugger |
-| [AD015](anti-debugger/AD015_NtQueryObject/) | NtQueryObject | Anti-Debugger | Windows | Enumerates object types looking for DebugObject |
-| [AD016](anti-debugger/AD016_RaiseException/) | RaiseException DBG_CONTROL_C | Anti-Debugger | Windows | Raises DBG_CONTROL_C to detect exception interception |
-| [AD017](anti-debugger/AD017_SoftwareBreakpoint/) | Memory Breakpoint INT3 | Anti-Debugger | Windows | Scans function memory for breakpoints (0xCC) |
-| [AD018](anti-debugger/AD018_AntiStepOver/) | Anti-Step-Over | Anti-Debugger | Windows | Checks for breakpoint at function return address |
-| [AD019](anti-debugger/AD019_MemoryBreakpoint/) | Guard Page | Anti-Debugger | Windows | Uses guard page exception to detect debugger |
-| [AD020](anti-debugger/AD020_NtQueryVirtualMemory_WorkingSetList/) | NtQueryVirtualMemory WorkingSetList | Anti-Debugger | Windows | Checks working set page attributes for modifications |
-| [AD021](anti-debugger/AD021_DbgBreakPoint_patch/) | DbgBreakPoint Patch | Anti-Debugger | Windows | Patches DbgBreakPoint to prevent debugger attachment |
-| [AD022](anti-debugger/AD022_DbgUiRemoteBreakin_hook/) | DbgUiRemoteBreakin Hook | Anti-Debugger | Windows | Patches DbgUiRemoteBreakin to block debugger attachment |
-| [AD023](anti-debugger/AD023_INT3/) | INT3 (0xC3) | Anti-Debugger | Windows | Uses vectored exception handler with INT3 instruction |
-| [AD024](anti-debugger/AD024_INT3_long/) | INT3 Long Form (0xCD03) | Anti-Debugger | Windows | Uses long form of INT3 for debugger detection |
-| [AD025](anti-debugger/AD025_INT2D/) | INT 2D | Anti-Debugger | Windows | Kernel debugger interrupt for detection |
-| [AD026](anti-debugger/AD026_INT1/) | INT1 ICEBP (0xF1) | Anti-Debugger | Windows | Uses ICEBP instruction for debugger detection |
-| [AD027](anti-debugger/AD027_INT1_long/) | INT1 Long Form (0xCD01) | Anti-Debugger | Windows | Two-byte form of INT 1 for detection |
-| [AD028](anti-debugger/AD028_popfd_trap/) | POPFD Trap Flag | Anti-Debugger | Windows | Manipulates Trap Flag via POPFD to trigger single-step |
-| [AD029](anti-debugger/AD029_INT1_prefix/) | INT1 with Prefixes | Anti-Debugger | Windows | Uses instruction prefixes before ICEBP |
-| [AD030](anti-debugger/AD030_self_debugging/) | Self-Debugging | Anti-Debugger | Windows | Attempts to debug itself to detect existing debugger |
-| [AD031](anti-debugger/AD031_GenerateConsoleCtrlEvent/) | GenerateConsoleCtrlEvent | Anti-Debugger | Windows | Detects debugger by checking console control event handling |
-| [AD032](anti-debugger/AD032_GetShellWindow/) | GetShellWindow | Anti-Debugger | Windows | Compares parent PID against Explorer to detect abnormal execution |
-| [AD033](anti-debugger/AD033_FindWindow/) | FindWindow | Anti-Debugger | Windows | Detects debuggers by searching for known window class names |
-| [AD034](anti-debugger/AD034_SwitchDesktop/) | SwitchDesktop | Anti-Debugger | Windows | Hides process from debugger by switching to a new desktop |
-| [AD035](anti-debugger/AD035_GetLocalTime/) | GetLocalTime | Anti-Debugger | Windows | Detects debugger by measuring elapsed time of a known workload |
-| [AD036](anti-debugger/AD036_GetSystemTime/) | GetSystemTime | Anti-Debugger | Windows | Detects debugger via UTC timing analysis of a known workload |
-| [AD037](anti-debugger/AD037_GetTickCount/) | GetTickCount | Anti-Debugger | Windows | Detects debugger by comparing millisecond tick counts around a workload |
-| [AD038](anti-debugger/AD038_QueryPerformanceCounter/) | QueryPerformanceCounter | Anti-Debugger | Windows | Detects debugger using high-resolution performance counter timing |
-| [AD039](anti-debugger/AD039_timeGetTime/) | timeGetTime | Anti-Debugger | Windows | Detects debugger using multimedia timer elapsed time analysis |
-| [AD040](anti-debugger/AD040_ProcessDebugFlags/) | ProcessDebugFlags | Anti-Debugger | Windows | Queries ProcessDebugFlags via NtQueryInformationProcess |
-| [AD041](anti-debugger/AD041_NtGlobalFlag/) | NtGlobalFlag | Anti-Debugger | Windows | Checks PEB NtGlobalFlag for heap debugging flags set by debugger |
-| [AD042](anti-debugger/AD042_HeapFlags/) | HeapFlags | Anti-Debugger | Windows | Inspects heap Flags and ForceFlags for debugger-set values |
-| [AD043](anti-debugger/AD043_RDTSC/) | RDTSC | Anti-Debugger | Windows | Detects debugger using CPU timestamp counter cycle measurement |
-| [AD044](anti-debugger/AD044_OpenProcess_CSRSS/) | OpenProcess CSRSS | Anti-Debugger | Windows | Detects elevated debugger by attempting to open protected csrss.exe process |
-| [AD045](anti-debugger/AD045_CodeChecksum/) | Code Checksum | Anti-Debugger | Windows | Continuously monitors function checksums to detect breakpoints or code patches |
-| [AD046](anti-debugger/AD046_CreateFileA_Exclusive/) | CreateFileA Exclusive | Anti-Debugger | Windows | Detects debuggers by attempting exclusive file access on current executable |
-| [AD047](anti-debugger/AD047_SystemKernelDebuggerInformation/) | SystemKernelDebuggerInformation | Anti-Debugger | Windows | Detects kernel-mode debuggers by querying system kernel debugger flags |
-| [AD048](anti-debugger/AD048_LoadLibrary/) | LoadLibrary | Anti-Debugger | Windows | Detects debugger via file handle behavior after LoadLibraryA on executable |
-| [AD049](anti-debugger/AD049_DetectAPIPatch/) | DetectAPIPatch | Anti-Debugger | Windows | Detects debugger by comparing API function bytes across processes |
-| [AD050](anti-debugger/AD050_KUSER_SHARED_DATA/) | KUSER_SHARED_DATA | Anti-Debugger | Windows | Reads KdDebuggerEnabled from KUSER_SHARED_DATA to detect kernel debugger |
-| [AD051](anti-debugger/AD051_HEAP_TAIL_CHECKING_ENABLED/) | HEAP_TAIL_CHECKING_ENABLED | Anti-Debugger | Windows | Detects debugger by checking for 0xABABABAB heap tail sentinel pattern |
-| [AD052](anti-debugger/AD052_InstructionCounting/) | Instruction Counting | Anti-Debugger | Windows | Detects debugger by counting hardware breakpoint single-step exceptions |
-| [AD053](anti-debugger/AD053_StackSegment/) | Stack Segment Register | Anti-Debugger | Windows | Detects single-stepping debugger via SS register trap inhibit |
+| **Anti-Debugging** | | | | |
+| [AD001](anti-debugging/AD001_CheckProcessDebugPort/) | Check Process Debug Port | Anti-Debugging | Windows | Queries ProcessDebugPort via NtQueryInformationProcess |
+| [AD002](anti-debugging/AD002_IsDebuggerPresent/) | IsDebuggerPresent | Anti-Debugging | Windows | Checks PEB debug flag using IsDebuggerPresent API |
+| [AD003](anti-debugging/AD003_CheckRemoteDebuggerPresent/) | CheckRemoteDebuggerPresent | Anti-Debugging | Windows | Detects debugger attached to specific process |
+| [AD004](anti-debugging/AD004_ProcessDebugObjectHandle/) | ProcessDebugObjectHandle | Anti-Debugging | Windows | Queries ProcessDebugObjectHandle to detect debugging |
+| [AD005](anti-debugging/AD005_CheckPEB/) | Check PEB | Anti-Debugging | Windows | Directly inspects debug flags in PEB structure |
+| [AD006](anti-debugging/AD006_SetUnhandledExceptionFilter/) | SetUnhandledExceptionFilter | Anti-Debugging | Windows | Detects debugger takeover of exception handling chain |
+| [AD007](anti-debugging/AD007_CloseHandle/) | CloseHandle Exception | Anti-Debugging | Windows | Checks if CloseHandle raises exception on invalid handle |
+| [AD008](anti-debugging/AD008_SetHandleInformation/) | SetHandleInformation | Anti-Debugging | Windows | Abuses HANDLE_FLAG_PROTECT_FROM_CLOSE to detect debugger |
+| [AD009](anti-debugging/AD009_RtlQueryProcessHeapInformation/) | RtlQueryProcessHeapInformation | Anti-Debugging | Windows | Detects debugger by examining heap flags |
+| [AD010](anti-debugging/AD010_RtlQueryProcessDebugInformation/) | RtlQueryProcessDebugInformation | Anti-Debugging | Windows | Checks heap flags via RtlQueryProcessDebugInformation |
+| [AD011](anti-debugging/AD011_DbgPrint/) | DbgPrint Exception | Anti-Debugging | Windows | Detects debugger via DbgPrint exception behavior |
+| [AD012](anti-debugging/AD012_GetWriteWatch/) | GetWriteWatch | Anti-Debugging | Windows | Monitors protected memory for debugger modifications |
+| [AD013](anti-debugging/AD013_GetThreadContext/) | GetThreadContext | Anti-Debugging | Windows | Inspects hardware breakpoint registers (Dr0-Dr7) |
+| [AD014](anti-debugging/AD014_NtSetInformationThread/) | NtSetInformationThread | Anti-Debugging | Windows | Hides thread from debugger using ThreadHideFromDebugger |
+| [AD015](anti-debugging/AD015_NtQueryObject/) | NtQueryObject | Anti-Debugging | Windows | Enumerates object types looking for DebugObject |
+| [AD016](anti-debugging/AD016_RaiseException/) | RaiseException DBG_CONTROL_C | Anti-Debugging | Windows | Raises DBG_CONTROL_C to detect exception interception |
+| [AD017](anti-debugging/AD017_SoftwareBreakpoint/) | Memory Breakpoint INT3 | Anti-Debugging | Windows | Scans function memory for breakpoints (0xCC) |
+| [AD018](anti-debugging/AD018_AntiStepOver/) | Anti-Step-Over | Anti-Debugging | Windows | Checks for breakpoint at function return address |
+| [AD019](anti-debugging/AD019_MemoryBreakpoint/) | Guard Page | Anti-Debugging | Windows | Uses guard page exception to detect debugger |
+| [AD020](anti-debugging/AD020_NtQueryVirtualMemory_WorkingSetList/) | NtQueryVirtualMemory WorkingSetList | Anti-Debugging | Windows | Checks working set page attributes for modifications |
+| [AD021](anti-debugging/AD021_DbgBreakPoint_patch/) | DbgBreakPoint Patch | Anti-Debugging | Windows | Patches DbgBreakPoint to prevent debugger attachment |
+| [AD022](anti-debugging/AD022_DbgUiRemoteBreakin_hook/) | DbgUiRemoteBreakin Hook | Anti-Debugging | Windows | Patches DbgUiRemoteBreakin to block debugger attachment |
+| [AD023](anti-debugging/AD023_INT3/) | INT3 (0xC3) | Anti-Debugging | Windows | Uses vectored exception handler with INT3 instruction |
+| [AD024](anti-debugging/AD024_INT3_long/) | INT3 Long Form (0xCD03) | Anti-Debugging | Windows | Uses long form of INT3 for debugger detection |
+| [AD025](anti-debugging/AD025_INT2D/) | INT 2D | Anti-Debugging | Windows | Kernel debugger interrupt for detection |
+| [AD026](anti-debugging/AD026_INT1/) | INT1 ICEBP (0xF1) | Anti-Debugging | Windows | Uses ICEBP instruction for debugger detection |
+| [AD027](anti-debugging/AD027_INT1_long/) | INT1 Long Form (0xCD01) | Anti-Debugging | Windows | Two-byte form of INT 1 for detection |
+| [AD028](anti-debugging/AD028_popfd_trap/) | POPFD Trap Flag | Anti-Debugging | Windows | Manipulates Trap Flag via POPFD to trigger single-step |
+| [AD029](anti-debugging/AD029_INT1_prefix/) | INT1 with Prefixes | Anti-Debugging | Windows | Uses instruction prefixes before ICEBP |
+| [AD030](anti-debugging/AD030_self_debugging/) | Self-Debugging | Anti-Debugging | Windows | Attempts to debug itself to detect existing debugger |
+| [AD031](anti-debugging/AD031_GenerateConsoleCtrlEvent/) | GenerateConsoleCtrlEvent | Anti-Debugging | Windows | Detects debugger by checking console control event handling |
+| [AD032](anti-debugging/AD032_GetShellWindow/) | GetShellWindow | Anti-Debugging | Windows | Compares parent PID against Explorer to detect abnormal execution |
+| [AD033](anti-debugging/AD033_FindWindow/) | FindWindow | Anti-Debugging | Windows | Detects debuggers by searching for known window class names |
+| [AD034](anti-debugging/AD034_SwitchDesktop/) | SwitchDesktop | Anti-Debugging | Windows | Hides process from debugger by switching to a new desktop |
+| [AD035](anti-debugging/AD035_GetLocalTime/) | GetLocalTime | Anti-Debugging | Windows | Detects debugger by measuring elapsed time of a known workload |
+| [AD036](anti-debugging/AD036_GetSystemTime/) | GetSystemTime | Anti-Debugging | Windows | Detects debugger via UTC timing analysis of a known workload |
+| [AD037](anti-debugging/AD037_GetTickCount/) | GetTickCount | Anti-Debugging | Windows | Detects debugger by comparing millisecond tick counts around a workload |
+| [AD038](anti-debugging/AD038_QueryPerformanceCounter/) | QueryPerformanceCounter | Anti-Debugging | Windows | Detects debugger using high-resolution performance counter timing |
+| [AD039](anti-debugging/AD039_timeGetTime/) | timeGetTime | Anti-Debugging | Windows | Detects debugger using multimedia timer elapsed time analysis |
+| [AD040](anti-debugging/AD040_ProcessDebugFlags/) | ProcessDebugFlags | Anti-Debugging | Windows | Queries ProcessDebugFlags via NtQueryInformationProcess |
+| [AD041](anti-debugging/AD041_NtGlobalFlag/) | NtGlobalFlag | Anti-Debugging | Windows | Checks PEB NtGlobalFlag for heap debugging flags set by debugger |
+| [AD042](anti-debugging/AD042_HeapFlags/) | HeapFlags | Anti-Debugging | Windows | Inspects heap Flags and ForceFlags for debugger-set values |
+| [AD043](anti-debugging/AD043_RDTSC/) | RDTSC | Anti-Debugging | Windows | Detects debugger using CPU timestamp counter cycle measurement |
+| [AD044](anti-debugging/AD044_OpenProcess_CSRSS/) | OpenProcess CSRSS | Anti-Debugging | Windows | Detects elevated debugger by attempting to open protected csrss.exe process |
+| [AD045](anti-debugging/AD045_CodeChecksum/) | Code Checksum | Anti-Debugging | Windows | Continuously monitors function checksums to detect breakpoints or code patches |
+| [AD046](anti-debugging/AD046_CreateFileA_Exclusive/) | CreateFileA Exclusive | Anti-Debugging | Windows | Detects debuggers by attempting exclusive file access on current executable |
+| [AD047](anti-debugging/AD047_SystemKernelDebuggerInformation/) | SystemKernelDebuggerInformation | Anti-Debugging | Windows | Detects kernel-mode debuggers by querying system kernel debugger flags |
+| [AD048](anti-debugging/AD048_LoadLibrary/) | LoadLibrary | Anti-Debugging | Windows | Detects debugger via file handle behavior after LoadLibraryA on executable |
+| [AD049](anti-debugging/AD049_DetectAPIPatch/) | DetectAPIPatch | Anti-Debugging | Windows | Detects debugger by comparing API function bytes across processes |
+| [AD050](anti-debugging/AD050_KUSER_SHARED_DATA/) | KUSER_SHARED_DATA | Anti-Debugging | Windows | Reads KdDebuggerEnabled from KUSER_SHARED_DATA to detect kernel debugger |
+| [AD051](anti-debugging/AD051_HEAP_TAIL_CHECKING_ENABLED/) | HEAP_TAIL_CHECKING_ENABLED | Anti-Debugging | Windows | Detects debugger by checking for 0xABABABAB heap tail sentinel pattern |
+| [AD052](anti-debugging/AD052_InstructionCounting/) | Instruction Counting | Anti-Debugging | Windows | Detects debugger by counting hardware breakpoint single-step exceptions |
+| [AD053](anti-debugging/AD053_StackSegment/) | Stack Segment Register | Anti-Debugging | Windows | Detects single-stepping debugger via SS register trap inhibit |
 
 ## Building Techniques
 
@@ -216,7 +216,7 @@ cl /Fe:technique.exe src/main.c
    ```bash
    cd anti-sandbox/AS001_SetErrorMode/
    # or
-   cd anti-debugger/AD002_IsDebuggerPresent/
+   cd anti-debugging/AD002_IsDebuggerPresent/
    ```
 
 2. **Check build requirements** in the technique's README

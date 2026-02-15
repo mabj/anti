@@ -97,7 +97,7 @@ make
 - [Cyberbit: Formbook Research](https://www.cyberbit.com/formbook-research-hints-large-data-theft-attack-brewing/)
 ```
 
-## Example: Anti-Debugger Technique
+## Example: Anti-Debugging Technique
 
 ```markdown
 # Context

@@ -28,7 +28,7 @@ jobs:
       id: find-techniques
       run: |
         echo "Found techniques:"
-        find anti-debugger anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | sort || echo "No technique directories found"
+        find anti-debugging anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | sort || echo "No technique directories found"
 
     - name: Build techniques
       run: |
@@ -44,7 +44,7 @@ jobs:
         echo ""
 
         # Build techniques from all category directories
-        for category in anti-debugger anti-sandbox anti-reversing; do
+        for category in anti-debugging anti-sandbox anti-reversing; do
           if [ -d "$category" ]; then
             echo "Category: $category"
             echo "----------------------------------------"
@@ -104,7 +104,7 @@ jobs:
       if: success()
       run: |
         echo "Built binaries:"
-        find anti-debugger anti-sandbox anti-reversing -name "*.exe" -type f 2>/dev/null | sort
+        find anti-debugging anti-sandbox anti-reversing -name "*.exe" -type f 2>/dev/null | sort
 
     - name: Upload build artifacts
       if: success()
@@ -112,7 +112,7 @@ jobs:
       with:
         name: anti-analysis-techniques
         path: |
-          anti-debugger/*/bin/*.exe
+          anti-debugging/*/bin/*.exe
           anti-sandbox/*/bin/*.exe
           anti-reversing/*/bin/*.exe
         retention-days: 30
@@ -122,9 +122,9 @@ jobs:
       run: |
         echo "Build Statistics"
         echo "================"
-        TOTAL_DIRS=$(find anti-debugger anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | wc -l)
-        TOTAL_MAKEFILES=$(find anti-debugger anti-sandbox anti-reversing -name "Makefile" 2>/dev/null | wc -l)
-        TOTAL_BINARIES=$(find anti-debugger anti-sandbox anti-reversing -name "*.exe" 2>/dev/null | wc -l)
+        TOTAL_DIRS=$(find anti-debugging anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | wc -l)
+        TOTAL_MAKEFILES=$(find anti-debugging anti-sandbox anti-reversing -name "Makefile" 2>/dev/null | wc -l)
+        TOTAL_BINARIES=$(find anti-debugging anti-sandbox anti-reversing -name "*.exe" 2>/dev/null | wc -l)
 
         echo "Total technique directories: $TOTAL_DIRS"
         echo "Directories with Makefile: $TOTAL_MAKEFILES"

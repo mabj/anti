@@ -110,7 +110,7 @@ jobs:
 
         MISSING_README=()
 
-        for category in anti-debugger anti-sandbox anti-reversing; do
+        for category in anti-debugging anti-sandbox anti-reversing; do
           if [ -d "$category" ]; then
             for dir in $category/[A-Z][A-Z][0-9][0-9][0-9]_*/; do
               if [ -d "$dir" ]; then
@@ -151,11 +151,11 @@ jobs:
         echo "Total Markdown files: $TOTAL_MD"
 
         # Count technique directories
-        TOTAL_TECHNIQUES=$(find anti-debugger anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | wc -l)
+        TOTAL_TECHNIQUES=$(find anti-debugging anti-sandbox anti-reversing -maxdepth 1 -type d -name "[A-Z][A-Z][0-9][0-9][0-9]_*" 2>/dev/null | wc -l)
         echo "Total technique directories: $TOTAL_TECHNIQUES"
 
         # Count techniques with README
-        TECHNIQUES_WITH_README=$(find anti-debugger anti-sandbox anti-reversing -path "*/[A-Z][A-Z][0-9][0-9][0-9]_*/README.md" 2>/dev/null | wc -l)
+        TECHNIQUES_WITH_README=$(find anti-debugging anti-sandbox anti-reversing -path "*/[A-Z][A-Z][0-9][0-9][0-9]_*/README.md" 2>/dev/null | wc -l)
         echo "Techniques with README: $TECHNIQUES_WITH_README"
 
         # Check for documentation files

@@ -50,7 +50,7 @@ GitHub will prompt you to:
 **Example posts**:
 - "Phase 2 Complete: New Taxonomy and Visual Diagrams"
 - "Release v1.0: 39 Techniques Available"
-- "New Anti-Debugger Technique Added: Stack Cookie Check"
+- "New Anti-Debugging Technique Added: Stack Cookie Check"
 
 ### 2. 💡 Ideas
 **Purpose**: Suggest new techniques or features
@@ -157,7 +157,7 @@ We're excited to have you here! This is a space for security researchers, malwar
 This repository documents 39 real-world anti-analysis techniques discovered during malware research. Each technique is implemented as a proof-of-concept for educational purposes.
 
 **Categories**:
-- 🛡️ Anti-Debugger (30 techniques): Detect and prevent debugging
+- 🛡️ Anti-Debugging (30 techniques): Detect and prevent debugging
 - 🔍 Anti-Sandbox (9 techniques): Detect VMs and automated analysis
 - 🔒 Anti-Reversing (0 techniques): Reserved for future
 
@@ -262,7 +262,7 @@ Create templates to guide discussions:
 **Technique Name**: [Name of the technique]
 
 **Category**:
-- [ ] Anti-Debugger
+- [ ] Anti-Debugging
 - [ ] Anti-Sandbox
 - [ ] Anti-Reversing
 
@@ -353,7 +353,7 @@ Create labels to organize discussions:
 - 🔴 `duplicate` - Already discussed elsewhere
 
 **Category Tags**:
-- 🛡️ `anti-debugger`
+- 🛡️ `anti-debugging`
 - 🔍 `anti-sandbox`
 - 🔒 `anti-reversing`
 

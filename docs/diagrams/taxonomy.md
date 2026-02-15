@@ -6,7 +6,7 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugger<br/>53 techniques<br/>86.9%]
+    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugging<br/>53 techniques<br/>86.9%]
     A --> C[Anti-Sandbox<br/>8 techniques<br/>13.1%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
@@ -33,16 +33,16 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugger" : 53
+    "Anti-Debugging" : 53
     "Anti-Sandbox" : 8
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugger Techniques (53)
+## Anti-Debugging Techniques (53)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugger<br/>53 Techniques]
+    AD[Anti-Debugging<br/>53 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>12 techniques]
     AD --> EXC[Exception-Based<br/>14 techniques]
@@ -161,7 +161,7 @@ sequenceDiagram
     alt Sandbox Detected
         M->>M: Exit or behave normally
     else No Sandbox
-        Note over M,D: Runtime Detection (Anti-Debugger)
+        Note over M,D: Runtime Detection (Anti-Debugging)
         M->>S: Check debug flags (PEB, ProcessDebugPort)
         M->>S: Test exception handling
         M->>S: Scan for breakpoints
@@ -234,7 +234,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugger<br/>53 techniques]
+        C1[Anti-Debugging<br/>53 techniques]
         C2[Anti-Sandbox<br/>8 techniques]
     end
 
@@ -313,4 +313,4 @@ graph TD
 
 **Last Updated**: 2026-02-14
 **Total Techniques**: 61
-**Categories**: 3 (Anti-Debugger, Anti-Sandbox, Anti-Reversing)
+**Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)
