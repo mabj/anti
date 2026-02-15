@@ -6,7 +6,7 @@ AR = ar
 CFLAGS = -Wall -Wextra -std=c99 -static -Wno-missing-field-initializers -Wno-cast-function-type -Wno-unused-label -Wno-unused-parameter -masm=intel -Wa,--no-warn
 OPTIMIZATION_FLAGS = -Os -s -ffunction-sections -fdata-sections -fno-ident
 # -Wl -fgc-sections
-LDFLAGS = -lntdll #-lshlwapi -lpsapi -lws2_32 
+LDFLAGS = -lntdll -lkernel32 -lpsapi #-lshlwapi -lws2_32 
 
 
 

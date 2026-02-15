@@ -1,10 +1,14 @@
 #include <windows.h>
 #include <winternl.h>
 #include <stdbool.h>
+#include <processthreadsapi.h>
+#include <versionhelpers.h>
 
 bool __is_debugged() { 
 #ifndef _WIN64
     PPEB pPeb = (PPEB)__readfsdword(0x30);
+    bool m_bIsWow64 = false;
+    IsWow64Process(GetCurrentProcess(), (PBOOL) &m_bIsWow64);
     PVOID pHeapBase = !m_bIsWow64
         ? (PVOID)(*(PDWORD_PTR)((PBYTE)pPeb + 0x18))
         : (PVOID)(*(PDWORD_PTR)((PBYTE)pPeb + 0x1030));
