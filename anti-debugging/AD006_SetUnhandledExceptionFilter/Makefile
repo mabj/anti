@@ -19,13 +19,13 @@ build:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
 
 build-amd64:
-	$(CC64) -o bin/sample_SetUnhandledExceptionFilter_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC64) -o bin/AD006_SetUnhandledExceptionFilter_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 build-x86: clean
-	$(CC32) -o bin/sample_SetUnhandledExceptionFilter_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC32) -o bin/AD006_SetUnhandledExceptionFilter_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 enter: clean
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
 
 clean:
-	rm -rf bin/sample_SetUnhandledExceptionFilter_*.exe
+	rm -rf bin/AD006_SetUnhandledExceptionFilter_*.exe

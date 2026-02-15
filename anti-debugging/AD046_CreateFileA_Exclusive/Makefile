@@ -17,13 +17,13 @@ build:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
 
 build-amd64:
-	$(CC64) -o bin/sample_CreateFileA_Exclusive_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC64) -o bin/AD046_CreateFileA_Exclusive_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 build-x86:
-	$(CC32) -o bin/sample_CreateFileA_Exclusive_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC32) -o bin/AD046_CreateFileA_Exclusive_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 enter:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
 
 clean:
-	rm -rf bin/sample_CreateFileA_Exclusive_*.exe
+	rm -rf bin/AD046_CreateFileA_Exclusive_*.exe

@@ -173,25 +173,25 @@ build:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
 
 build-amd64:
-	$(CC64) -o bin/sample_{TechniqueName}_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC64) -o bin/{ID}_{TechniqueName}_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 build-x86:
-	$(CC32) -o bin/sample_{TechniqueName}_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC32) -o bin/{ID}_{TechniqueName}_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 enter:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
 
 clean:
-	rm -rf bin/sample_{TechniqueName}_*.exe
+	rm -rf bin/{ID}_{TechniqueName}_*.exe
 ```
 
 Key conventions:
 - **`MAIN_NAME`**: `anti_{category}_{snake_case_name}` (e.g., `anti_debug_is_debugger_present`)
-- **Binary naming**: `sample_{TechniqueName}_{x86,amd64}.exe` (PascalCase technique name)
+- **Binary naming**: `{ID}_{TechniqueName}_{x86,amd64}.exe` (e.g., `AD001_CheckProcessDebugPort_amd64.exe`)
 - **`CFLAGS`**: Must include all warning flags, `-masm=intel`, and `-Wa,--no-warn`
 - **`OPTIMIZATION_FLAGS`**: Always use `-Os -s -ffunction-sections -fdata-sections -fno-ident`
 - **`LDFLAGS`**: Commented-out defaults; uncomment only the libs actually needed
-- **`clean`**: Only removes binaries (`bin/sample_*.exe`), never the `bin/` directory itself
+- **`clean`**: Only removes binaries (`bin/{ID}_*.exe`), never the `bin/` directory itself
 - **`enter`** target: Always include for interactive Docker debugging
 
 ## Important Rules

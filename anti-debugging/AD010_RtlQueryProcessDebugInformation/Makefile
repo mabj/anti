@@ -18,13 +18,13 @@ build:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment ${MAIN_NAME} make
 
 build-amd64:
-	$(CC64) -o bin/sample_RtlQueryProcessDebugInformation_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC64) -o bin/AD010_RtlQueryProcessDebugInformation_amd64.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 build-x86:
-	$(CC32) -o bin/sample_RtlQueryProcessDebugInformation_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
+	$(CC32) -o bin/AD010_RtlQueryProcessDebugInformation_x86.exe src/main.c $(CFLAGS) ${OPTIMIZATION_FLAGS} $(LDFLAGS)
 
 enter:
 	docker run -it -m 4g --rm -v .:/experiment -w /experiment --entrypoint /bin/bash ${MAIN_NAME}
 
 clean:
-	rm -rf bin/sample_RtlQueryProcessDebugInformation_*.exe
+	rm -rf bin/AD010_RtlQueryProcessDebugInformation_*.exe
