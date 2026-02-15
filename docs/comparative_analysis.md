@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugging** | 54 techniques | ~34 techniques | 61 techniques |
+| **Anti-Debugging** | 55 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 7 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -159,7 +159,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | API hook detection | AD049 | Yes | - |
 | EnumWindows + SuspendThread | AD054 | - | Yes |
 | WudfIsAnyDebuggerPresent | - | Yes | - |
-| DbgSetDebugFilterState | - | - | Yes |
+| DbgSetDebugFilterState | AD055 | - | Yes |
 | Selectors | - | - | Yes |
 
 ---
@@ -228,7 +228,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | ~~KUSER_SHARED_DATA~~ | ~~Debug Flags~~ | ~~Low~~ - Implemented as **AD050** |
 | ~~Heap Protection (sentinel patterns)~~ | ~~Debug Flags~~ | ~~Low~~ - Implemented as **AD051** |
 | Selectors | Misc | Low |
-| DbgSetDebugFilterState | Misc | Low |
+| ~~DbgSetDebugFilterState~~ | ~~Misc~~ | ~~Low~~ - Implemented as **AD055** |
 | ~~EnumWindows + SuspendThread~~ | ~~Interactive~~ | ~~Low~~ - Implemented as **AD054** |
 
 ### 5.3 In Al-Khaser but NOT in This Project (candidates for future techniques)
@@ -313,10 +313,10 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 54 | ~34 | 61 |
-| Shared with Check Point | 48 / 61 (79%) | ~25 / 61 (41%) | - |
+| Total anti-debug techniques | 55 | ~34 | 61 |
+| Shared with Check Point | 49 / 61 (80%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
-| Techniques unique to project | ~3 | ~30+ (mostly anti-VM) | ~12 |
+| Techniques unique to project | ~2 | ~30+ (mostly anti-VM) | ~12 |
 | Anti-sandbox/VM techniques | 7 | ~90+ | 0 |
 
 ---

@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugging<br/>54 techniques<br/>88.5%]
-    A --> C[Anti-Sandbox<br/>7 techniques<br/>11.5%]
+    A[Anti-Analysis Techniques<br/>62 Total] --> B[Anti-Debugging<br/>55 techniques<br/>88.7%]
+    A --> C[Anti-Sandbox<br/>7 techniques<br/>11.3%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,23 +33,23 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugging" : 54
+    "Anti-Debugging" : 55
     "Anti-Sandbox" : 7
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugging Techniques (54)
+## Anti-Debugging Techniques (55)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugging<br/>54 Techniques]
+    AD[Anti-Debugging<br/>55 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>12 techniques]
     AD --> EXC[Exception-Based<br/>14 techniques]
     AD --> MEM[Memory & Breakpoints<br/>7 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
-    AD --> OTHER[Other Detection<br/>10 techniques]
+    AD --> OTHER[Other Detection<br/>11 techniques]
 
     PEB --> PEB1[AD001: CheckProcessDebugPort]
     PEB --> PEB2[AD002: IsDebuggerPresent]
@@ -110,6 +110,7 @@ graph LR
     OTHER --> OTH8[AD046: CreateFileA_Exclusive]
     OTHER --> OTH9[AD048: LoadLibrary]
     OTHER --> OTH10[AD054: EnumWindowsProc]
+    OTHER --> OTH11[AD055: DbgSetDebugFilterState]
 
     style AD fill:#ffebee
     style PEB fill:#ffcdd2
@@ -234,7 +235,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugging<br/>54 techniques]
+        C1[Anti-Debugging<br/>55 techniques]
         C2[Anti-Sandbox<br/>7 techniques]
     end
 
@@ -312,5 +313,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-02-15
-**Total Techniques**: 61
+**Total Techniques**: 62
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)

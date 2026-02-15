@@ -479,8 +479,8 @@ td[colspan]{
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">60</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">54</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">62</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">55</div><div class="lbl">ANTI-DEBUG</div></div>
 <div class="stat"><div class="num">7</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
@@ -527,7 +527,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-debugging.db</p>
 
-<h2> ANTI-DEBUGGING :: 54 techniques </h2><br>
+<h2> ANTI-DEBUGGING :: 55 techniques </h2><br>
 <span class="cat-label cat-ad">ANTI-DEBUGGING</span>
 
 <table>
@@ -561,6 +561,7 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD052_InstructionCounting">AD052</a></td><td>Instruction Counting</td><td>Detects debugger by counting HW breakpoint single-step exceptions</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD053_StackSegment">AD053</a></td><td>Stack Segment Register</td><td>Detects single-stepping debugger via SS register trap inhibit</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD054_EnumWindowsProc">AD054</a></td><td>EnumWindowsProc</td><td>Detects debuggers by enumerating windows with known tool titles</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD055_DbgSetDebugFilterState">AD055</a></td><td>DbgSetDebugFilterState</td><td>Detects kernel debugger via NtSetDebugFilterState success status</td></tr>
 <tr><td colspan="3">--- Memory &amp; Breakpoints ---</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD012_GetWriteWatch">AD012</a></td><td>GetWriteWatch</td><td>Monitors protected memory for debugger modifications</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD017_SoftwareBreakpoint">AD017</a></td><td>SoftwareBreakpoint</td><td>Scans function memory for breakpoints (0xCC)</td></tr>
