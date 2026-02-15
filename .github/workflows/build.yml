@@ -111,12 +111,14 @@ jobs:
         tar -tzf "anti_${DATE}.tar.gz"
         echo ""
         echo "Created anti_${DATE}.tar.gz ($(du -h "anti_${DATE}.tar.gz" | cut -f1))"
+        echo "archive_name=anti_${DATE}" >> "$GITHUB_OUTPUT"
+      id: package
 
     - name: Upload archive
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: anti-analysis-archive
+        name: ${{ steps.package.outputs.archive_name }}
         path: anti_*.tar.gz
         retention-days: 30
 
