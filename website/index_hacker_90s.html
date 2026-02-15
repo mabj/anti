@@ -213,8 +213,8 @@ td:first-child{color:#1a8a1a;white-space:nowrap}
 
 <div class="stats">
 <div class="stat"><div class="num">60</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">52</div><div class="lbl">ANTI-DEBUG</div></div>
-<div class="stat"><div class="num">8</div><div class="lbl">ANTI-SANDBOX</div></div>
+<div class="stat"><div class="num">54</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">7</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
 <div class="about">
@@ -240,7 +240,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-sandbox.db</p>
 
-<h2> ANTI-SANDBOX :: 8 techniques </h2>
+<h2> ANTI-SANDBOX :: 7 techniques </h2>
 <span class="cat-label cat-as">ANTI-SANDBOX</span>
 
 <table>
@@ -251,13 +251,12 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS004_CheckLoadedModules">AS004</a></td><td>CheckLoadedModules</td><td>Detects injected DLLs from analysis tools in current process</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS005_CheckRegistryKeys">AS005</a></td><td>CheckRegistryKeys</td><td>Searches Windows Registry for VM-related device names</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS006_CopyOfNtdll">AS006</a></td><td>CopyOfNtdll</td><td>Loads clean ntdll.dll copy to bypass hooked functions</td></tr>
-<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS007_EnumWindowsProc">AS007</a></td><td>EnumWindowsProc</td><td>Searches for windows with known analysis tool names</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS008_BlockInput">AS008</a></td><td>BlockInput</td><td>Detects API hooking by analyzing BlockInput behavior</td></tr>
 </table>
 
 <p class="prompt">cat techniques/anti-debugging.db</p>
 
-<h2> ANTI-DEBUGGING :: 52 techniques </h2>
+<h2> ANTI-DEBUGGING :: 54 techniques </h2>
 <span class="cat-label cat-ad">ANTI-DEBUGGING</span>
 
 <table>
@@ -289,6 +288,8 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD028_popfd_trap">AD028</a></td><td>POPFD Trap Flag</td><td>Manipulates Trap Flag via POPFD to trigger single-step</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD029_INT1_prefix">AD029</a></td><td>INT1 with Prefixes</td><td>Uses instruction prefixes before ICEBP</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD052_InstructionCounting">AD052</a></td><td>Instruction Counting</td><td>Detects debugger by counting HW breakpoint single-step exceptions</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD053_StackSegment">AD053</a></td><td>Stack Segment Register</td><td>Detects single-stepping debugger via SS register trap inhibit</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD054_EnumWindowsProc">AD054</a></td><td>EnumWindowsProc</td><td>Detects debuggers by enumerating windows with known tool titles</td></tr>
 <tr><td colspan="3" style="color:#1a3a1a">--- Memory &amp; Breakpoints ---</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD012_GetWriteWatch">AD012</a></td><td>GetWriteWatch</td><td>Monitors protected memory for debugger modifications</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD017_SoftwareBreakpoint">AD017</a></td><td>SoftwareBreakpoint</td><td>Scans function memory for breakpoints (0xCC)</td></tr>

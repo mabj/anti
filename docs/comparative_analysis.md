@@ -20,8 +20,8 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugging** | 53 techniques | ~34 techniques | 61 techniques |
-| **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
+| **Anti-Debugging** | 54 techniques | ~34 techniques | 61 techniques |
+| **Anti-Sandbox/VM** | 7 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
 | **Code Injection** | 0 | 7 techniques | N/A |
@@ -176,7 +176,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Loaded module (DLL) detection | AS004 | Yes (11 DLLs) |
 | Registry key / device name check | AS005 | Yes (extensive) |
 | Clean ntdll.dll copy | AS006 | - |
-| Window enumeration | AS007 | - |
+| Window enumeration | AD054 | - |
 | BlockInput hook detection | AS008 | - |
 | CPUID hypervisor bit | - | Yes |
 | CPUID hypervisor vendor string | - | Yes |
@@ -203,7 +203,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Power capabilities | - | Yes |
 | Thermal zone temperature | - | Yes |
 
-**Key gap**: This project's anti-sandbox coverage is minimal (8 generic techniques) compared to Al-Khaser's 90+ checks with per-hypervisor detection. However, this project includes unique techniques like SetErrorMode hook detection (AS001) and clean ntdll.dll copy loading (AS006) that Al-Khaser does not implement.
+**Key gap**: This project's anti-sandbox coverage is minimal (7 generic techniques) compared to Al-Khaser's 90+ checks with per-hypervisor detection. However, this project includes unique techniques like SetErrorMode hook detection (AS001) and clean ntdll.dll copy loading (AS006) that Al-Khaser does not implement.
 
 ---
 
@@ -215,7 +215,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | ---- | ----------- | ------- |
 | AS001 | SetErrorMode hook detection | Unique sandbox evasion approach |
 | AS006 | Clean ntdll.dll copy | Bypasses API hooks by loading fresh copy |
-| AS007 | EnumWindowsProc (sandbox tools) | Window-based sandbox tool detection |
+| AD054 | EnumWindowsProc (debugger windows) | Window-based debugger tool detection |
 | AD027 | INT1 long form (0xCD01) | Specific opcode variant |
 
 ### 5.2 In Check Point but NOT in This Project (candidates for future techniques)
@@ -313,11 +313,11 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 53 | ~34 | 61 |
+| Total anti-debug techniques | 54 | ~34 | 61 |
 | Shared with Check Point | 47 / 61 (77%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~12 |
-| Anti-sandbox/VM techniques | 8 | ~90+ | 0 |
+| Anti-sandbox/VM techniques | 7 | ~90+ | 0 |
 
 ---
 

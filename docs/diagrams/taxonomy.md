@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugging<br/>53 techniques<br/>86.9%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>13.1%]
+    A[Anti-Analysis Techniques<br/>61 Total] --> B[Anti-Debugging<br/>54 techniques<br/>88.5%]
+    A --> C[Anti-Sandbox<br/>7 techniques<br/>11.5%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,23 +33,23 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugging" : 53
-    "Anti-Sandbox" : 8
+    "Anti-Debugging" : 54
+    "Anti-Sandbox" : 7
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugging Techniques (53)
+## Anti-Debugging Techniques (54)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugging<br/>53 Techniques]
+    AD[Anti-Debugging<br/>54 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>12 techniques]
     AD --> EXC[Exception-Based<br/>14 techniques]
     AD --> MEM[Memory & Breakpoints<br/>7 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
-    AD --> OTHER[Other Detection<br/>9 techniques]
+    AD --> OTHER[Other Detection<br/>10 techniques]
 
     PEB --> PEB1[AD001: CheckProcessDebugPort]
     PEB --> PEB2[AD002: IsDebuggerPresent]
@@ -109,6 +109,7 @@ graph LR
     OTHER --> OTH7[AD044: OpenProcess_CSRSS]
     OTHER --> OTH8[AD046: CreateFileA_Exclusive]
     OTHER --> OTH9[AD048: LoadLibrary]
+    OTHER --> OTH10[AD054: EnumWindowsProc]
 
     style AD fill:#ffebee
     style PEB fill:#ffcdd2
@@ -119,20 +120,19 @@ graph LR
     style OTHER fill:#f44336
 ```
 
-## Anti-Sandbox Techniques (8)
+## Anti-Sandbox Techniques (7)
 
 ```mermaid
 graph LR
-    AS[Anti-Sandbox<br/>8 Techniques]
+    AS[Anti-Sandbox<br/>7 Techniques]
 
-    AS --> ENV[Environment Detection<br/>4 techniques]
+    AS --> ENV[Environment Detection<br/>3 techniques]
     AS --> HOOK[Hook Detection<br/>3 techniques]
     AS --> TIME[Timing Detection<br/>1 technique]
 
     ENV --> ENV1[AS003: CheckProcessList]
     ENV --> ENV2[AS004: CheckLoadedModules]
     ENV --> ENV3[AS005: CheckRegistryKeys]
-    ENV --> ENV4[AS007: EnumWindowsProc]
 
     HOOK --> HOOK1[AS001: SetErrorMode]
     HOOK --> HOOK2[AS006: CopyOfNtdll]
@@ -234,8 +234,8 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugging<br/>53 techniques]
-        C2[Anti-Sandbox<br/>8 techniques]
+        C1[Anti-Debugging<br/>54 techniques]
+        C2[Anti-Sandbox<br/>7 techniques]
     end
 
     C1 -.High Effectiveness.-> T1
@@ -311,6 +311,6 @@ graph TD
 
 ---
 
-**Last Updated**: 2026-02-14
+**Last Updated**: 2026-02-15
 **Total Techniques**: 61
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)

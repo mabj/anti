@@ -78,7 +78,8 @@ No anti-reversing techniques have been implemented yet. This category is reserve
 ## Notes
 
 Some techniques could fit multiple categories:
-- **AS007_EnumWindowsProc** and **AS008_FindWindow**: Can detect both sandboxes and debuggers, categorized as Anti-Sandbox due to broader detection scope
+- **AD054_EnumWindowsProc**: Reclassified from Anti-Sandbox (AS007) to Anti-Debugging as it primarily detects debugger windows
+- **AS008_FindWindow**: Can detect both sandboxes and debuggers, categorized as Anti-Sandbox due to broader detection scope
 - **AS006_CopyOfNtdll**: Bypasses API hooks commonly used by sandboxes and analysis tools
 - **AD012_GetWriteWatch** and **AD020_NtQueryVirtualMemory**: Primarily detect debugger modifications to memory
 
