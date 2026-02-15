@@ -106,7 +106,7 @@ jobs:
 
         echo "Staged files:"
         find "$STAGING" -type f | sort
-        echo "archive_name=anti_$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+        echo "archive_name=anti_$(date -u +%Y%m%d%HH%MM%SS).zip" >> "$GITHUB_OUTPUT"
       id: stage
 
     - name: Upload archive
