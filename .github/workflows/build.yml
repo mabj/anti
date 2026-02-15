@@ -93,7 +93,7 @@ jobs:
     - name: Package artifacts
       if: success()
       run: |
-        DATE=$(date -u +%Y%m%d)
+        TIMESTAMP=$(date -u +%Y%m%d%H%M%S)
         STAGING="staging"
 
         for category in anti-debugging anti-sandbox anti-reversing; do
@@ -105,13 +105,13 @@ jobs:
           fi
         done
 
-        tar -czf "anti_${DATE}.tar.gz" -C "$STAGING" .
+        tar -czf "anti_${TIMESTAMP}.tar.gz" -C "$STAGING" .
 
         echo "Archive contents:"
-        tar -tzf "anti_${DATE}.tar.gz"
+        tar -tzf "anti_${TIMESTAMP}.tar.gz"
         echo ""
-        echo "Created anti_${DATE}.tar.gz ($(du -h "anti_${DATE}.tar.gz" | cut -f1))"
-        echo "archive_name=anti_${DATE}" >> "$GITHUB_OUTPUT"
+        echo "Created anti_${TIMESTAMP}.tar.gz ($(du -h "anti_${TIMESTAMP}.tar.gz" | cut -f1))"
+        echo "archive_name=anti_${TIMESTAMP}" >> "$GITHUB_OUTPUT"
       id: package
 
     - name: Upload archive
