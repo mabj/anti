@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 61 techniques
+1. **This project** (`anti`) - 63 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugging** | 55 techniques | ~34 techniques | 61 techniques |
+| **Anti-Debugging** | 56 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 7 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -153,7 +153,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | OpenProcess (csrss / SeDebugPrivilege) | AD044 | Yes | Yes |
 | CreateFile (exclusive open) | AD046 | - | Yes |
 | LoadLibrary (file handle exclusive access) | AD048 | - | Yes |
-| SwitchToThread / NtYieldExecution | - | Yes | Yes |
+| SwitchToThread / NtYieldExecution | AD056 | Yes | Yes |
 | TLS callbacks | - | Yes | - |
 | Process jobs | - | Yes | - |
 | API hook detection | AD049 | Yes | - |
@@ -313,8 +313,8 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 55 | ~34 | 61 |
-| Shared with Check Point | 49 / 61 (80%) | ~25 / 61 (41%) | - |
+| Total anti-debug techniques | 56 | ~34 | 61 |
+| Shared with Check Point | 50 / 61 (82%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~2 | ~30+ (mostly anti-VM) | ~12 |
 | Anti-sandbox/VM techniques | 7 | ~90+ | 0 |
