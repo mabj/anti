@@ -35,7 +35,6 @@ This repository documents 63 real-world anti-analysis techniques discovered duri
   - [Building Techniques](#building-techniques)
     - [Build System Overview](#build-system-overview)
       - [Docker + MinGW (Recommended)](#docker--mingw-recommended)
-      - [Visual C++ (VC)](#visual-c-vc)
     - [General Build Process](#general-build-process)
     - [Build Requirements](#build-requirements)
     - [Troubleshooting](#troubleshooting)
@@ -202,15 +201,6 @@ make
 
 Output binaries are placed in the `bin/` directory.
 
-#### Visual C++ (VC)
-
-Some techniques may require Visual C++ compiler on Windows:
-
-```bash
-# Build with Visual Studio developer command prompt
-cl /Fe:technique.exe src/main.c
-```
-
 ### General Build Process
 
 1. **Navigate to technique directory**:
@@ -242,7 +232,6 @@ cl /Fe:technique.exe src/main.c
 
 - **Docker**: For containerized builds (recommended)
 - **MinGW-w64**: For native Windows builds on Linux/Mac
-- **Visual Studio**: For techniques requiring VC compiler
 - **GNU Make**: Build automation
 
 ### Troubleshooting
