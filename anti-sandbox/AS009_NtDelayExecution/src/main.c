@@ -11,7 +11,7 @@ typedef NTSTATUS(NTAPI * TNtDelayExecution)(
 bool __delay_execution(void) {
 	// API to delay execution Sleep -> SleepEx -> NtDelayExecution.
     // It can be abused to timeout sandboxes
-    unsigned int delay_in_millis = 10 * 1000; // (5 seconds)
+    unsigned int delay_in_millis = 10 * 1000; // (10 seconds)
 	LARGE_INTEGER DelayInterval;
 	LONGLONG llDelay = delay_in_millis * 10000LL;
 	DelayInterval.QuadPart = -llDelay;

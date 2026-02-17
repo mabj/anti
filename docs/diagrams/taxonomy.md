@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>64 Total] --> B[Anti-Debugging<br/>56 techniques<br/>87.5%]
-    A --> C[Anti-Sandbox<br/>8 techniques<br/>12.5%]
+    A[Anti-Analysis Techniques<br/>66 Total] --> B[Anti-Debugging<br/>56 techniques<br/>84.8%]
+    A --> C[Anti-Sandbox<br/>10 techniques<br/>15.2%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -34,7 +34,7 @@ graph TB
 ```mermaid
 pie title Technique Distribution by Category
     "Anti-Debugging" : 56
-    "Anti-Sandbox" : 8
+    "Anti-Sandbox" : 10
     "Anti-Reversing" : 0
 ```
 
@@ -122,15 +122,15 @@ graph LR
     style OTHER fill:#f44336
 ```
 
-## Anti-Sandbox Techniques (8)
+## Anti-Sandbox Techniques (10)
 
 ```mermaid
 graph LR
-    AS[Anti-Sandbox<br/>8 Techniques]
+    AS[Anti-Sandbox<br/>10 Techniques]
 
     AS --> ENV[Environment Detection<br/>3 techniques]
     AS --> HOOK[Hook Detection<br/>3 techniques]
-    AS --> TIME[Timing Detection<br/>2 techniques]
+    AS --> TIME[Timing Detection<br/>4 techniques]
 
     ENV --> ENV1[AS003: CheckProcessList]
     ENV --> ENV2[AS004: CheckLoadedModules]
@@ -141,7 +141,9 @@ graph LR
     HOOK --> HOOK3[AS008: BlockInput]
 
     TIME --> TIME1[AS002: ForcedRaceConditionSleep]
-    TIME --> TIME2[AS009: NtDelayExecution]
+    TIME --> TIME2[AS007: SetTimer]
+    TIME --> TIME3[AS009: NtDelayExecution]
+    TIME --> TIME4[AS010: WaitForSingleObject]
 
     style AS fill:#fff3e0
     style ENV fill:#ffe0b2
@@ -237,8 +239,8 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugging<br/>55 techniques]
-        C2[Anti-Sandbox<br/>7 techniques]
+        C1[Anti-Debugging<br/>56 techniques]
+        C2[Anti-Sandbox<br/>10 techniques]
     end
 
     C1 -.High Effectiveness.-> T1
@@ -314,6 +316,6 @@ graph TD
 
 ---
 
-**Last Updated**: 2026-02-16
-**Total Techniques**: 64
+**Last Updated**: 2026-02-17
+**Total Techniques**: 66
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)

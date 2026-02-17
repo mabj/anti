@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 64 techniques
+1. **This project** (`anti`) - 66 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
@@ -21,7 +21,7 @@ This report compares three anti-analysis technique collections:
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
 | **Anti-Debugging** | 56 techniques | ~34 techniques | 61 techniques |
-| **Anti-Sandbox/VM** | 8 techniques | ~90+ techniques | N/A |
+| **Anti-Sandbox/VM** | 10 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
 | **Code Injection** | 0 | 7 techniques | N/A |
@@ -34,7 +34,7 @@ This report compares three anti-analysis technique collections:
 
 ```[text]
                         Anti-Debug    Anti-Sandbox/VM    Anti-Disasm    Other
-This Project            █████████████ ███
+This Project            █████████████ ████
 Al-Khaser               ████████████  █████████████████  ██             █████
 Check Point             ██████████████████
 ```
@@ -137,8 +137,8 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | ZwGetTickCount / KiGetTickCount | - | - | Yes |
 | Sleep acceleration detection | - | Yes | - |
 | NtDelayExecution | AS009 | Yes | - |
-| SetTimer + message loop | - | Yes | - |
-| WaitForSingleObject | - | Yes | - |
+| SetTimer + message loop | AS007 | Yes | - |
+| WaitForSingleObject | AS010 | Yes | - |
 | IcmpSendEcho | - | Yes | - |
 | CreateWaitableTimer | - | Yes | - |
 | CreateTimerQueueTimer | - | Yes | - |
@@ -178,6 +178,9 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Clean ntdll.dll copy | AS006 | - |
 | Window enumeration | AD054 | - |
 | BlockInput hook detection | AS008 | - |
+| NtDelayExecution timing | AS009 | - |
+| SetTimer message loop | AS007 | Yes (variant) |
+| WaitForSingleObject timeout | AS010 | Yes |
 | CPUID hypervisor bit | - | Yes |
 | CPUID hypervisor vendor string | - | Yes |
 | IDT/GDT/LDT/STR location | - | Yes |
@@ -203,7 +206,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Power capabilities | - | Yes |
 | Thermal zone temperature | - | Yes |
 
-**Key gap**: This project's anti-sandbox coverage is minimal (7 generic techniques) compared to Al-Khaser's 90+ checks with per-hypervisor detection. However, this project includes unique techniques like SetErrorMode hook detection (AS001) and clean ntdll.dll copy loading (AS006) that Al-Khaser does not implement.
+**Key gap**: This project's anti-sandbox coverage is minimal (10 generic techniques) compared to Al-Khaser's 90+ checks with per-hypervisor detection. However, this project includes unique techniques like SetErrorMode hook detection (AS001) and clean ntdll.dll copy loading (AS006) that Al-Khaser does not implement.
 
 ---
 
@@ -289,7 +292,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 **This Project**:
 
-- Limited anti-sandbox coverage (8 vs Al-Khaser's 90+)
+- Limited anti-sandbox coverage (10 vs Al-Khaser's 90+)
 - No anti-VM, anti-disassembly, or anti-dumping categories
 - No kernel-level anti-debug techniques (NtQuerySystemInformation KernelDebugger)
 
@@ -317,7 +320,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Shared with Check Point | 50 / 61 (82%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~2 | ~30+ (mostly anti-VM) | ~12 |
-| Anti-sandbox/VM techniques | 8 | ~90+ | 0 |
+| Anti-sandbox/VM techniques | 10 | ~90+ | 0 |
 
 ---
 
