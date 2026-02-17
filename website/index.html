@@ -420,9 +420,9 @@ td[colspan]{
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">66</div><div class="lbl">Techniques</div></div>
+<div class="stat"><div class="num">68</div><div class="lbl">Techniques</div></div>
 <div class="stat"><div class="num">56</div><div class="lbl">Anti-Debug</div></div>
-<div class="stat"><div class="num">10</div><div class="lbl">Anti-Sandbox</div></div>
+<div class="stat"><div class="num">12</div><div class="lbl">Anti-Sandbox</div></div>
 </div>
 
 <div class="card">
@@ -457,7 +457,7 @@ For educational and research purposes only. Do not use these techniques for mali
 <div class="section">
 <div class="section-header">
 <h2 class="section-title">Anti-Sandbox</h2>
-<span class="badge badge-as">10 techniques</span>
+<span class="badge badge-as">12 techniques</span>
 </div>
 <div class="table-wrap">
 <table>
@@ -472,6 +472,8 @@ For educational and research purposes only. Do not use these techniques for mali
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS008_BlockInput">AS008</a></td><td>BlockInput</td><td>Detects API hooking by analyzing BlockInput behavior</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS009_NtDelayExecution">AS009</a></td><td>NtDelayExecution</td><td>Evades sandbox analysis by introducing long execution delays via native API</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS010_WaitForSingleObject">AS010</a></td><td>WaitForSingleObject</td><td>Uses event synchronization timeout to bypass sandbox time acceleration</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS011_CreateWaitableTimer">AS011</a></td><td>CreateWaitableTimer</td><td>Uses high-resolution waitable timer to evade sandbox time acceleration</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS012_CreateTimerQueueTimer">AS012</a></td><td>CreateTimerQueueTimer</td><td>Uses timer queue callbacks to bypass sandbox time acceleration</td></tr>
 </table>
 </div>
 </div>
