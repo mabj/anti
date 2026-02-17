@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>68 Total] --> B[Anti-Debugging<br/>56 techniques<br/>82.4%]
-    A --> C[Anti-Sandbox<br/>12 techniques<br/>17.6%]
+    A[Anti-Analysis Techniques<br/>69 Total] --> B[Anti-Debugging<br/>56 techniques<br/>81.2%]
+    A --> C[Anti-Sandbox<br/>13 techniques<br/>18.8%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -34,7 +34,7 @@ graph TB
 ```mermaid
 pie title Technique Distribution by Category
     "Anti-Debugging" : 56
-    "Anti-Sandbox" : 12
+    "Anti-Sandbox" : 13
     "Anti-Reversing" : 0
 ```
 
@@ -122,15 +122,15 @@ graph LR
     style OTHER fill:#f44336
 ```
 
-## Anti-Sandbox Techniques (12)
+## Anti-Sandbox Techniques (13)
 
 ```mermaid
 graph LR
-    AS[Anti-Sandbox<br/>12 Techniques]
+    AS[Anti-Sandbox<br/>13 Techniques]
 
     AS --> ENV[Environment Detection<br/>3 techniques]
     AS --> HOOK[Hook Detection<br/>3 techniques]
-    AS --> TIME[Timing Detection<br/>6 techniques]
+    AS --> TIME[Timing Detection<br/>7 techniques]
 
     ENV --> ENV1[AS003: CheckProcessList]
     ENV --> ENV2[AS004: CheckLoadedModules]
@@ -146,6 +146,7 @@ graph LR
     TIME --> TIME4[AS010: WaitForSingleObject]
     TIME --> TIME5[AS011: CreateWaitableTimer]
     TIME --> TIME6[AS012: CreateTimerQueueTimer]
+    TIME --> TIME7[AS013: SleepLoop]
 
     style AS fill:#fff3e0
     style ENV fill:#ffe0b2
@@ -242,7 +243,7 @@ graph TB
 
     subgraph Technique Categories
         C1[Anti-Debugging<br/>56 techniques]
-        C2[Anti-Sandbox<br/>12 techniques]
+        C2[Anti-Sandbox<br/>13 techniques]
     end
 
     C1 -.High Effectiveness.-> T1
@@ -318,6 +319,6 @@ graph TD
 
 ---
 
-**Last Updated**: 2026-02-17
-**Total Techniques**: 68
+**Last Updated**: 2026-02-18
+**Total Techniques**: 69
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)

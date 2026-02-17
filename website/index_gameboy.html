@@ -475,13 +475,13 @@ td[colspan]{
 /_/   \_\_| \_| |_| |___|   /_/   \_\_| \_/_/   \_\_____|_| |____/___|____/
 </pre>
 <div class="subtitle">ANTI-ANALYSIS TECHNIQUE COLLECTION</div>
-<div class="subtitle">- 60 techniques for the curious mind -</div>
+<div class="subtitle">- 69 techniques for the curious mind -</div>
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">62</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">55</div><div class="lbl">ANTI-DEBUG</div></div>
-<div class="stat"><div class="num">7</div><div class="lbl">ANTI-SANDBOX</div></div>
+<div class="stat"><div class="num">69</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">56</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">13</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
 <div class="pixel-box">
@@ -511,7 +511,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-sandbox.db</p>
 
-<h2> ANTI-SANDBOX :: 7 techniques </h2><br>
+<h2> ANTI-SANDBOX :: 13 techniques </h2><br>
 <span class="cat-label cat-as">ANTI-SANDBOX</span>
 
 <table>
@@ -522,12 +522,18 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS004_CheckLoadedModules">AS004</a></td><td>CheckLoadedModules</td><td>Detects injected DLLs from analysis tools in current process</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS005_CheckRegistryKeys">AS005</a></td><td>CheckRegistryKeys</td><td>Searches Windows Registry for VM-related device names</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS006_CopyOfNtdll">AS006</a></td><td>CopyOfNtdll</td><td>Loads clean ntdll.dll copy to bypass hooked functions</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS007_SetTimer">AS007</a></td><td>SetTimer</td><td>Uses message-driven timer to bypass sandbox time acceleration</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS008_BlockInput">AS008</a></td><td>BlockInput</td><td>Detects API hooking by analyzing BlockInput behavior</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS009_NtDelayExecution">AS009</a></td><td>NtDelayExecution</td><td>Evades sandbox analysis by introducing long execution delays via native API</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS010_WaitForSingleObject">AS010</a></td><td>WaitForSingleObject</td><td>Uses event synchronization timeout to bypass sandbox time acceleration</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS011_CreateWaitableTimer">AS011</a></td><td>CreateWaitableTimer</td><td>Uses high-resolution waitable timer to evade sandbox time acceleration</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS012_CreateTimerQueueTimer">AS012</a></td><td>CreateTimerQueueTimer</td><td>Uses timer queue callbacks to bypass sandbox time acceleration</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-sandbox/AS013_SleepLoop">AS013</a></td><td>SleepLoop</td><td>Evades sandbox time acceleration by splitting delay into many short Sleep calls</td></tr>
 </table>
 
 <p class="prompt">cat techniques/anti-debugging.db</p>
 
-<h2> ANTI-DEBUGGING :: 55 techniques </h2><br>
+<h2> ANTI-DEBUGGING :: 56 techniques </h2><br>
 <span class="cat-label cat-ad">ANTI-DEBUGGING</span>
 
 <table>
@@ -593,6 +599,7 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD044_OpenProcess_CSRSS">AD044</a></td><td>OpenProcess CSRSS</td><td>Detects elevated debugger by attempting to open csrss.exe</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD046_CreateFileA_Exclusive">AD046</a></td><td>CreateFileA Exclusive</td><td>Detects debugger by attempting exclusive file access on executable</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD048_LoadLibrary">AD048</a></td><td>LoadLibrary</td><td>Detects debugger via file handle behavior after LoadLibraryA</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD056_SwitchToThread">AD056</a></td><td>SwitchToThread</td><td>Detects debugger by exploiting thread scheduler behavior during single-stepping</td></tr>
 </table>
 
 <hr class="separator">

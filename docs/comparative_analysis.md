@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 68 techniques
+1. **This project** (`anti`) - 69 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
@@ -21,11 +21,11 @@ This report compares three anti-analysis technique collections:
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
 | **Anti-Debugging** | 56 techniques | ~34 techniques | 61 techniques |
-| **Anti-Sandbox/VM** | 12 techniques | ~90+ techniques | N/A |
+| **Anti-Sandbox/VM** | 13 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
 | **Code Injection** | 0 | 7 techniques | N/A |
-| **Timing Attacks** | 6 (in anti-debugging) | 12 techniques | 7 techniques |
+| **Timing Attacks** | 6 (in anti-sandbox) | 12 techniques | 7 techniques |
 | **Companion tool** | N/A | N/A | ShowStopper |
 
 ---
@@ -141,6 +141,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | WaitForSingleObject | AS010 | Yes | - |
 | CreateWaitableTimer | AS011 | Yes | - |
 | CreateTimerQueueTimer | AS012 | Yes | - |
+| Sleep loop (chunked delay) | AS013 | - | - |
 
 ### 3.8 Behavioral / Other Detection
 
@@ -207,7 +208,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Power capabilities | - | Yes |
 | Thermal zone temperature | - | Yes |
 
-**Key gap**: This project's anti-sandbox coverage is minimal (12 generic techniques) compared to Al-Khaser's 90+ checks with per-hypervisor detection. However, this project includes unique techniques like SetErrorMode hook detection (AS001) and clean ntdll.dll copy loading (AS006) that Al-Khaser does not implement.
+**Key gap**: This project's anti-sandbox coverage is minimal (13 generic techniques) compared to Al-Khaser's 90+ checks with per-hypervisor detection. However, this project includes unique techniques like SetErrorMode hook detection (AS001) and clean ntdll.dll copy loading (AS006) that Al-Khaser does not implement.
 
 ---
 
@@ -321,7 +322,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | Shared with Check Point | 50 / 61 (82%) | ~25 / 61 (41%) | - |
 | Shared with Al-Khaser (anti-debug) | 28 / 34 (82%) | - | ~25 / 34 (74%) |
 | Techniques unique to project | ~2 | ~30+ (mostly anti-VM) | ~12 |
-| Anti-sandbox/VM techniques | 12 | ~90+ | 0 |
+| Anti-sandbox/VM techniques | 13 | ~90+ | 0 |
 
 ---
 
