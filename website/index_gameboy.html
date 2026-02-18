@@ -475,12 +475,12 @@ td[colspan]{
 /_/   \_\_| \_| |_| |___|   /_/   \_\_| \_/_/   \_\_____|_| |____/___|____/
 </pre>
 <div class="subtitle">ANTI-ANALYSIS TECHNIQUE COLLECTION</div>
-<div class="subtitle">- 69 techniques for the curious mind -</div>
+<div class="subtitle">- 72 techniques for the curious mind -</div>
 </div>
 
 <div class="stats">
-<div class="stat"><div class="num">69</div><div class="lbl">TECHNIQUES</div></div>
-<div class="stat"><div class="num">56</div><div class="lbl">ANTI-DEBUG</div></div>
+<div class="stat"><div class="num">72</div><div class="lbl">TECHNIQUES</div></div>
+<div class="stat"><div class="num">59</div><div class="lbl">ANTI-DEBUG</div></div>
 <div class="stat"><div class="num">13</div><div class="lbl">ANTI-SANDBOX</div></div>
 </div>
 
@@ -533,7 +533,7 @@ Do not use these techniques for malicious purposes.
 
 <p class="prompt">cat techniques/anti-debugging.db</p>
 
-<h2> ANTI-DEBUGGING :: 56 techniques </h2><br>
+<h2> ANTI-DEBUGGING :: 59 techniques </h2><br>
 <span class="cat-label cat-ad">ANTI-DEBUGGING</span>
 
 <table>
@@ -600,6 +600,9 @@ Do not use these techniques for malicious purposes.
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD046_CreateFileA_Exclusive">AD046</a></td><td>CreateFileA Exclusive</td><td>Detects debugger by attempting exclusive file access on executable</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD048_LoadLibrary">AD048</a></td><td>LoadLibrary</td><td>Detects debugger via file handle behavior after LoadLibraryA</td></tr>
 <tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD056_SwitchToThread">AD056</a></td><td>SwitchToThread</td><td>Detects debugger by exploiting thread scheduler behavior during single-stepping</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD057_TLSCallback">AD057</a></td><td>TLS Callback</td><td>Executes code before main entry point using Thread Local Storage callbacks</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD058_ProcessJob">AD058</a></td><td>Process Job</td><td>Detects debuggers by enumerating processes in the job object</td></tr>
+<tr><td><a href="https://github.com/mabj/anti/tree/master/anti-debugging/AD059_WudfIsAnyDebuggerPresent">AD059</a></td><td>WudfIsAnyDebuggerPresent</td><td>Detects debugger via undocumented UMDF platform API in WudfPlatform.dll</td></tr>
 </table>
 
 <hr class="separator">
