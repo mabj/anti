@@ -135,7 +135,6 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | timeGetTime | AD039 | - | Yes |
 | RDTSC / RDPMC | AD043 | Yes | Yes |
 | ZwGetTickCount / KiGetTickCount | - | - | Yes |
-| Sleep acceleration detection | - | - | - |
 | NtDelayExecution | AS009 | Yes | - |
 | SetTimer + message loop | AS007 | Yes | - |
 | WaitForSingleObject | AS010 | Yes | - |
