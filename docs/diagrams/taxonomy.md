@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>70 Total] --> B[Anti-Debugging<br/>57 techniques<br/>81.4%]
-    A --> C[Anti-Sandbox<br/>13 techniques<br/>18.6%]
+    A[Anti-Analysis Techniques<br/>71 Total] --> B[Anti-Debugging<br/>58 techniques<br/>81.7%]
+    A --> C[Anti-Sandbox<br/>13 techniques<br/>18.3%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,23 +33,23 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugging" : 57
+    "Anti-Debugging" : 58
     "Anti-Sandbox" : 13
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugging Techniques (57)
+## Anti-Debugging Techniques (58)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugging<br/>57 Techniques]
+    AD[Anti-Debugging<br/>58 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>12 techniques]
     AD --> EXC[Exception-Based<br/>14 techniques]
     AD --> MEM[Memory & Breakpoints<br/>7 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
-    AD --> OTHER[Other Detection<br/>13 techniques]
+    AD --> OTHER[Other Detection<br/>14 techniques]
 
     PEB --> PEB1[AD001: CheckProcessDebugPort]
     PEB --> PEB2[AD002: IsDebuggerPresent]
@@ -113,6 +113,7 @@ graph LR
     OTHER --> OTH11[AD055: DbgSetDebugFilterState]
     OTHER --> OTH12[AD056: SwitchToThread]
     OTHER --> OTH13[AD057: TLSCallback]
+    OTHER --> OTH14[AD058: ProcessJob]
 
     style AD fill:#ffebee
     style PEB fill:#ffcdd2
@@ -321,5 +322,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-02-18
-**Total Techniques**: 70
+**Total Techniques**: 71
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)

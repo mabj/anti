@@ -2,7 +2,7 @@
 
 This report compares three anti-analysis technique collections:
 
-1. **This project** (`anti`) - 70 techniques
+1. **This project** (`anti`) - 71 techniques
 2. **Al-Khaser** (`github.com/LordNoteworthy/al-khaser`) - ~200+ techniques
 3. **Check Point Anti-Debug Encyclopedia** (`anti-debug.checkpoint.com`) - 61 techniques
 
@@ -20,7 +20,7 @@ This report compares three anti-analysis technique collections:
 | **Architecture** | Standalone executables (1 per technique) | Single binary (all-in-one) | Code snippets (reference) |
 | **Build System** | Docker + MinGW (cross-compilation) | Visual Studio solution | N/A (documentation site) |
 | **Platform** | Windows | Windows | Windows |
-| **Anti-Debugging** | 57 techniques | ~34 techniques | 61 techniques |
+| **Anti-Debugging** | 58 techniques | ~34 techniques | 61 techniques |
 | **Anti-Sandbox/VM** | 13 techniques | ~90+ techniques | N/A |
 | **Anti-Disassembly** | 0 | 6 techniques | N/A |
 | **Anti-Dumping** | 0 | 2 techniques | N/A |
@@ -154,7 +154,7 @@ This matrix maps each anti-debug technique across all three projects. A checkmar
 | LoadLibrary (file handle exclusive access) | AD048 | - | Yes |
 | SwitchToThread / NtYieldExecution | AD056 | Yes | Yes |
 | TLS callbacks | AD057 | Yes | - |
-| Process jobs | - | Yes | - |
+| Process jobs | AD058 | Yes | - |
 | API hook detection | AD049 | Yes | - |
 | EnumWindows + SuspendThread | AD054 | - | Yes |
 | WudfIsAnyDebuggerPresent | - | Yes | - |
@@ -222,6 +222,7 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 | AD054 | EnumWindowsProc (debugger windows) | Window-based debugger tool detection |
 | AD027 | INT1 long form (0xCD01) | Specific opcode variant |
 | AD057 | TLS Callback | Early execution before main entry point |
+| AD058 | Process Job | Job object enumeration for debugger detection |
 
 ### 5.2 In Check Point but NOT in This Project (candidates for future techniques)
 
@@ -318,10 +319,10 @@ Check Point does not cover anti-sandbox. This comparison is between this project
 
 | Metric | This Project | Al-Khaser | Check Point |
 | -------- | :-----------: | :---------: | :-----------: |
-| Total anti-debug techniques | 57 | ~34 | 61 |
+| Total anti-debug techniques | 58 | ~34 | 61 |
 | Shared with Check Point | 51 / 61 (84%) | ~25 / 61 (41%) | - |
-| Shared with Al-Khaser (anti-debug) | 29 / 34 (85%) | - | ~25 / 34 (74%) |
-| Techniques unique to project | ~3 | ~30+ (mostly anti-VM) | ~12 |
+| Shared with Al-Khaser (anti-debug) | 30 / 34 (88%) | - | ~25 / 34 (74%) |
+| Techniques unique to project | ~4 | ~30+ (mostly anti-VM) | ~12 |
 | Anti-sandbox/VM techniques | 13 | ~90+ | 0 |
 
 ---
