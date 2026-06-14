@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>72 Total] --> B[Anti-Debugging<br/>59 techniques<br/>81.9%]
-    A --> C[Anti-Sandbox<br/>13 techniques<br/>18.1%]
+    A[Anti-Analysis Techniques<br/>73 Total] --> B[Anti-Debugging<br/>60 techniques<br/>82.2%]
+    A --> C[Anti-Sandbox<br/>13 techniques<br/>17.8%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -33,23 +33,23 @@ graph TB
 
 ```mermaid
 pie title Technique Distribution by Category
-    "Anti-Debugging" : 59
+    "Anti-Debugging" : 60
     "Anti-Sandbox" : 13
     "Anti-Reversing" : 0
 ```
 
-## Anti-Debugging Techniques (59)
+## Anti-Debugging Techniques (60)
 
 ```mermaid
 graph LR
-    AD[Anti-Debugging<br/>59 Techniques]
+    AD[Anti-Debugging<br/>60 Techniques]
 
     AD --> PEB[PEB & Process Info<br/>12 techniques]
     AD --> EXC[Exception-Based<br/>14 techniques]
     AD --> MEM[Memory & Breakpoints<br/>7 techniques]
     AD --> SELF[Self-Protection<br/>5 techniques]
     AD --> TIME[Timing-Based<br/>6 techniques]
-    AD --> OTHER[Other Detection<br/>15 techniques]
+    AD --> OTHER[Other Detection<br/>16 techniques]
 
     PEB --> PEB1[AD001: CheckProcessDebugPort]
     PEB --> PEB2[AD002: IsDebuggerPresent]
@@ -115,6 +115,7 @@ graph LR
     OTHER --> OTH13[AD057: TLSCallback]
     OTHER --> OTH14[AD058: ProcessJob]
     OTHER --> OTH15[AD059: WudfIsAnyDebuggerPresent]
+    OTHER --> OTH16[AD060: LowFragmentationHeap]
 
     style AD fill:#ffebee
     style PEB fill:#ffcdd2
@@ -245,7 +246,7 @@ graph TB
     end
 
     subgraph Technique Categories
-        C1[Anti-Debugging<br/>59 techniques]
+        C1[Anti-Debugging<br/>60 techniques]
         C2[Anti-Sandbox<br/>13 techniques]
     end
 
@@ -322,6 +323,6 @@ graph TD
 
 ---
 
-**Last Updated**: 2026-02-18
-**Total Techniques**: 72
+**Last Updated**: 2026-06-14
+**Total Techniques**: 73
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)
