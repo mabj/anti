@@ -6,8 +6,8 @@ This document contains visual diagrams showing the organization and relationship
 
 ```mermaid
 graph TB
-    A[Anti-Analysis Techniques<br/>73 Total] --> B[Anti-Debugging<br/>60 techniques<br/>82.2%]
-    A --> C[Anti-Sandbox<br/>13 techniques<br/>17.8%]
+    A[Anti-Analysis Techniques<br/>74 Total] --> B[Anti-Debugging<br/>60 techniques<br/>81.1%]
+    A --> C[Anti-Sandbox<br/>14 techniques<br/>18.9%]
     A --> D[Anti-Reversing<br/>0 techniques<br/>0%]
 
     B --> B1[PEB/Process Checks]
@@ -34,7 +34,7 @@ graph TB
 ```mermaid
 pie title Technique Distribution by Category
     "Anti-Debugging" : 60
-    "Anti-Sandbox" : 13
+    "Anti-Sandbox" : 14
     "Anti-Reversing" : 0
 ```
 
@@ -126,14 +126,14 @@ graph LR
     style OTHER fill:#f44336
 ```
 
-## Anti-Sandbox Techniques (13)
+## Anti-Sandbox Techniques (14)
 
 ```mermaid
 graph LR
-    AS[Anti-Sandbox<br/>13 Techniques]
+    AS[Anti-Sandbox<br/>14 Techniques]
 
     AS --> ENV[Environment Detection<br/>3 techniques]
-    AS --> HOOK[Hook Detection<br/>3 techniques]
+    AS --> HOOK[Hook Detection<br/>4 techniques]
     AS --> TIME[Timing Detection<br/>7 techniques]
 
     ENV --> ENV1[AS003: CheckProcessList]
@@ -143,6 +143,7 @@ graph LR
     HOOK --> HOOK1[AS001: SetErrorMode]
     HOOK --> HOOK2[AS006: CopyOfNtdll]
     HOOK --> HOOK3[AS008: BlockInput]
+    HOOK --> HOOK4[AS014: RtlSetProcessIsCritical]
 
     TIME --> TIME1[AS002: ForcedRaceConditionSleep]
     TIME --> TIME2[AS007: SetTimer]
@@ -247,7 +248,7 @@ graph TB
 
     subgraph Technique Categories
         C1[Anti-Debugging<br/>60 techniques]
-        C2[Anti-Sandbox<br/>13 techniques]
+        C2[Anti-Sandbox<br/>14 techniques]
     end
 
     C1 -.High Effectiveness.-> T1
@@ -324,5 +325,5 @@ graph TD
 ---
 
 **Last Updated**: 2026-06-14
-**Total Techniques**: 73
+**Total Techniques**: 74
 **Categories**: 3 (Anti-Debugging, Anti-Sandbox, Anti-Reversing)
